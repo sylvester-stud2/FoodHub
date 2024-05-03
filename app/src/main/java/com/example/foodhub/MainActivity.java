@@ -18,11 +18,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.welcome);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        Button btn = findViewById(R.id.btn1);
+        Button btno = findViewById(R.id.btn2);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreateProfile.class);
+                startActivity(intent);
+            }
+
+        });
+
+        btno.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, login.class);
+                startActivity(intent);
+            }
         });
 
 
