@@ -18,7 +18,7 @@ public class CreateProfile extends Activity {
 
 
         Button btn = findViewById(R.id.back);
-        Button btno = findViewById(R.id.tohomepage);
+        Button btno = findViewById(R.id.tologin);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -32,7 +32,7 @@ public class CreateProfile extends Activity {
         btno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateProfile.this, homepage.class);
+                Intent intent = new Intent(CreateProfile.this, MainActivity.class);
                 startActivity(intent);
             }
         });
