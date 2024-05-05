@@ -22,7 +22,7 @@
 
 
     <Button
-        android:id="@+id/tologin"
+        android:id="@+id/tohomepage"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
 
