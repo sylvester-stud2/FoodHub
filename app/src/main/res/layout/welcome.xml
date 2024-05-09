@@ -14,8 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:layout_marginStart="30dp"
+        android:background="@color/smoke"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/custom_edittext"
+
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp"
         app:layout_constraintBottom_toTopOf="parent"
@@ -41,20 +42,20 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="400dp"
-        android:layout_marginTop="4dp"
-        android:paddingTop="-1000dp"
+
         android:src="@drawable/rabbit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="108dp"
+        android:layout_marginBottom="76dp"
         android:background="@color/smoke"
         android:orientation="vertical"
         android:padding="24dp"
@@ -62,7 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
-
 
         <TextView
             android:id="@+id/loginText"
@@ -77,47 +77,54 @@
             tools:layout_editor_absoluteY="432dp" />
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/custom_edittext"
             android:drawableLeft="@drawable/person"
             android:drawablePadding="8dp"
-            android:hint="username"
-            android:textColorHint="@color/blue"
+            android:hint="email"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHighlight="@color/cardview_dark_background"
-
+            android:textColorHint="@color/blue"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="494dp" />
 
-
-        <EditText
-            android:id="@+id/password"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/custom_edittext"
-            android:drawableLeft="@drawable/lock"
-            android:drawablePadding="8dp"
-            android:hint="password"
-            android:textColorHint="@color/blue"
-            android:inputType="textPassword"
-            android:padding="8dp"
             android:textColor="@color/black"
-            android:textColorHighlight="@color/cardview_dark_background"
+            android:textColorHint="@color/blue"
 
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="554dp" />
+
+            app:endIconMode="password_toggle">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_edittext"
+
+                android:drawablePadding="8dp"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:padding="8dp"
+
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/blue"
+                android:textColorHint="@color/blue"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="554dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn1"
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
-
             android:drawableRight="@drawable/forward"
             android:text="Login"
             android:textColorLink="#5FA4C3"
@@ -127,16 +134,17 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/create"
+        android:layout_width="355dp"
+        android:layout_height="60dp"
 
-        android:layout_marginStart="124dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="4dp"
         android:drawableRight="@drawable/forward"
         android:text="Create"
         android:textColorLink="#E91E63"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
