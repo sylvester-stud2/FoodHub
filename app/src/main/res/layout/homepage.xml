@@ -1,67 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/homenav">
 
-<!--the code for google android bottom navigation bar-&#45;&#45;just copy and paste to the page you are working on then change if neccessary-->
+    <!-- Google Android bottom navigation bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:menu="@layout/bottom_nav_menu"
         app:itemIconTint="@color/blue"
         app:itemTextColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Content FrameLayout -->
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="openNewPage"
-        android:background="?android:attr/selectableItemBackground">
+        <!-- Add your content views here -->
 
     </FrameLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="First Name"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="115dp" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:srcCompat="@drawable/profile"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="96dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name"
+        app:layout_constraintStart_toEndOf="@id/imageView2"
+        app:layout_constraintTop_toTopOf="@id/imageView2"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="16dp" />
+
 
     <Button
         android:id="@+id/add_recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Recipe"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="549dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        android:layout_marginTop="450dp"
+        android:layout_marginStart="60dp" />
 
     <Button
         android:id="@+id/remove_recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remove Recipe"
-        tools:layout_editor_absoluteX="200dp"
-        tools:layout_editor_absoluteY="549dp" />
-
+        app:layout_constraintStart_toEndOf="@id/add_recipe"
+        app:layout_constraintTop_toTopOf="@id/add_recipe"
+        android:layout_marginStart="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:id="@+id/homenav">-->
+
+<!--&lt;!&ndash;the code for google android bottom navigation bar-&#45;&#45;just copy and paste to the page you are working on then change if neccessary&ndash;&gt;-->
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_navigation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        app:menu="@layout/bottom_nav_menu"-->
+<!--        app:itemIconTint="@color/blue"-->
+<!--        app:itemTextColor="@color/blue"-->
+
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" >-->
+
+<!--    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/fame"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:onClick="openNewPage"-->
+<!--        android:background="?android:attr/selectableItemBackground">-->
+
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:text="First Name"-->
+<!--        tools:layout_editor_absoluteX="74dp"-->
+<!--        tools:layout_editor_absoluteY="115dp" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView2"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:srcCompat="@drawable/profile"-->
+<!--        tools:layout_editor_absoluteX="16dp"-->
+<!--        tools:layout_editor_absoluteY="96dp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/add_recipe"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Add Recipe"-->
+<!--        tools:layout_editor_absoluteX="58dp"-->
+<!--        tools:layout_editor_absoluteY="549dp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/remove_recipe"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Remove Recipe"-->
+<!--        tools:layout_editor_absoluteX="200dp"-->
+<!--        tools:layout_editor_absoluteY="549dp" />-->
+<!--    </FrameLayout>-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
