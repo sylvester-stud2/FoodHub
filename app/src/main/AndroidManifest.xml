@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".CreateProfile"/>
         <activity android:name=".homepage"/>
+        <activity android:name=".Friends" />
+        <activity android:name=".Community" />
     </application>
 
 </manifest>
