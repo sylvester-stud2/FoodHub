@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/cookingcomm">
+
+        <ImageView
+            android:id="@+id/friendprofile"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/profile" />
+
+        <Button
+            android:id="@+id/addfriend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="204dp"
+            android:text="Make Friend"
+            app:layout_constraintStart_toEndOf="@+id/friendprofile"
+            tools:ignore="MissingConstraints"
+            android:onClick="AddFriendonClick"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/post"
+            android:layout_width="412dp"
+            android:layout_height="178dp"
+            android:onClick="AddPostonClick"
+            android:text="Post Recipe"
+            android:textSize="40dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="-1dp"
+            tools:layout_editor_absoluteY="90dp" />
+
+        <ImageView
+            android:id="@+id/thumbsup"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:clickable="true"
+            android:onClick="onThumbsUpClicked"
+            android:src="@drawable/thumbsup"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="284dp" />
+
+        <ImageView
+            android:id="@+id/thumbsdown"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:clickable="true"
+            android:onClick="onThumbsDownClicked"
+            android:src="@drawable/thumbsdown"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="74dp"
+            tools:layout_editor_absoluteY="284dp" />
+
+        <ImageView
+            android:id="@+id/comment"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:clickable="true"
+            android:onClick="onCommentClicked"
+            android:src="@drawable/comment"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="151dp"
+            tools:layout_editor_absoluteY="284dp" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navcomm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:menu="@layout/bottom_nav_comm"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/postprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            app:layout_constraintEnd_toStartOf="@+id/addfriend"
+            app:layout_constraintStart_toEndOf="@+id/friendprofile"
+            tools:layout_editor_absoluteY="34dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
