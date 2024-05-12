@@ -1,7 +1,9 @@
 package com.example.foodhub;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
     private EditText emailEditText;
+
     private EditText passwordEditText;
 
     @Override
@@ -96,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if ("Login successful".equals(responseData.trim())) {
+                            // After a successful login
+                            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                            myEdit.putString("email", emailEditText.getText().toString()); // 'email' is the key, and the user's email is the value
+                            myEdit.commit();
+                            String storedEmail = sharedPreferences.getString("email", "");
+                            Log.d("MainActivity", "Stored email: " + storedEmail);
+
                             // If authentication successful, move to the next activity
                             startActivity(new Intent(MainActivity.this, homepage.class));
                             finish(); // Finish current activity
