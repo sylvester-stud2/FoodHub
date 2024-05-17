@@ -1,11 +1,8 @@
 package com.example.foodhub;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,18 +48,18 @@ public class friends extends AppCompatActivity {
             }
 
             private void openMealPlanner() {
-                Intent intent = new Intent(friends.this, friends.class);
-                startActivity(intent);
+                //Intent intent = new Intent(friends.this, friends.class);
+                //startActivity(intent);
             }
 
             private void openGroceryList() {
-                Intent intent = new Intent(friends.this, friends.class);
-                startActivity(intent);
+                //Intent intent = new Intent(friends.this, friends.class);
+                //startActivity(intent);
             }
 
             private void openFilter() {
-                Intent intent = new Intent(friends.this, friends.class);
-                startActivity(intent);
+                //Intent intent = new Intent(friends.this, friends.class);
+                //startActivity(intent);
             }
 
             private void openHome() {

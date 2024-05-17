@@ -6,51 +6,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/comm">
 
-        <TextView
-            android:id="@+id/friend1name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="FindLiked"
-            android:text="FRIEND1"
-            app:layout_constraintTop_toTopOf="@+id/likes"
-            tools:layout_editor_absoluteX="155dp" />
 
         <ImageView
             android:id="@+id/friendprofile1"
             android:layout_width="99dp"
             android:layout_height="102dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="168dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile" />
+            app:srcCompat="@drawable/profile"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/friend1name"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="52dp"
+            android:onClick="FindLiked"
+            android:text="FRIEND1"
+            app:layout_constraintStart_toEndOf="@+id/friendprofile1"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="203dp" />
 
         <Button
             android:id="@+id/likes"
-            android:layout_width="wrap_content"
+            android:layout_width="93dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="68dp"
             android:text="LIKES"
             app:layout_constraintStart_toEndOf="@+id/friend1name"
-            tools:layout_editor_absoluteY="165dp" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="195dp" />
+
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navfriend"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:itemIconTint="@color/black"
-            app:itemTextColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@layout/bottom_nav_menu" />
-
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:menu="@layout/bottom_nav_menu"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="647dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
