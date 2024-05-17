@@ -96,7 +96,8 @@
             android:text="Name"
             app:layout_constraintEnd_toStartOf="@+id/addfriend"
             app:layout_constraintStart_toEndOf="@+id/friendprofile"
-            tools:layout_editor_absoluteY="34dp" />
+            tools:layout_editor_absoluteY="34dp"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
