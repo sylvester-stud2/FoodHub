@@ -146,6 +146,7 @@ public class homepage extends AppCompatActivity {
             String imgUrl = child.optString("profile_picture", "");
 
             String name = child.getString("first_name");
+
             if (imgUrl != null && !imgUrl.isEmpty()) {
                 Glide.with(this).load(imgUrl).into(profile_image);
             } else {
@@ -162,8 +163,18 @@ public class homepage extends AppCompatActivity {
     // Methods to open respective pages
     private void openProfilePage() {
         // Implement logic to open Filter page
+
+
         Intent intent = new Intent(homepage.this, Profile.class);
+
+        // Put the email as an extra in the Intent
+        intent.putExtra("email", email);
+
+        // Start the testUser activity
         startActivity(intent);
+
+        // Finish current activity
+        finish();
     }
     private void openHomePage() {
         // Already implemented to open CreateProfile page
