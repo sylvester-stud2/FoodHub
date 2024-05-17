@@ -29,6 +29,9 @@ public class Profile extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     ImageView profile_image;
     TextView name_txt;
+    TextView last_name;
+    TextView email_txt;
+
     Intent intent;
     String email;
 
@@ -46,12 +49,15 @@ public class Profile extends AppCompatActivity {
         // Initialize views
         profile_image = findViewById(R.id.profilePicture);
         name_txt = findViewById(R.id.firstName);
+        email_txt = findViewById(R.id.emailTextView); // Initialize the email text view
+        last_name = findViewById(R.id.lastNameTextView); // Initialize the last name text view
 
         // Initialize OkHttpClient
         client = new OkHttpClient();
 
         // Initialize progressDialog
         progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
 
         // Get email from intent
         intent = getIntent();
@@ -66,13 +72,6 @@ public class Profile extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set listener
-
-
-
-        // Set OnClickListener on name text
-
-
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -97,34 +96,36 @@ public class Profile extends AppCompatActivity {
         });
     }
 
-    public class GetUserDataRequest extends AsyncTask<Void, Void, Void> {
+    public class GetUserDataRequest extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.show(); // Show the ProgressDialog here
         }
 
-        protected Void doInBackground(Void... voids) {
+        @Override
+        protected String doInBackground(Void... voids) {
             // Create a form-encoded request body
             request = new Request.Builder().url(apiUrl).build();
             try {
                 response = client.newCall(request).execute();
-            } catch (IOException e){
+                return response.body().string();
+            } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
-            // Your background task logic here
-            return null;
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
-            try {
-                strJson = response.body().string();
-                updateUserData(strJson);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (result != null) {
+                updateUserData(result);
+            } else {
+                // Handle the error
+                // You might want to show a message to the user here
             }
+            progressDialog.dismiss(); // Dismiss the ProgressDialog here
         }
     }
 
@@ -134,53 +135,43 @@ public class Profile extends AppCompatActivity {
             JSONObject child = parent.getJSONObject(0);
             String imgUrl = child.optString("profile_picture", "");
 
-            String name = child.getString("first_name");
-            if (imgUrl != null && !imgUrl.isEmpty()) {
-                Glide.with(this).load(imgUrl).into(profile_image);
-            } else {
-                Glide.with(this).load(R.drawable.userhome).into(profile_image);
-            }
+            String firstName = child.getString("first_name");
+            String lastName = child.getString("last_name");
+            Glide.with(this).load(imgUrl).into(profile_image);
 
-            name_txt.setText(name);
-            progressDialog.hide();
+
+            name_txt.setText(firstName);
+            last_name.setText(lastName);
+            email_txt.setText(email);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
     // Methods to open respective pages
-    private void openProfilePage() {
-        // Implement logic to open Filter page
-        Intent intent = new Intent(Profile.this, Profile.class);
-        startActivity(intent);
-    }
     private void openHomePage() {
-        // Already implemented to open CreateProfile page
         Intent intent = new Intent(Profile.this, homepage.class);
+        intent.putExtra("email", email);
         startActivity(intent);
+        finish();
     }
 
     private void openCommunityPage() {
-        // Implement logic to open Community page
         Intent intent = new Intent(Profile.this, community.class);
         startActivity(intent);
     }
 
     private void openFilterPage() {
-        // Implement logic to open Filter page
         Intent intent = new Intent(Profile.this, dietplan.class);
         startActivity(intent);
     }
 
     private void openGroceryListPage() {
         // Implement logic to open Grocery List page
-
     }
 
     private void openMealPlannerPage() {
-        // Implement logic to open Meal Planner page
         Intent intent = new Intent(Profile.this, weekplan.class);
         startActivity(intent);
     }
-
 }
