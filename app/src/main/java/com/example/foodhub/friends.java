@@ -18,6 +18,8 @@ public class friends extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends);
+        Intent  intent = getIntent();
+        String email = intent.getStringExtra("email");
 
         // Find views by their IDs
         bottomNavigationView = findViewById(R.id.bottom_navfriend);
@@ -48,18 +50,24 @@ public class friends extends AppCompatActivity {
             }
 
             private void openMealPlanner() {
-                //Intent intent = new Intent(friends.this, friends.class);
-                //startActivity(intent);
+                Intent intent = new Intent(friends.this, weekplan.class);
+                intent.putExtra("email",email);
+                startActivity(intent);
+                finish();
             }
 
             private void openGroceryList() {
-                //Intent intent = new Intent(friends.this, friends.class);
-                //startActivity(intent);
+                Intent intent = new Intent(friends.this, Grocery.class);
+                intent.putExtra("email",email);
+                startActivity(intent);
+                finish();
             }
 
             private void openFilter() {
-                //Intent intent = new Intent(friends.this, friends.class);
-                //startActivity(intent);
+                Intent intent = new Intent(friends.this, dietplan.class);
+                intent.putExtra("email",email);
+                startActivity(intent);
+                finish();
             }
 
             private void openHome() {
@@ -70,7 +78,9 @@ public class friends extends AppCompatActivity {
 
             private void openCommunity() {
                 Intent intent = new Intent(friends.this, community.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
+                finish();
             }
         });
     }

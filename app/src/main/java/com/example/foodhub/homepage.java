@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class homepage extends AppCompatActivity {
     Intent intent;
     String email;
 
+
     private OkHttpClient client;
     private Response response;
     private Request request;
@@ -43,6 +45,14 @@ public class homepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
+        Button CreateRecipe = findViewById(R.id.add_recipe);
+        CreateRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(homepage.this, CreateRecipe.class);
+                startActivity(intent);
+            }
+        });
 
         // Initialize views
         profile_image = findViewById(R.id.profile_image_id);
@@ -171,9 +181,10 @@ public class homepage extends AppCompatActivity {
     }
 
     private void openCommunityPage() {
-        // Implement logic to open Community page
         Intent intent = new Intent(homepage.this, community.class);
+        intent.putExtra("email",email);
         startActivity(intent);
+        finish();
     }
 
     private void openFilterPage() {
