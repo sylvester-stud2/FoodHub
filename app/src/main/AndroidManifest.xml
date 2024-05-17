@@ -34,8 +34,8 @@
         <activity android:name=".weekplan"/>
         <activity android:name=".dietplan"/>
         <activity android:name=".Profile"/>
-        <activity android:name=".CreateRecipe"/>
-        <activity android:name=".Grocery"/>
+        <activity android:name=".community"/>
+        <activity android:name=".friends"/>
 
 
     </application>
