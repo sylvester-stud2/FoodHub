@@ -1,50 +1,89 @@
 package com.example.foodhub;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class homepage extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    ImageView profileImageView;
-    TextView firstNameTextView;
+    ImageView profile_image;
+    TextView name_txt;
+    Intent intent;
+    String email;
+
+    private OkHttpClient client;
+    private Response response;
+    private Request request;
+    String strJson, apiUrl;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        LinearLayout customButton = findViewById(R.id.customButton);
-        profileImageView = customButton.findViewById(R.id.imageView2); // Get the ImageView inside the custom button
-        firstNameTextView = customButton.findViewById(R.id.textView);
+        // Initialize views
+        profile_image = findViewById(R.id.profile_image_id);
+        name_txt = findViewById(R.id.NameTest);
 
+        // Initialize OkHttpClient
+        client = new OkHttpClient();
+
+        // Initialize progressDialog
+        progressDialog = new ProgressDialog(this);
+
+        // Get email from intent
+        intent = getIntent();
+        email = intent.getStringExtra("email");
+
+        // Construct API URL
+        apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/ProfileAndName.php?email=" + email;
+
+        // Execute AsyncTask to fetch user data
+        new GetUserDataRequest().execute();
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set listener
+
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProfilePage();
+            }
+        });
+
+        // Set OnClickListener on name text
+        name_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProfilePage();
+            }
+        });
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -67,104 +106,68 @@ public class homepage extends AppCompatActivity {
                 return false;
             }
         });
-
-       SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
-        Log.d("MainActivity", "Retrieved email: " + email);
-        new FetchUserProfileTask(email).execute("https://lamp.ms.wits.ac.za/home/s2709514/ProfileAndName.php");
-
     }
 
-    // AsyncTask to fetch user profile data
-    private class FetchUserProfileTask extends AsyncTask<String, Void, JSONObject> {
-
-        private String email;
-
-        public FetchUserProfileTask(String email) {
-            this.email = email;
-
-            // Log the value
-            Log.d("FetchUserProfileTask", "Email: " + email);
+    public class GetUserDataRequest extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show(); // Show the ProgressDialog here
         }
 
-        @Override
-        protected JSONObject doInBackground(String... strings) {
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            StringBuilder result = new StringBuilder();
-
+        protected Void doInBackground(Void... voids) {
+            // Create a form-encoded request body
+            request = new Request.Builder().url(apiUrl).build();
             try {
-                // Modify your URL to include the email as a parameter
-                URL url = new URL(strings[0] + "?email=" + URLEncoder.encode(email, "UTF-8"));
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-
-                // Read the response
-                reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    result.append(line).append("\n");
-                }
-
-                // Parse JSON response
-                return new JSONObject(result.toString());
-            } catch (IOException | JSONException e) {
+                response = client.newCall(request).execute();
+            } catch (IOException e){
                 e.printStackTrace();
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
+            // Your background task logic here
             return null;
         }
 
         @Override
-        protected void onPostExecute(JSONObject jsonObject) {
-            super.onPostExecute(jsonObject);
-
-            if (jsonObject != null) {
-                // Log the entire JSON response
-                Log.d("FetchUserProfileTask", "JSON Response: " + jsonObject.toString());
-
-                // Assuming the JSON structure is like {"profile_picture": "URL", "first_name": "Name"}
-                String profilePictureUrl = jsonObject.optString("profile_picture");
-                String firstName = jsonObject.optString("first_name");
-
-                // Log the first name
-                Log.d("FetchUserProfileTask", "First Name: " + firstName);
-
-                // Load profile picture into ImageView using Picasso
-                if (!TextUtils.isEmpty(profilePictureUrl)) {
-                    // Load profile picture into ImageView using Picasso
-                    Picasso.get().load(profilePictureUrl).into(profileImageView);
-                } else {
-                    Log.d("FetchUserProfileTask", "Profile picture URL is empty or null");
-                }
-
-                // Check if firstNameTextView is initialized
-                if (firstNameTextView != null) {
-                    // Set first name into TextView
-                    firstNameTextView.setText(firstName);
-                } else {
-                    Log.d("FetchUserProfileTask", "firstNameTextView is not initialized");
-                }
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            try {
+                strJson = response.body().string();
+                updateUserData(strJson);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
+    }
 
+    private void updateUserData(String strJson) {
+        try {
+            JSONArray parent = new JSONArray(strJson);
+            JSONObject child = parent.getJSONObject(0);
+            String imgUrl = child.optString("profile_picture", "");
 
+            String name = child.getString("first_name");
+            if (imgUrl != null && !imgUrl.isEmpty()) {
+                Glide.with(this).load(imgUrl).into(profile_image);
+            } else {
+                Glide.with(this).load(R.drawable.userhome).into(profile_image);
+            }
+
+            name_txt.setText(name);
+            progressDialog.hide();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Methods to open respective pages
+    private void openProfilePage() {
+        // Implement logic to open Filter page
+        Intent intent = new Intent(homepage.this, Profile.class);
+        startActivity(intent);
+    }
     private void openHomePage() {
         // Already implemented to open CreateProfile page
-        Intent intent = new Intent(homepage.this, CreateProfile.class);
+        Intent intent = new Intent(homepage.this, homepage.class);
         startActivity(intent);
     }
 
@@ -183,4 +186,5 @@ public class homepage extends AppCompatActivity {
     private void openMealPlannerPage() {
         // Implement logic to open Meal Planner page
     }
+
 }
