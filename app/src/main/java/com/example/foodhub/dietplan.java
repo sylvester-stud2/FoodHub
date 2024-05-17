@@ -67,8 +67,8 @@ public class dietplan extends AppCompatActivity {
 
     private void openGroceryListPage() {
         // Implement logic to open Grocery List page
-        Intent intent = new Intent(dietplan.this, CreateProfile.class);
-        startActivity(intent);
+//        Intent intent = new Intent(dietplan.this, CreateProfile.class);
+//        startActivity(intent);
     }
 
     private void openFriendsPage() {
