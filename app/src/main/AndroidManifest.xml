@@ -29,6 +29,8 @@
         <activity android:name=".CreateProfile"/>
         <activity android:name=".homepage"/>
         <activity android:name=".Profile"/>
+        <activity android:name=".CreateRecipe"/>
+        <activity android:name=".Grocery"/>
 
     </application>
 
