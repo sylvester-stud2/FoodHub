@@ -7,5 +7,8 @@
     <color name="blue">#46A0E8</color>
     <color name="green">#64E846</color>
     <color name="smoke">#EBEBEB</color>
+    <color name="text_color">#333333</color>
+    <color name="accent_color">#4CAF50</color>
+
 
 </resources>
