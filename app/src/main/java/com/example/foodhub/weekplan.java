@@ -11,12 +11,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class weekplan extends AppCompatActivity {
 
+
     BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.diet_plan);
+        setContentView(R.layout.weekplan);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -66,6 +67,7 @@ public class weekplan extends AppCompatActivity {
     }
 
     private void openGroceryListPage() {
+
         // Implement logic to open Grocery List page
         Intent intent = new Intent(weekplan.this, CreateProfile.class);
         startActivity(intent);
