@@ -198,7 +198,8 @@ public class homepage extends AppCompatActivity {
     private void openGroceryListPage() {
         // Implement logic to open Grocery List page
 
-        Intent intent = new Intent(homepage.this, Profile.class);
+        Intent intent = new Intent(homepage.this, Grocery.class);
+        startActivity(intent);
 
     }
 
