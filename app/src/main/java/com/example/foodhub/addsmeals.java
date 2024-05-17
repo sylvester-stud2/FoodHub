@@ -1,5 +1,6 @@
 package com.example.foodhub;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,15 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class homepage extends AppCompatActivity {
+public class addsmeals extends AppCompatActivity {
     Intent intent;
     String email;
     BottomNavigationView bottomNavigationView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.homepage);
+        setContentView(R.layout.addsmeals);
         intent=getIntent();
         email=intent.getStringExtra("email");
 
@@ -52,20 +54,20 @@ public class homepage extends AppCompatActivity {
     // Methods to open respective pages
     private void openHomePage() {
 
-        Intent intent = new Intent(homepage.this, CreateProfile.class);
+        Intent intent = new Intent(addsmeals.this, CreateProfile.class);
         startActivity(intent);
     }
 
     private void openCommunityPage() {
         // Implement logic to open Community page
-        Intent intent = new Intent(homepage.this, community.class);
+        Intent intent = new Intent(addsmeals.this, community.class);
         startActivity(intent);
 
     }
 
     private void openFilterPage() {
         // Implement logic to open Filter page
-        Intent intent = new Intent(homepage.this, dietplan.class);
+        Intent intent = new Intent(addsmeals.this, dietplan.class);
         startActivity(intent);
     }
 
@@ -76,9 +78,10 @@ public class homepage extends AppCompatActivity {
 
     private void openMealPlannerPage() {
         // Implement logic to open Meal Planner page
-        Intent intent = new Intent(homepage.this, weekplan.class);
+        Intent intent = new Intent(addsmeals.this, weekplan.class);
         intent.putExtra("email",email);
         startActivity(intent);
         finish();
     }
 }
+

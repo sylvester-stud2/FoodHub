@@ -1,739 +1,691 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/page2">
-
+    tools:context=".weekplan">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/textView"
-                android:text="WEEKLY PLANNER"
-                android:textColor="#FFFFFF"
-                tools:layout_editor_absoluteX="10dp"
-                tools:layout_editor_absoluteY="20dp"
-                tools:ignore="MissingConstraints" />
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/monday_title"
                     android:text="Monday"
-                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="4dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Breakfast"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="0dp"
+                <!-- Breakfast section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp"
+                    android:padding="6dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lunch"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
+                    <EditText
+                        android:id="@+id/breakfast_monday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:hint="Breakfast"
+                        android:background="#FFFFFF"
+                        android:padding="6dp" />
 
+                    <Button
+                        android:id="@+id/add_meal_breakfast_monday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Meal"
+                        android:textColor="#FFFFFF"
+                        android:background="#222222"
+                        android:padding="6dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:layout_width="0dp"
+                <!-- Lunch section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Supper"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp"
+                    android:padding="6dp">
 
+                    <EditText
+                        android:id="@+id/lunch_monday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:background="#FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:hint="Lunch"
+                        android:padding="6dp" />
+
+                    <Button
+                        android:id="@+id/add_meal_lunch_monday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Meal"
+                        android:textColor="#FFFFFF"
+                        android:background="#222222"
+                        android:padding="6dp" />
+                </LinearLayout>
+
+                <!-- Dinner section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp"
+                    android:textColor="#FFFFFF"
+                    android:padding="6dp">
+
+                    <EditText
+                        android:id="@+id/dinner_monday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:background="#FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:hint="Dinner"
+                        android:padding="6dp" />
+
+                    <Button
+                        android:id="@+id/add_meal_dinner_monday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Meal"
+                        android:textColor="#FFFFFF"
+                        android:background="#222222"
+                        android:padding="6dp" />
+                </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tuesday_title"
                 android:text="Tuesday"
-                android:gravity="center"
-                android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="4dp"
-                tools:ignore="MissingConstraints" />
+                android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
 
-                <TextView
+                <EditText
+                    android:id="@+id/breakfast_tuesday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Breakfast"
-                    android:gravity="center"
                     android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
+                    android:textColor="#000000"
+                    android:hint="Breakfast"
+                    android:background="#FFFFFF"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
 
-                <TextView
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/add_meal_breakfast_tuesday"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
+                    android:text="Add Meal"
                     android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
+                    android:background="#222222"
+                    android:padding="6dp" />
             </LinearLayout>
+
+            <!-- Lunch section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
 
-                <TextView
+                <EditText
+                    android:id="@+id/lunch_tuesday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Lunch"
-                    android:gravity="center"
                     android:textStyle="bold"
+                    android:background="#FFFFFF"
                     android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
+                    android:hint="Lunch"
+                    android:padding="6dp" />
 
-
-                <TextView
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/add_meal_lunch_tuesday"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
+                    android:text="Add Meal"
                     android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
+                    android:background="#222222"
+                    android:padding="6dp" />
             </LinearLayout>
+
+            <!-- Dinner section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Supper"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/wednesday_title"
-                android:text="Wednesday"
-                android:gravity="center"
-                android:textStyle="bold"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
                 android:textColor="#FFFFFF"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="4dp"
-                tools:ignore="MissingConstraints" />
+                android:padding="6dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
+                <EditText
+                    android:id="@+id/dinner_tuesday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Breakfast"
-                    android:gravity="center"
                     android:textStyle="bold"
+                    android:background="#FFFFFF"
                     android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-                <TextView
-                    android:layout_width="0dp"
+                    android:hint="Dinner"
+                    android:padding="6dp" />
+
+                <Button
+                    android:id="@+id/add_meal_dinner_tuesday"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
+                    android:text="Add Meal"
                     android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
+                    android:background="#222222"
+                    android:padding="6dp" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lunch"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wednesday"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:padding="6dp">
 
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Supper"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/thursday_title"
-                android:text="Thursday"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="4dp"
-                tools:ignore="MissingConstraints" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Breakfast"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lunch"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Supper"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/friday_title"
-                android:text="Friday"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="4dp"
-                tools:ignore="MissingConstraints" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Breakfast"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lunch"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Supper"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/saturday_title"
-                android:text="Saturday"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="4dp"
-                tools:ignore="MissingConstraints" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Breakfast"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lunch"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Supper"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sunday_title"
-                android:text="Sunday"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="4dp"
-                tools:ignore="MissingConstraints" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Breakfast"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lunch"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Supper"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="16dp"
-                    tools:ignore="MissingConstraints" />
-
-            </LinearLayout>
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation"
+            <EditText
+                android:id="@+id/breakfast_wednesday"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:itemIconTint="@color/blue"
-                app:itemTextColor="@color/blue"
-                app:labelVisibilityMode="labeled"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@layout/bottom_nav_weekplan" />
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:hint="Breakfast"
+                android:background="#FFFFFF"
+                android:padding="6dp" />
+
+            <Button
+                android:id="@+id/add_meal_breakfast_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Meal"
+                android:textColor="#FFFFFF"
+                android:background="#222222"
+                android:padding="6dp" />
         </LinearLayout>
 
+        <!-- Lunch section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:padding="6dp">
+
+            <EditText
+                android:id="@+id/lunch_wednesday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:background="#FFFFFF"
+                android:textColor="#FFFFFF"
+                android:hint="Lunch"
+                android:padding="6dp" />
+
+            <Button
+                android:id="@+id/add_meal_lunch_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Meal"
+                android:textColor="#FFFFFF"
+                android:background="#222222"
+                android:padding="6dp" />
+        </LinearLayout>
+
+        <!-- Dinner section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:textColor="#FFFFFF"
+            android:padding="6dp">
+
+            <EditText
+                android:id="@+id/dinner_wednesday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:background="#FFFFFF"
+                android:textColor="#FFFFFF"
+                android:hint="Dinner"
+                android:padding="6dp" />
+
+            <Button
+                android:id="@+id/add_meal_dinner_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Meal"
+                android:textColor="#FFFFFF"
+                android:background="#222222"
+                android:padding="6dp" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thursday"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/breakfast_thursday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:hint="Breakfast"
+                    android:background="#FFFFFF"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+
+                <Button
+                    android:id="@+id/add_meal_breakfast_thursday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+            </LinearLayout>
+
+            <!-- Lunch section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/lunch_thursday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:background="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:hint="Lunch"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+
+                <Button
+                    android:id="@+id/add_meal_lunch_thursday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+            </LinearLayout>
+
+            <!-- Dinner section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:textColor="#FFFFFF"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/add_meal_dinner_thursday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:background="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:hint="Dinner"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+
+                <Button
+                    android:id="@+id/add_meal_dinner_thursday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Friday"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/breakfast_friday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:hint="Breakfast"
+                    android:background="#FFFFFF"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+
+                <Button
+                    android:id="@+id/add_meal_breakfast_friday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+            <!-- Lunch section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/lunch_friday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:background="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:hint="Lunch"
+                    android:padding="6dp" />
+
+                <Button
+                    android:id="@+id/add_meal_lunch_friday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+            <!-- Dinner section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:textColor="#FFFFFF"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/add_meal_dinner_friday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:background="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:hint="Dinner"
+                    android:padding="6dp" />
+
+                <Button
+                    android:id="@+id/add_meal_dinner_friday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saturday"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/breakfast_saturday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:hint="Breakfast"
+                    android:background="#FFFFFF"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+
+                <Button
+                    android:id="@+id/add_meal_breakfast_saturday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+            <!-- Lunch section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/lunch_saturday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:background="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:hint="Lunch"
+                    android:padding="6dp" />
+
+                <Button
+                    android:id="@+id/add_meal_lunch_saturday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+            <!-- Dinner section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:textColor="#FFFFFF"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/add_meal_dinner_saturday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:background="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:hint="Dinner"
+                    android:padding="6dp" />
+
+                <Button
+                    android:id="@+id/add_meal_dinner_saturday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunday"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/breakfast_sunday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:hint="Breakfast"
+                    android:background="#FFFFFF"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+
+                <Button
+                    android:id="@+id/add_meal_breakfast_sunday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+            <!-- Lunch section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/lunch_sunday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:background="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:hint="Lunch"
+                    android:padding="6dp" />
+
+                <Button
+                    android:id="@+id/add_meal_lunch_sunday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+            <!-- Dinner section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:textColor="#FFFFFF"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/add_meal_dinner_sunday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:background="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:hint="Dinner"
+                    android:padding="6dp" />
+
+                <Button
+                    android:id="@+id/add_meal_dinner_sunday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Meal"
+                    android:textColor="#FFFFFF"
+                    android:background="#222222"
+                    android:padding="6dp"
+                    tools:ignore="DuplicateIds" />
+            </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
