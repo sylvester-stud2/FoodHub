@@ -1,13 +1,16 @@
 package com.example.foodhub;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.OutputStream;
@@ -17,10 +20,23 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class CreateProfile extends AppCompatActivity {
 
     private EditText firstNameEditText, lastNameEditText, emailEditText, passwordEditText, reEnterPasswordEditText;
+    ImageView profile_image;
+    TextView name_txt;
+    Intent intent;
+    String email;
 
+    private OkHttpClient client;
+    private Response response;
+    private Request request;
+    String strJson, apiUrl;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,22 +66,26 @@ public class CreateProfile extends AppCompatActivity {
                 String password = passwordEditText.getText().toString();
                 String reEnterPassword = reEnterPasswordEditText.getText().toString();
 
-                if (!password.equals(reEnterPassword)) {
+                if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || reEnterPassword.isEmpty()) {
+                    Toast.makeText(CreateProfile.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+                } else if (!password.equals(reEnterPassword)) {
                     Toast.makeText(CreateProfile.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                 } else {
                     new SignUpTask().execute(firstName, lastName, email, password);
                 }
             }
         });
+
+
     }
 
     private class SignUpTask extends AsyncTask<String, Void, Integer> {
-
+        private String email;
         @Override
         protected Integer doInBackground(String... params) {
             String firstName = params[0];
             String lastName = params[1];
-            String email = params[2];
+            email = params[2];
             String password = params[3];
 
             try {
@@ -103,16 +123,21 @@ public class CreateProfile extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer responseCode) {
-            if (responseCode != null && responseCode == 200) {
+            if (responseCode != null && responseCode == 200 ) {
                 Toast.makeText(CreateProfile.this, "Sign up successful", Toast.LENGTH_SHORT).show();
 
                 // Create an Intent to start the homepage activity
                 Intent intent = new Intent(CreateProfile.this, homepage.class);
+                intent.putExtra("email", email);  // Use the field here
                 startActivity(intent);
 
                 // Close the CreateProfile activity
                 finish();
-            } else {
+            }else if (responseCode != null && responseCode == 409) {
+                // Email already exists, show error message
+                Toast.makeText(CreateProfile.this, "Email already exists", Toast.LENGTH_SHORT).show();
+            }
+            else {
                 Toast.makeText(CreateProfile.this, "Sign up failed", Toast.LENGTH_SHORT).show();
             }
         }
