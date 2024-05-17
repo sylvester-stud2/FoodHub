@@ -28,7 +28,13 @@
         </activity>
         <activity android:name=".CreateProfile"/>
         <activity android:name=".homepage"/>
+
+        <activity android:name=".friends" />
+        <activity android:name=".community" />
+        <activity android:name=".weekplan"/>
+        <activity android:name=".dietplan"/>
         <activity android:name=".Profile"/>
+
 
     </application>
 

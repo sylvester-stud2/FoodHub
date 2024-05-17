@@ -173,18 +173,25 @@ public class homepage extends AppCompatActivity {
 
     private void openCommunityPage() {
         // Implement logic to open Community page
+        Intent intent = new Intent(homepage.this, community.class);
+        startActivity(intent);
     }
 
     private void openFilterPage() {
         // Implement logic to open Filter page
+        Intent intent = new Intent(homepage.this, dietplan.class);
+        startActivity(intent);
     }
 
     private void openGroceryListPage() {
         // Implement logic to open Grocery List page
+
     }
 
     private void openMealPlannerPage() {
         // Implement logic to open Meal Planner page
+        Intent intent = new Intent(homepage.this, weekplan.class);
+        startActivity(intent);
     }
 
 }
