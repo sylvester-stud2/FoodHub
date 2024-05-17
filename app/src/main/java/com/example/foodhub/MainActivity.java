@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
     private EditText emailEditText;
+
     private EditText passwordEditText;
 
     @Override
@@ -96,14 +97,25 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if ("Login successful".equals(responseData.trim())) {
-                            // If authentication successful, move to the next activity
-                            startActivity(new Intent(MainActivity.this, homepage.class));
-                            finish(); // Finish current activity
+                            // After a successful login
+
+                            // Create an Intent to start the testUser activity
+                            Intent intent = new Intent(MainActivity.this, homepage.class);
+
+                            // Put the email as an extra in the Intent
+                            intent.putExtra("email", email);
+
+                            // Start the testUser activity
+                            startActivity(intent);
+
+                            // Finish current activity
+                            finish();
                         } else {
                             // If authentication failed, show error message
                             Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                         }
                     }
+
                 });
             }
 
@@ -112,55 +124,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
-
-
-//ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//        Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//        v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//        return insets;
-//        });
-
-
-
-
-//
-//        username = findViewById(R.id.username);
-//        password = findViewById(R.id.password);
-//
-//
-//        Button btn = findViewById(R.id.btn1);
-//        Button btno = findViewById(R.id.btn2);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//
-//            public void onClick(View v){
-//
-//                if(username.getText().toString().equals("user") && password.getText().toString().equals("1234")){
-//                    Toast.makeText(MainActivity.this,"Login Successful!",Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(MainActivity.this, homepage.class);
-//                    startActivity(intent);
-//                }
-//                else{
-//                    Toast.makeText(MainActivity.this,"Login Failed!",Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//
-//                }
-//
-//
-//
-//            }
-//
-//        });
-//
-//        btno.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, CreateProfile.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-
-
 
