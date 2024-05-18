@@ -20,6 +20,6 @@
     <item
         android:id="@+id/friends"
         android:icon="@drawable/friends"
-        android:title="weekplan" />
+        android:title="Friends" />
 
 </menu>

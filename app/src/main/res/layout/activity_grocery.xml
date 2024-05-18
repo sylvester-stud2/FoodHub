@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".Grocery">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,6 +14,7 @@
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,63 +23,60 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="500dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Grocery List"
                 android:textSize="24sp"
-                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:background="@color/blue"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
-
-            <LinearLayout
+            <Spinner
+                android:id="@+id/day_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="16dp" />
 
-                <ListView
-                    android:id="@+id/list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/header"
-                    android:layout_marginTop="-3dp" />
-            </LinearLayout>
-            <LinearLayout
+            <EditText
+                android:id="@+id/meal_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:hint="Enter meal"
+                android:layout_margin="16dp" />
 
-            </LinearLayout>
-            <LinearLayout
+            <Button
+                android:id="@+id/add_meal_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Meal"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp" />
+
+            <ListView
+                android:id="@+id/meals_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="16dp" />
 
+            <Button
+                android:id="@+id/generate_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Generate Grocery List"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:onClick="generateGroceryList" />
 
-
-            </LinearLayout>
-            <LinearLayout
+            <TextView
+                android:id="@+id/grocery_list_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:itemIconTint="@color/blue"
-                app:itemTextColor="@color/blue"
-                app:labelVisibilityMode="labeled"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@layout/bottom_nav_weekplan" />
+                android:text="Grocery List"
+                android:layout_margin="16dp" />
         </LinearLayout>
-
     </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
@@ -91,7 +88,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@layout/bottom_nav_weekplan"
-        tools:ignore="DuplicateIds" />
-
+        app:menu="@layout/bottom_nav_weekplan" />
 </androidx.constraintlayout.widget.ConstraintLayout>
