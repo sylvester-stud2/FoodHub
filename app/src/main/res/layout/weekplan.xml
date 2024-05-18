@@ -719,18 +719,7 @@
                     tools:ignore="MissingConstraints" />
 
             </LinearLayout>
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:itemIconTint="@color/blue"
-                app:itemTextColor="@color/blue"
-                app:labelVisibilityMode="labeled"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@layout/bottom_nav_weekplan" />
+
         </LinearLayout>
 
     </ScrollView>
@@ -741,11 +730,10 @@
         android:layout_gravity="bottom"
         app:itemIconTint="@color/blue"
         app:itemTextColor="@color/blue"
-        app:labelVisibilityMode="labeled"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@layout/bottom_nav_weekplan"
-        tools:ignore="DuplicateIds" />
+        app:menu="@layout/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

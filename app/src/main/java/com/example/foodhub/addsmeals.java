@@ -1,5 +1,6 @@
 package com.example.foodhub;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,21 +10,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class weekplan extends AppCompatActivity {
+public class addsmeals extends AppCompatActivity {
     Intent intent;
     String email;
-
-
     BottomNavigationView bottomNavigationView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.weekplan);
+        setContentView(R.layout.addsmeals);
+        intent=getIntent();
+        email=intent.getStringExtra("email");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        intent = getIntent();
-        email = intent.getStringExtra("email");
 
         // Set listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -41,71 +41,45 @@ public class weekplan extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.grocery_list) {
                     openGroceryListPage();
                     return true;
-                } else if (item.getItemId() == R.id.friends) {
-                    openFriendsPage();
+                } else if (item.getItemId() == R.id.meal_planner) {
+                    openMealPlannerPage();
                     return true;
                 }
                 return false;
             }
-
-
         });
-        if (savedInstanceState != null) {
-            int selectedItemId = savedInstanceState.getInt("selectedItemId", R.id.filter);
-            bottomNavigationView.setSelectedItemId(selectedItemId);
-        }
 
-    }
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // Save the selected item ID
-        outState.putInt("selectedItemId", bottomNavigationView.getSelectedItemId());
     }
 
     // Methods to open respective pages
     private void openHomePage() {
 
-        Intent intent = new Intent(weekplan.this, homepage.class);
-        intent.putExtra("email", email);
-        overridePendingTransition(0, 0);
+        Intent intent = new Intent(addsmeals.this, CreateProfile.class);
         startActivity(intent);
-        finish();
     }
 
     private void openCommunityPage() {
         // Implement logic to open Community page
-        Intent intent = new Intent(weekplan.this, community.class);
-        intent.putExtra("email", email);
-        overridePendingTransition(0, 0);
+        Intent intent = new Intent(addsmeals.this, community.class);
         startActivity(intent);
-        finish();
+
     }
 
     private void openFilterPage() {
         // Implement logic to open Filter page
-        Intent intent = new Intent(weekplan.this, dietplan.class);
-        intent.putExtra("email", email);
-        overridePendingTransition(0, 0);
+        Intent intent = new Intent(addsmeals.this, dietplan.class);
         startActivity(intent);
-        finish();
     }
 
     private void openGroceryListPage() {
-
         // Implement logic to open Grocery List page
-        Intent intent = new Intent(weekplan.this, homepage.class);
-        intent.putExtra("email", email);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
+
     }
 
-    private void openFriendsPage() {
+    private void openMealPlannerPage() {
         // Implement logic to open Meal Planner page
-        Intent intent = new Intent(weekplan.this, homepage.class);
-        intent.putExtra("email", email);
-        overridePendingTransition(0, 0);
+        Intent intent = new Intent(addsmeals.this, weekplan.class);
+        intent.putExtra("email",email);
         startActivity(intent);
         finish();
     }
