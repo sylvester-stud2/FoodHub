@@ -14,14 +14,6 @@
 
         <!-- User Profile Section -->
         <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/userhome"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-        <ImageView
             android:id="@+id/profile_image_id"
             android:layout_width="50dp"
             android:layout_height="50dp"

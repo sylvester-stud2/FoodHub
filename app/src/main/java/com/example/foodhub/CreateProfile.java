@@ -10,14 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 
 public class CreateProfile extends AppCompatActivity {
 
@@ -82,14 +81,6 @@ public class CreateProfile extends AppCompatActivity {
             String password = params[3];
 
             try {
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-                StringBuilder sb = new StringBuilder();
-                for (byte b : hashedPassword) {
-                    sb.append(String.format("%02x", b));
-                }
-                password = sb.toString();
-
                 URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/ADD.php");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
@@ -112,6 +103,7 @@ public class CreateProfile extends AppCompatActivity {
 
             return null;
         }
+
 
         @Override
         protected void onPostExecute(Integer responseCode) {
