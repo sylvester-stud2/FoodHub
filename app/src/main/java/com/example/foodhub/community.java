@@ -23,10 +23,10 @@ public class community extends AppCompatActivity {
             setContentView(R.layout.community);
 
             // Find views by their IDs
-            //ImageView thumbsUpImageView = findViewById(R.id.thumbsup);
-            //ImageView thumbsDownImageView = findViewById(R.id.thumbsdown);
-            //ImageView commentImageView = findViewById(R.id.comment);
-            //@SuppressLint("WrongViewCast") ImageView addfriendImageView = findViewById(R.id.addfriend);
+            ImageView thumbsUpImageView = findViewById(R.id.thumbsup);
+            ImageView thumbsDownImageView = findViewById(R.id.thumbsdown);
+            ImageView commentImageView = findViewById(R.id.comment);
+            @SuppressLint("WrongViewCast") ImageView addfriendImageView = findViewById(R.id.addfriend);
             bottomNavigationView = findViewById(R.id.bottom_navcomm);
 
             // Set click listeners for the buttons or icons
@@ -55,18 +55,18 @@ public class community extends AppCompatActivity {
                 }
 
                 private void openMealPlanner() {
-                    // Intent intent = new Intent(community.this, friends.class);
-                    // startActivity(intent);
+                    Intent intent = new Intent(community.this, friends.class);
+                    startActivity(intent);
                 }
 
                 private void openGroceryList() {
-                    // Intent intent = new Intent(community.this, friends.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(community.this, friends.class);
+                    startActivity(intent);
                 }
 
                 private void openFilter() {
-                    //Intent intent = new Intent(community.this, friends.class);
-                    // startActivity(intent);
+                    Intent intent = new Intent(community.this, friends.class);
+                    startActivity(intent);
                 }
 
                 private void openHome() {
@@ -81,5 +81,60 @@ public class community extends AppCompatActivity {
                 }
             });
 
+
+
+            thumbsUpImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Handle thumbs up icon click
+                    onThumbsUpClicked();
+                }
+            });
+
+            thumbsDownImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Handle thumbs down icon click
+                    onThumbsDownClicked();
+                }
+            });
+
+            commentImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Handle comment icon click
+                    onCommentClicked();
+                }
+            });
+            
+            addfriendImageView.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    onAddFriendClicked();
+                }
+            });
+
+            // Add more click listeners for other buttons or icons as needed
+        }
+        
+
+        public void onAddFriendClicked() {
+        }
+
+        // Method to handle thumbs up icon click
+        public void onThumbsUpClicked() {
+            // Implement your logic here
+            // For example, update the thumbs up count or perform some other action
+        }
+
+        // Method to handle thumbs down icon click
+        public void onThumbsDownClicked() {
+            // Implement your logic here
+            // For example, update the thumbs down count or perform some other action
+        }
+
+        // Method to handle comment icon click
+        public void onCommentClicked() {
+            // Implement your logic here
+            // For example, open a comment activity or perform some other action
         }
 }
