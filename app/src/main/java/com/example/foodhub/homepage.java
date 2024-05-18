@@ -27,12 +27,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class homepage extends AppCompatActivity {
-
+    Intent intent;
+    String email;
     BottomNavigationView bottomNavigationView;
     ImageView profile_image;
     TextView name_txt;
-    Intent intent;
-    String email;
+
 
     private OkHttpClient client;
     private Response response;
@@ -44,6 +44,8 @@ public class homepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
+        intent=getIntent();
+        email=intent.getStringExtra("email");
 
         Button CreateRecipe = findViewById(R.id.add_recipe);
         CreateRecipe.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +182,7 @@ public class homepage extends AppCompatActivity {
     private void openCommunityPage() {
         Intent intent = new Intent(homepage.this, community.class);
         startActivity(intent);
+
     }
 
     private void openFilterPage() {
@@ -193,6 +196,8 @@ public class homepage extends AppCompatActivity {
 
     private void openMealPlannerPage() {
         Intent intent = new Intent(homepage.this, weekplan.class);
+        intent.putExtra("email",email);
         startActivity(intent);
+        finish();
     }
 }
