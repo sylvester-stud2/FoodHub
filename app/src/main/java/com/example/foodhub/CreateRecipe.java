@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateRecipe extends AppCompatActivity {
+    Intent intent;
+    String email;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final String[] PREDEFINED_INGREDIENTS = {
@@ -42,6 +44,8 @@ public class CreateRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        intent = getIntent();
+        email = intent.getStringExtra("email");
 
         ingredientsLayout = findViewById(R.id.ingredientsLayout);
         uploadImageButton = findViewById(R.id.uploadImageButton);
@@ -71,23 +75,35 @@ public class CreateRecipe extends AppCompatActivity {
                 int itemId = item.getItemId();
                 if (itemId == R.id.home) {
                     // Handle home navigation
-                    Toast.makeText(CreateRecipe.this, "Home selected", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CreateRecipe.this, homepage.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+                    finish();
                     return true;
                 } else if (itemId == R.id.community) {
                     // Handle community navigation
-                    Toast.makeText(CreateRecipe.this, "Community selected", Toast.LENGTH_SHORT).show();
-                    return true;
+                    Intent intent = new Intent(CreateRecipe.this, community.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+                    finish();return true;
                 } else if (itemId == R.id.filter) {
                     // Handle filter navigation
-                    Toast.makeText(CreateRecipe.this, "Filter selected", Toast.LENGTH_SHORT).show();
-                    return true;
+                    Intent intent = new Intent(CreateRecipe.this, dietplan.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+                    finish();return true;
                 } else if (itemId == R.id.grocery_list) {
                     // Handle grocery list navigation
-                    Toast.makeText(CreateRecipe.this, "Grocery List selected", Toast.LENGTH_SHORT).show();
-                    return true;
+                    Intent intent = new Intent(CreateRecipe.this, homepage.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+                    finish();return true;
                 } else if (itemId == R.id.meal_planner) {
                     // Handle meal planner navigation
-                    Toast.makeText(CreateRecipe.this, "Meal Plan selected", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CreateRecipe.this, weekplan.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+                    finish();
                     return true;
                 }
                 return false;

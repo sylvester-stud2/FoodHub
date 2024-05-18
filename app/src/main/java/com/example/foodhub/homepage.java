@@ -50,7 +50,9 @@ public class homepage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(homepage.this, CreateRecipe.class);
+                intent.putExtra("email", email);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -169,6 +171,7 @@ public class homepage extends AppCompatActivity {
     private void openProfilePage() {
         Intent intent = new Intent(homepage.this, Profile.class);
         intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
@@ -179,12 +182,18 @@ public class homepage extends AppCompatActivity {
 
     private void openCommunityPage() {
         Intent intent = new Intent(homepage.this, community.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
         startActivity(intent);
+        finish();
     }
 
     private void openFilterPage() {
         Intent intent = new Intent(homepage.this, dietplan.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
         startActivity(intent);
+        finish();
     }
 
     private void openGroceryListPage() {
@@ -193,6 +202,9 @@ public class homepage extends AppCompatActivity {
 
     private void openMealPlannerPage() {
         Intent intent = new Intent(homepage.this, weekplan.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
         startActivity(intent);
+        finish();
     }
 }
