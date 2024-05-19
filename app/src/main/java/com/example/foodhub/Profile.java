@@ -157,13 +157,15 @@ public class Profile extends AppCompatActivity {
     }
 
     private void openCommunityPage() {
-        Intent intent = new Intent(Profile.this, community.class);
-        startActivity(intent);
+//        Intent intent = new Intent(Profile.this, community.class);
+//        startActivity(intent);
     }
 
     private void openFilterPage() {
         Intent intent = new Intent(Profile.this, dietplan.class);
+        intent.putExtra("email", email);
         startActivity(intent);
+        finish();
     }
 
     private void openGroceryListPage() {
@@ -172,6 +174,8 @@ public class Profile extends AppCompatActivity {
 
     private void openMealPlannerPage() {
         Intent intent = new Intent(Profile.this, weekplan.class);
+        intent.putExtra("email", email);
         startActivity(intent);
+        finish();
     }
 }
