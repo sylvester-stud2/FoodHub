@@ -114,7 +114,7 @@
     <EditText
         android:id="@+id/diet_item_input"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:hint="Enter diet item"
         android:textColor="#FFFFFF"

@@ -9,50 +9,55 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/comm">
-
-        <TextView
-            android:id="@+id/friend1name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="FindLiked"
-            android:text="FRIEND1"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="144dp"
-            tools:layout_editor_absoluteY="112dp" />
 
         <ImageView
             android:id="@+id/friendprofile1"
             android:layout_width="99dp"
             android:layout_height="102dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="72dp"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="84dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/friend1name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:onClick="FindLiked"
+            android:text="FRIEND1"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintStart_toEndOf="@id/friendprofile1"
+            app:layout_constraintTop_toTopOf="@id/friendprofile1"
+            app:layout_constraintBottom_toBottomOf="@id/friendprofile1" />
 
         <Button
             android:id="@+id/likes1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:backgroundTint="@color/black"
             android:text="LIKES"
-            tools:ignore="DuplicateIds,MissingConstraints"
-            tools:layout_editor_absoluteX="307dp"
-            tools:layout_editor_absoluteY="98dp" />
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/friend1name"
+            app:layout_constraintStart_toEndOf="@id/friend1name"
+            app:layout_constraintTop_toTopOf="@id/friend1name"
+            app:layout_constraintVertical_bias="0.535" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navfriend"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:menu="@layout/bottom_nav_menu"
-            app:itemIconTint="@color/black"
-            app:itemTextColor="@color/black"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@layout/bottom_nav_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

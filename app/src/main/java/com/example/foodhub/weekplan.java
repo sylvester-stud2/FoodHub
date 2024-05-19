@@ -8,6 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class weekplan extends AppCompatActivity {
     Intent intent;
@@ -15,6 +26,7 @@ public class weekplan extends AppCompatActivity {
 
 
     BottomNavigationView bottomNavigationView;
+    private static List<String> weeklyMeals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +37,8 @@ public class weekplan extends AppCompatActivity {
         intent = getIntent();
         email = intent.getStringExtra("email");
 
+        // Initialize the weekly meals
+        initializeWeeklyMeals();
         // Set listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -50,6 +64,19 @@ public class weekplan extends AppCompatActivity {
 
         });
 
+    }
+
+    // Initialize weekly meals
+    private void initializeWeeklyMeals() {
+        weeklyMeals = new ArrayList<>();
+        weeklyMeals.add("Spaghetti");
+        weeklyMeals.add("Tacos");
+        weeklyMeals.add("Chicken Salad");
+        // Add more meals as needed
+    }
+
+    public static List<String> getWeeklyMeals() {
+        return weeklyMeals;
     }
 
     // Methods to open respective pages
