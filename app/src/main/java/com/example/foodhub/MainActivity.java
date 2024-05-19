@@ -22,11 +22,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
-
 public class MainActivity extends AppCompatActivity {
 
-    // Updated OkHttpClient initialization with timeout
     private OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
@@ -34,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
     private EditText emailEditText;
-
     private EditText passwordEditText;
 
     @Override
@@ -46,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         Button loginButton = findViewById(R.id.login);
         Button create = findViewById(R.id.create);
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,19 +62,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void authenticateUser(String email, String password) {
-        // Formulate the request body
         RequestBody requestBody = new FormBody.Builder()
                 .add("email", email)
                 .add("password", password)
                 .build();
 
-        // Create the request
         Request request = new Request.Builder()
                 .url("https://lamp.ms.wits.ac.za/home/s2709514/USERS.php")
                 .post(requestBody)
                 .build();
 
-        // Execute the request asynchronously
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -90,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
-
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 final String responseData = response.body().string();
@@ -98,31 +91,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if ("Login successful".equals(responseData.trim())) {
-                            // After a successful login
-
-                            // Create an Intent to start the testUser activity
                             Intent intent = new Intent(MainActivity.this, homepage.class);
-
-                            // Put the email as an extra in the Intent
                             intent.putExtra("email", email);
-
-                            // Start the testUser activity
                             startActivity(intent);
-
-                            // Finish current activity
                             finish();
                         } else {
-                            // If authentication failed, show error message
                             Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                 });
             }
-
         });
     }
-
-
 }
-

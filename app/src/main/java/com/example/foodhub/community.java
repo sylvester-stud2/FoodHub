@@ -21,14 +21,9 @@ public class community extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.community);
-            Intent  intent = getIntent();
+            Intent intent = getIntent();
             String email = intent.getStringExtra("email");
 
-            // Find views by their IDs
-            //ImageView thumbsUpImageView = findViewById(R.id.thumbsup);
-            //ImageView thumbsDownImageView = findViewById(R.id.thumbsdown);
-            //ImageView commentImageView = findViewById(R.id.comment);
-            //@SuppressLint("WrongViewCast") ImageView addfriendImageView = findViewById(R.id.addfriend);
             bottomNavigationView = findViewById(R.id.bottom_navcomm);
 
             // Set click listeners for the buttons or icons
@@ -64,7 +59,7 @@ public class community extends AppCompatActivity {
                 }
 
                 private void openGroceryList() {
-                    Intent intent = new Intent(community.this, Grocery.class);
+                    Intent intent = new Intent(community.this, addsmeals.class);
                     intent.putExtra("email",email);
                     startActivity(intent);
                     finish();
@@ -82,6 +77,7 @@ public class community extends AppCompatActivity {
                     intent.putExtra("email",email);
                     startActivity(intent);
                     finish();
+
                 }
 
                 private void openFriends() {
@@ -91,6 +87,5 @@ public class community extends AppCompatActivity {
                     finish();
                 }
             });
-
         }
 }

@@ -9,20 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class CreateProfile extends AppCompatActivity {
 
@@ -32,11 +26,8 @@ public class CreateProfile extends AppCompatActivity {
     Intent intent;
     String email;
 
-    private OkHttpClient client;
-    private Response response;
-    private Request request;
-    String strJson, apiUrl;
     private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +41,7 @@ public class CreateProfile extends AppCompatActivity {
 
         Button signUpButton = findViewById(R.id.tohomepage);
         Button backToLogin = findViewById(R.id.back);
+
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +49,7 @@ public class CreateProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,12 +68,11 @@ public class CreateProfile extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     private class SignUpTask extends AsyncTask<String, Void, Integer> {
         private String email;
+
         @Override
         protected Integer doInBackground(String... params) {
             String firstName = params[0];
@@ -89,14 +81,6 @@ public class CreateProfile extends AppCompatActivity {
             String password = params[3];
 
             try {
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-                StringBuilder sb = new StringBuilder();
-                for (byte b : hashedPassword) {
-                    sb.append(String.format("%02x", b));
-                }
-                password = sb.toString();
-
                 URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/ADD.php");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
@@ -123,24 +107,17 @@ public class CreateProfile extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer responseCode) {
-            if (responseCode != null && responseCode == 200 ) {
+            if (responseCode != null && responseCode == 200) {
                 Toast.makeText(CreateProfile.this, "Sign up successful", Toast.LENGTH_SHORT).show();
-
-                // Create an Intent to start the homepage activity
                 Intent intent = new Intent(CreateProfile.this, homepage.class);
-                intent.putExtra("email", email);  // Use the field here
+                intent.putExtra("email", email);
                 startActivity(intent);
-
-                // Close the CreateProfile activity
                 finish();
-            }else if (responseCode != null && responseCode == 409) {
-                // Email already exists, show error message
+            } else if (responseCode != null && responseCode == 409) {
                 Toast.makeText(CreateProfile.this, "Email already exists", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 Toast.makeText(CreateProfile.this, "Sign up failed", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 }

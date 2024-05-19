@@ -6,27 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/page1"
-    tools:ignore="ExtraText">
+    tools:context=".dietplan">
 
     <TextView
         android:id="@+id/dietary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Dietary Preference and Health Goals:"
+        android:text="@string/dietary_preference_and_health_goals"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="80dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/allergicLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:orientation="horizontal"
         android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dietary">
 
@@ -38,9 +38,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Allergy-conscious"
+            android:text="@string/allergy_conscious"
             android:textColor="#FFFFFF" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -62,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vegetarian"
+            android:text="@string/vegetarian"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
@@ -112,6 +111,19 @@
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/diet_item_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Enter diet item"
+        android:textColor="#FFFFFF"
+        android:background="#00000000"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout4" />
+
     <Button
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
@@ -121,6 +133,18 @@
         android:layout_marginBottom="16dp"
         android:text="Add"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/diet_item_input"
+        app:layout_constraintBottom_toTopOf="@id/diet_items_list" />
+
+    <ListView
+        android:id="@+id/diet_items_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_button"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -130,10 +154,10 @@
         android:layout_gravity="bottom"
         app:itemIconTint="@color/blue"
         app:itemTextColor="@color/blue"
-        app:labelVisibilityMode="labeled"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@layout/bottom_nav_menu" />
+        app:menu="@layout/bottom_nav_dietplan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
