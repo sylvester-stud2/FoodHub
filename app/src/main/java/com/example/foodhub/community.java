@@ -21,12 +21,9 @@ public class community extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.community);
+            Intent intent = getIntent();
+            String email = intent.getStringExtra("email");
 
-            // Find views by their IDs
-            ImageView thumbsUpImageView = findViewById(R.id.thumbsup);
-            ImageView thumbsDownImageView = findViewById(R.id.thumbsdown);
-            ImageView commentImageView = findViewById(R.id.comment);
-            @SuppressLint("WrongViewCast") ImageView addfriendImageView = findViewById(R.id.addfriend);
             bottomNavigationView = findViewById(R.id.bottom_navcomm);
 
             // Set click listeners for the buttons or icons
@@ -55,86 +52,40 @@ public class community extends AppCompatActivity {
                 }
 
                 private void openMealPlanner() {
-                    Intent intent = new Intent(community.this, friends.class);
+                    Intent intent = new Intent(community.this, weekplan.class);
+                    intent.putExtra("email",email);
                     startActivity(intent);
+                    finish();
                 }
 
                 private void openGroceryList() {
-                    Intent intent = new Intent(community.this, friends.class);
+                    Intent intent = new Intent(community.this, addsmeals.class);
+                    intent.putExtra("email",email);
                     startActivity(intent);
+                    finish();
                 }
 
                 private void openFilter() {
-                    Intent intent = new Intent(community.this, friends.class);
+                    Intent intent = new Intent(community.this, dietplan.class);
+                    intent.putExtra("email",email);
                     startActivity(intent);
+                    finish();
                 }
 
                 private void openHome() {
                     Intent intent = new Intent(community.this, homepage.class);
+                    intent.putExtra("email",email);
                     startActivity(intent);
+                    finish();
 
                 }
 
                 private void openFriends() {
                     Intent intent = new Intent(community.this, friends.class);
+                    intent.putExtra("email",email);
                     startActivity(intent);
+                    finish();
                 }
             });
-
-
-
-            thumbsUpImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Handle thumbs up icon click
-                    onThumbsUpClicked();
-                }
-            });
-
-            thumbsDownImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Handle thumbs down icon click
-                    onThumbsDownClicked();
-                }
-            });
-
-            commentImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Handle comment icon click
-                    onCommentClicked();
-                }
-            });
-            
-            addfriendImageView.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    onAddFriendClicked();
-                }
-            });
-
-            // Add more click listeners for other buttons or icons as needed
-        }
-        
-
-        public void onAddFriendClicked() {
-        }
-
-        // Method to handle thumbs up icon click
-        public void onThumbsUpClicked() {
-            // Implement your logic here
-            // For example, update the thumbs up count or perform some other action
-        }
-
-        // Method to handle thumbs down icon click
-        public void onThumbsDownClicked() {
-            // Implement your logic here
-            // For example, update the thumbs down count or perform some other action
-        }
-
-        // Method to handle comment icon click
-        public void onCommentClicked() {
-            // Implement your logic here
-            // For example, open a comment activity or perform some other action
         }
 }

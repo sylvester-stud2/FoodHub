@@ -1,11 +1,8 @@
 package com.example.foodhub;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +18,8 @@ public class friends extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends);
+        Intent  intent = getIntent();
+        String email = intent.getStringExtra("email");
 
         // Find views by their IDs
         bottomNavigationView = findViewById(R.id.bottom_navfriend);
@@ -51,29 +50,39 @@ public class friends extends AppCompatActivity {
             }
 
             private void openMealPlanner() {
-                Intent intent = new Intent(friends.this, friends.class);
+                Intent intent = new Intent(friends.this, weekplan.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
+                finish();
             }
 
             private void openGroceryList() {
-                Intent intent = new Intent(friends.this, friends.class);
+                Intent intent = new Intent(friends.this, addsmeals.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
+                finish();
             }
 
             private void openFilter() {
-                Intent intent = new Intent(friends.this, friends.class);
+                Intent intent = new Intent(friends.this, dietplan.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
+                finish();
             }
 
             private void openHome() {
                 Intent intent = new Intent(friends.this, homepage.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
+                finish();
 
             }
 
             private void openCommunity() {
                 Intent intent = new Intent(friends.this, community.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
+                finish();
             }
         });
     }

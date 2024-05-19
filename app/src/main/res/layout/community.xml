@@ -9,73 +9,94 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/cookingcomm">
+        android:layout_height="wrap_content"
+        android:background="@drawable/communitycook">
 
         <ImageView
             android:id="@+id/friendprofile"
             android:layout_width="70dp"
             android:layout_height="75dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="28dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/postprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/friendprofile"
+            app:layout_constraintBottom_toBottomOf="@id/friendprofile" />
 
         <Button
             android:id="@+id/addfriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="204dp"
-            android:text="Make Friend"
-            app:layout_constraintStart_toEndOf="@+id/friendprofile"
-            tools:ignore="MissingConstraints"
+            android:layout_marginStart="104dp"
+            android:layout_marginTop="16dp"
             android:onClick="AddFriendonClick"
-            tools:layout_editor_absoluteY="16dp" />
+            android:text="Make Friend"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/friendprofile"
+            app:layout_constraintStart_toEndOf="@id/postprofile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.589" />
 
         <TextView
             android:id="@+id/post"
-            android:layout_width="412dp"
-            android:layout_height="178dp"
-            android:onClick="AddPostonClick"
+            android:layout_width="371dp"
+            android:layout_height="216dp"
+            android:layout_marginTop="56dp"
             android:text="Post Recipe"
             android:textSize="40dp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="-1dp"
-            tools:layout_editor_absoluteY="90dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/friendprofile" />
 
         <ImageView
             android:id="@+id/thumbsup"
             android:layout_width="49dp"
             android:layout_height="49dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:onClick="onThumbsUpClicked"
             android:src="@drawable/thumbsup"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="284dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/post" />
 
         <ImageView
             android:id="@+id/thumbsdown"
             android:layout_width="49dp"
             android:layout_height="49dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:clickable="true"
             android:onClick="onThumbsDownClicked"
             android:src="@drawable/thumbsdown"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="74dp"
-            tools:layout_editor_absoluteY="284dp" />
+            app:layout_constraintStart_toEndOf="@id/thumbsup"
+            app:layout_constraintTop_toBottomOf="@id/post" />
 
         <ImageView
             android:id="@+id/comment"
             android:layout_width="49dp"
             android:layout_height="49dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:onClick="onCommentClicked"
             android:src="@drawable/comment"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="151dp"
-            tools:layout_editor_absoluteY="284dp" />
+            app:layout_constraintStart_toEndOf="@id/thumbsdown"
+            app:layout_constraintTop_toBottomOf="@id/post" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navcomm"
@@ -83,21 +104,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:menu="@layout/bottom_nav_comm"
-            app:itemIconTint="@color/black"
-            app:itemTextColor="@color/black"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/postprofile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            app:layout_constraintEnd_toStartOf="@+id/addfriend"
-            app:layout_constraintStart_toEndOf="@+id/friendprofile"
-            tools:layout_editor_absoluteY="34dp"
-            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
