@@ -57,7 +57,7 @@ public class friends extends AppCompatActivity {
             }
 
             private void openGroceryList() {
-                Intent intent = new Intent(friends.this, Grocery.class);
+                Intent intent = new Intent(friends.this, addsmeals.class);
                 intent.putExtra("email",email);
                 startActivity(intent);
                 finish();
@@ -72,7 +72,9 @@ public class friends extends AppCompatActivity {
 
             private void openHome() {
                 Intent intent = new Intent(friends.this, homepage.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
+                finish();
 
             }
 
