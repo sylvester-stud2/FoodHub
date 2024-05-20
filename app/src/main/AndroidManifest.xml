@@ -35,7 +35,7 @@
         <activity android:name=".addsmeals"/>
 
         <activity android:name=".Profile"/>
-<!--        <activity android:name=".Grocery"/>-->
+        <activity android:name=".Grocery"/>
 
 
         <activity android:name=".CreateRecipe"/>

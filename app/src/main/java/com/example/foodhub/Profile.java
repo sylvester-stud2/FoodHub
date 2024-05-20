@@ -167,7 +167,8 @@ public class Profile extends AppCompatActivity {
     }
 
     private void openGroceryListPage() {
-        // Implement logic to open Grocery List page
+        Intent intent = new Intent(Profile.this, Grocery.class);
+        startActivity(intent);
     }
 
     private void openMealPlannerPage() {

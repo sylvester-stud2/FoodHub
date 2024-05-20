@@ -197,7 +197,11 @@ public class homepage extends AppCompatActivity {
     }
 
     private void openGroceryListPage() {
-        // Implement logic to open Grocery List page
+        Intent intent = new Intent(homepage.this, Grocery.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
     }
 
     private void openMealPlannerPage() {

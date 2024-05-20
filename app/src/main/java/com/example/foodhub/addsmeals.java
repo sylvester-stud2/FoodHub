@@ -73,6 +73,8 @@ public class addsmeals extends AppCompatActivity {
 
     private void openGroceryListPage() {
         // Implement logic to open Grocery List page
+        Intent intent = new Intent(addsmeals.this, Grocery.class);
+        startActivity(intent);
 
     }
 

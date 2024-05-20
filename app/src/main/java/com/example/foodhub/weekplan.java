@@ -121,7 +121,7 @@ public class weekplan extends AppCompatActivity {
     private void openGroceryListPage() {
 
         // Implement logic to open Grocery List page
-        Intent intent = new Intent(weekplan.this, homepage.class);
+        Intent intent = new Intent(weekplan.this, Grocery.class);
         intent.putExtra("email", email);
         overridePendingTransition(0, 0);
         startActivity(intent);
