@@ -94,7 +94,7 @@ public class CreateRecipe extends AppCompatActivity {
                     finish();return true;
                 } else if (itemId == R.id.grocery_list) {
                     // Handle grocery list navigation
-                    Intent intent = new Intent(CreateRecipe.this, homepage.class);
+                    Intent intent = new Intent(CreateRecipe.this, Grocery.class);
                     intent.putExtra("email", email);
                     startActivity(intent);
                     finish();return true;

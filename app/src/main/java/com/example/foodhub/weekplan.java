@@ -8,14 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,11 +83,11 @@ public class weekplan extends AppCompatActivity {
 
     private void openCommunityPage() {
         // Implement logic to open Community page
-//        Intent intent = new Intent(weekplan.this, community.class);
-//        intent.putExtra("email", email);
-//        overridePendingTransition(0, 0);
-//        startActivity(intent);
-//        finish();
+        Intent intent = new Intent(weekplan.this, community.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
     }
 
     private void openFilterPage() {
@@ -109,12 +101,12 @@ public class weekplan extends AppCompatActivity {
 
     private void openGroceryListPage() {
 
-        // Implement logic to open Grocery List page
-//        Intent intent = new Intent(weekplan.this, homepage.class);
-//        intent.putExtra("email", email);
-//        overridePendingTransition(0, 0);
-//        startActivity(intent);
-//        finish();
+
+        Intent intent = new Intent(weekplan.this, Grocery.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
     }
 
     private void openMealPlannerPage() {

@@ -157,8 +157,10 @@ public class Profile extends AppCompatActivity {
     }
 
     private void openCommunityPage() {
-//        Intent intent = new Intent(Profile.this, community.class);
-//        startActivity(intent);
+        Intent intent = new Intent(Profile.this, community.class);
+        intent.putExtra("email",email);
+        startActivity(intent);
+        finish();
     }
 
     private void openFilterPage() {
@@ -169,7 +171,10 @@ public class Profile extends AppCompatActivity {
     }
 
     private void openGroceryListPage() {
-        // Implement logic to open Grocery List page
+        Intent intent = new Intent(Profile.this, Grocery.class);
+        intent.putExtra("email", email);
+        startActivity(intent);
+        finish();
     }
 
     private void openMealPlannerPage() {

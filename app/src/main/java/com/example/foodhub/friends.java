@@ -57,7 +57,7 @@ public class friends extends AppCompatActivity {
             }
 
             private void openGroceryList() {
-                Intent intent = new Intent(friends.this, addsmeals.class);
+                Intent intent = new Intent(friends.this, Grocery.class);
                 intent.putExtra("email",email);
                 startActivity(intent);
                 finish();
