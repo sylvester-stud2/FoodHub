@@ -172,9 +172,11 @@ public class Profile extends AppCompatActivity {
 
     private void openGroceryListPage() {
         Intent intent = new Intent(Profile.this, Grocery.class);
+
         intent.putExtra("email", email);
         startActivity(intent);
         finish();
+
     }
 
     private void openMealPlannerPage() {

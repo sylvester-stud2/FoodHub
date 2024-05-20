@@ -101,7 +101,6 @@ public class weekplan extends AppCompatActivity {
 
     private void openGroceryListPage() {
 
-
         Intent intent = new Intent(weekplan.this, Grocery.class);
         intent.putExtra("email", email);
         overridePendingTransition(0, 0);

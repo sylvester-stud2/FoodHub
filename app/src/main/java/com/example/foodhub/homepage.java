@@ -200,7 +200,10 @@ public class homepage extends AppCompatActivity {
 
     private void openGroceryListPage() {
         Intent intent = new Intent(homepage.this, Grocery.class);
-        intent.putExtra("email",email);
+
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
+
         startActivity(intent);
         finish();
     }

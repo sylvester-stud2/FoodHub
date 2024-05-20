@@ -161,10 +161,12 @@ public class dietplan extends AppCompatActivity {
     }
 
     private void openGroceryListPage() {
+
         Intent intent = new Intent(dietplan.this,Grocery.class);
         intent.putExtra("email", email);
         startActivity(intent);
         finish();
+
     }
 
     private void openFriendsPage() {

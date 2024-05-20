@@ -59,7 +59,7 @@ public class community extends AppCompatActivity {
                 }
 
                 private void openGroceryList() {
-                    Intent intent = new Intent(community.this, addsmeals.class);
+                    Intent intent = new Intent(community.this, Grocery.class);
                     intent.putExtra("email",email);
                     startActivity(intent);
                     finish();
