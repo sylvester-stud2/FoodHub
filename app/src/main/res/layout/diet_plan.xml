@@ -5,12 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/page1"
+    android:background="@drawable/filterback"
     tools:context=".dietplan">
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,10 +45,14 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+
                     android:layout_height="wrap_content"
                     android:text="Water"
-                    android:textColor="#FFFFFF" />
+
+                    android:textColor="#E91E63" />
             </LinearLayout>
 
             <LinearLayout
@@ -64,10 +69,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Baby tomatoes"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
 
             <LinearLayout
@@ -84,10 +91,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Vinegar"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
 
             <LinearLayout
@@ -104,10 +113,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Salt"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
 
             <LinearLayout
@@ -125,10 +136,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Soy milk"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,10 +158,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Flour"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
 
             <LinearLayout
@@ -165,10 +180,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Olive oil"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout8"
@@ -184,10 +201,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Brown sugar"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout9"
@@ -203,10 +222,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Rice"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout10"
@@ -222,10 +243,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Nuts"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout11"
@@ -241,10 +264,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Grains"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout12"
@@ -260,10 +285,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Honey"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout13"
@@ -279,10 +306,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Seeds"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout14"
@@ -298,10 +327,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Broccoli"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout15"
@@ -317,10 +348,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Carrots"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout16"
@@ -336,10 +369,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Garlic"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout17"
@@ -355,10 +390,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Onions"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout18"
@@ -374,10 +411,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Herbs"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout19"
@@ -393,10 +432,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Lemon"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout20"
@@ -412,10 +453,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
-                    android:text="Spices(tumeric,paprika)"
-                    android:textColor="#FFFFFF" />
+                    android:text="Spices"
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout21"
@@ -431,10 +474,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Soy sauce"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout22"
@@ -450,10 +495,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Cauliflower"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout23"
@@ -469,10 +516,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Avocado"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout24"
@@ -488,10 +537,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Mushrooms"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout25"
@@ -507,10 +558,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Spinach"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout26"
@@ -526,10 +579,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Cocoa pwder"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout27"
@@ -545,10 +600,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Cinnamon"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout28"
@@ -564,10 +621,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Banana"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout29"
@@ -583,10 +642,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Oats"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout30"
@@ -602,10 +663,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Dozen eggs"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#E91E63" />
             </LinearLayout>
 
         </LinearLayout>
@@ -621,6 +684,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@layout/bottom_nav_dietplan" />
+        app:menu="@layout/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
