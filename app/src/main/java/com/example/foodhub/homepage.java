@@ -178,10 +178,11 @@ public class homepage extends AppCompatActivity {
 
     private void openHomePage() {
         // Already implemented to open CreateProfile page
+
     }
 
     private void openCommunityPage() {
-        Intent intent = new Intent(homepage.this, community.class);
+        Intent intent = new Intent(homepage.this,community.class);
         intent.putExtra("email", email);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -189,17 +190,20 @@ public class homepage extends AppCompatActivity {
     }
 
     private void openFilterPage() {
-        Intent intent = new Intent(homepage.this, dietplan.class);
+        Intent intent = new Intent(homepage.this,dietplan.class);
         intent.putExtra("email", email);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
+
     }
 
     private void openGroceryListPage() {
         Intent intent = new Intent(homepage.this, Grocery.class);
+
         intent.putExtra("email", email);
         overridePendingTransition(0, 0);
+
         startActivity(intent);
         finish();
     }
