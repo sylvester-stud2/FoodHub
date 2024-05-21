@@ -66,6 +66,11 @@ public class Grocery extends AppCompatActivity {
 
     private void openHomePage() {
         // Already implemented to open CreateProfile page
+        Intent intent = new Intent(Grocery.this,homepage.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
 
     }
 
