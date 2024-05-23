@@ -30,7 +30,7 @@ public class CreateRecipe extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final String[] PREDEFINED_INGREDIENTS = {
-            "Apples", "Avocadoe", "Bacon", "Baking powder", "Banana", "Beans", "Beef", "Beetroot", "Berries", "Bread", "Brocolli", "Butter", "Butternut", "Carrot", "Cereal", "Cheese", "Chicken", "Cinnanon", "Cream", "Eggs", "Fish", "Flour", "Garlic", "Honey", "Lettuce", "Lemon", "Maize neal", "Mayonaise", "Milk", "Mushroons", "Oats", "Oil", "Onion", "Parsley", "Pasta", "Pepper", "Potatoes", "Rice", "Salt", "Soup powder", "Spinach", "Steak", "Sugar", "Tomato sauce", "Tomatoe", "Vanilla essence", "Vinegar", "Water", "Yeast", "Yogurt", "Stock (beef/chicken)"
+            "Apples", "Avocado", "Bacon", "Baking powder", "Banana", "Beans", "Beef", "Beetroot", "Berries", "Bread", "Broccoli", "Butter", "Butternut", "Carrot", "Cereal", "Cheese", "Chicken", "Cinnamon", "Cream", "Eggs", "Fish", "Flour", "Garlic", "Honey", "Lettuce", "Lemon", "Maize meal", "Mayonnaise", "Milk", "Mushrooms", "Oats", "Oil", "Onion", "Parsley", "Pasta", "Pepper", "Potatoes", "Rice", "Salt", "Soup powder", "Spinach", "Steak", "Sugar", "Tomato sauce", "Tomato", "Vanilla essence", "Vinegar", "Water", "Yeast", "Yogurt", "Stock (beef/chicken)"
     };
 
     private LinearLayout ingredientsLayout;
