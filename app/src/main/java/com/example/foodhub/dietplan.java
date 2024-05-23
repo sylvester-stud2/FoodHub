@@ -81,20 +81,14 @@ public class dietplan extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.grocery_list) {
                     openGroceryListPage();
                     return true;
-                } else if (item.getItemId() == R.id.friends) {
-                    openFriendsPage();
+                } else if (item.getItemId() == R.id.meal_planner) {
+                    openMealPage();
                     return true;
                 }
                 return false;
             }
         });
 
-        // Set up check recipe button
-//        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button checkRecipeButton = findViewById(R.id.check_recipe_button);
-//        checkRecipeButton.setOnClickListener(v -> {
-//            List<String> recipeIngredients = Arrays.asList("Water", "Baby tomatoes", "Vinegar", "Salt");
-//            checkIngredientsForRecipe(recipeIngredients);
-//        });
     }
 
     private void setupCheckBox(int checkBoxId, String ingredient) {
@@ -169,8 +163,8 @@ public class dietplan extends AppCompatActivity {
 
     }
 
-    private void openFriendsPage() {
-        Intent intent = new Intent(dietplan.this, friends.class);
+    private void openMealPage() {
+        Intent intent = new Intent(dietplan.this, weekplan.class);
         intent.putExtra("email", email);
         startActivity(intent);
         finish();

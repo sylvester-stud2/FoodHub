@@ -38,6 +38,8 @@ android {
 
 dependencies {
     implementation ("com.google.android.material:material:1.4.0")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.android.volley:volley:1.2.1")
