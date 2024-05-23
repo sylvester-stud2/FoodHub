@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".ChangeProfile">
     <Button
         android:id="@+id/back"
+        android:paddingTop="10dp"
         android:layout_width="60dp"
         android:layout_height="30dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/blue"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:drawableLeft="@drawable/back"
-        android:paddingTop="10dp"
         android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:backgroundTint="@color/blue"
 
-    <LinearLayout
-        android:id="@+id/linear_layout"
-        android:layout_width="match_parent"
+         />
+
+    <Button
+        android:id="@+id/btnSelect"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/back">
+        android:text="Select Image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
 
-        <Button
-            android:id="@+id/uploadImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Upload Image +"
-            android:layout_marginBottom="16dp"/>
+    <ImageView
+        android:id="@+id/imagePreview"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_below="@id/btnSelect"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:scaleType="centerCrop"/>
 
-        <!-- Image Preview -->
-        <ImageView
-            android:id="@+id/imagePreview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Submit Profile"/>
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Image"
+        android:layout_below="@id/imagePreview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

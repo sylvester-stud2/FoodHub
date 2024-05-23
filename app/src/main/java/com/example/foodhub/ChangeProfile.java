@@ -2,9 +2,9 @@ package com.example.foodhub;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,11 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,10 +28,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ChangeProfile extends AppCompatActivity {
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private ImageView imageView;
+
+    private static final int PICK_IMAGE_REQUEST = 101;
+
+    private static final String SERVER_URL = "https://lamp.ms.wits.ac.za/home/s2709514/USERppUp.php";
+
+    private Button btnSelect, btnUpload;
+    private ImageView imagePreview;
     private Uri imageUri;
-    private OkHttpClient client;
     private String email;
 
     @Override
@@ -40,100 +43,98 @@ public class ChangeProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.changeprofile);
 
-        // Get email from Intent
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
-        Button backToLogin = findViewById(R.id.back);
 
-        backToLogin.setOnClickListener(v -> {
-            Intent backIntent = new Intent(ChangeProfile.this, Profile.class);
-            backIntent.putExtra("email", email);
-            startActivity(backIntent);
-            finish();
+        btnSelect = findViewById(R.id.btnSelect);
+        btnUpload = findViewById(R.id.btnUpload);
+        imagePreview = findViewById(R.id.imagePreview);
+
+        btnSelect.setOnClickListener(v -> openFileChooser());
+        btnUpload.setOnClickListener(v -> uploadImage());
+
+        Button backToProfile = findViewById(R.id.back);
+
+
+        backToProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChangeProfile.this, Profile.class);
+                intent.putExtra("email",email);
+                startActivity(intent);
+                finish();
+            }
         });
 
-        imageView = findViewById(R.id.imagePreview);
-        Button selectImageButton = findViewById(R.id.uploadImageButton);
-        Button uploadImageButton = findViewById(R.id.submitButton);
-        client = new OkHttpClient();
-
-        selectImageButton.setOnClickListener(v -> openImagePicker());
-        uploadImageButton.setOnClickListener(v -> uploadProfilePicture());
     }
 
-    private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    private void openFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
+                InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                imagePreview.setImageBitmap(bitmap);
+                imagePreview.setVisibility(ImageView.VISIBLE);
+                btnUpload.setVisibility(Button.VISIBLE);
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void uploadProfilePicture() {
+    private void uploadImage() {
         if (imageUri == null) {
-            Toast.makeText(this, "Please select an image first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        OkHttpClient client = new OkHttpClient();
+
         try {
             InputStream inputStream = getContentResolver().openInputStream(imageUri);
-            byte[] imageBytes = readBytes(inputStream);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            byte[] imageBytes = bos.toByteArray();
 
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
+                    .addFormDataPart("image", "image.jpg", RequestBody.create(MediaType.parse("image/*"), imageBytes))
                     .addFormDataPart("email", email)
-                    .addFormDataPart("profile_picture", "profile_picture.jpg",
-                            RequestBody.create(MediaType.parse("image/jpeg"), imageBytes))
                     .build();
 
             Request request = new Request.Builder()
-                    .url("https://lamp.ms.wits.ac.za/home/s2709514/ChangeProfile.php")
+                    .url(SERVER_URL)
                     .post(requestBody)
                     .build();
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    runOnUiThread(() -> Toast.makeText(ChangeProfile.this, "Network error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                    runOnUiThread(() -> Toast.makeText(ChangeProfile.this, "Failed to upload image", Toast.LENGTH_SHORT).show());
                 }
 
                 @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    final String responseBody = response.body().string();
-                    runOnUiThread(() -> {
-                        Toast.makeText(ChangeProfile.this, responseBody, Toast.LENGTH_SHORT).show();
-                        if (response.isSuccessful()) {
-                            Toast.makeText(ChangeProfile.this, "Profile picture updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(ChangeProfile.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        runOnUiThread(() -> Toast.makeText(ChangeProfile.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show());
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(ChangeProfile.this, "Failed to upload image", Toast.LENGTH_SHORT).show());
+                    }
                 }
             });
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Failed to read image", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private byte[] readBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            byteArrayOutputStream.write(buffer, 0, bytesRead);
-        }
-        return byteArrayOutputStream.toByteArray();
     }
 }
