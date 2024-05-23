@@ -35,16 +35,19 @@
                 android:src="@drawable/boy"
                 app:shapeAppearanceOverlay="@style/circularImageView" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/changeProfilePictureButton"
+            <Button
+                android:id="@+id/uploadImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="220dp"
-                android:src="@drawable/plus"
-                app:backgroundTint="@color/blue"
-                app:layout_constraintBottom_toBottomOf="@id/profilePicture"
-                app:layout_constraintEnd_toEndOf="@id/profilePicture" />
+                android:layout_weight="1"
+                android:backgroundTint="@color/blue"
+                android:text="+"
+                android:textSize="40dp" />
+
+
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ import okhttp3.Response;
 
 public class Profile extends AppCompatActivity {
 
+
     BottomNavigationView bottomNavigationView;
     ImageView profile_image;
     TextView name_txt;
@@ -34,6 +37,7 @@ public class Profile extends AppCompatActivity {
 
     Intent intent;
     String email;
+    Button ChangeProfilePicture;
 
     private OkHttpClient client;
     private Response response;
@@ -51,6 +55,20 @@ public class Profile extends AppCompatActivity {
         name_txt = findViewById(R.id.firstName);
         email_txt = findViewById(R.id.emailTextView); // Initialize the email text view
         last_name = findViewById(R.id.lastNameTextView); // Initialize the last name text view
+        ChangeProfilePicture = findViewById(R.id.uploadImageButton);
+
+        ChangeProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, ChangeProfile.class);
+                intent.putExtra("email", email);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+
 
         // Initialize OkHttpClient
         client = new OkHttpClient();
