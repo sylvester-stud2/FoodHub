@@ -106,10 +106,10 @@ public class Grocery extends AppCompatActivity {
     }
 
     private void openGroceryListPage() {
-        Intent intent = new Intent(Grocery.this, Grocery.class);
-        intent.putExtra("user_id", userId);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(Grocery.this, Grocery.class);
+//        intent.putExtra("user_id", userId);
+//        startActivity(intent);
+//        finish();
     }
 
     private void openMealPlannerPage() {

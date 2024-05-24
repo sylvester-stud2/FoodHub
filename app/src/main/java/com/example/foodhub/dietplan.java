@@ -162,8 +162,8 @@ public class dietplan extends AppCompatActivity {
     }
 
     private void openFilterPage() {
-//        Intent intent = new Intent(dietplan.this, filter.class);
-//        intent.putExtra("email", email);
+//        Intent intent = new Intent(dietplan.this, dietplan.class);
+//        intent.putExtra("user_id", userId);
 //        startActivity(intent);
 //        finish();
     }
