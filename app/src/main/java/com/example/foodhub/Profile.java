@@ -7,12 +7,36 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,12 +57,38 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import android.app.AlertDialog;
+import android.os.AsyncTask;
+import android.os.Bundle;
+
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 public class Profile extends AppCompatActivity {
+    private AlertDialog dialog;
 
     BottomNavigationView bottomNavigationView;
     ImageView profile_image;
     EditText name_txt;
+    Button changePasswordButton;
+    Button deleteAccountButton;
     EditText last_name;
     EditText email_txt;
     Button saveChangesButton;
@@ -59,6 +109,8 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+        changePasswordButton = findViewById(R.id.changePasswordButton);
+        deleteAccountButton = findViewById(R.id.deleteProfileButton);
 
         // Initialize views
         profile_image = findViewById(R.id.profilePicture);
@@ -138,6 +190,21 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateUserInfo();
+            }
+        });
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Call method to change password
+                changePassword();
+            }
+        });
+
+        deleteAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Call method to delete account
+                deleteAccount(email);
             }
         });
     }
@@ -258,6 +325,172 @@ public class Profile extends AppCompatActivity {
             }
         }
     }
+
+    private class ChangePasswordTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String email = params[0];
+            String oldPassword = params[1];
+            String newPassword = params[2];
+
+            OkHttpClient client = new OkHttpClient();
+
+            // Define the request body with email, old password, and new password
+            RequestBody requestBody = new FormBody.Builder()
+                    .add("email", email)
+                    .add("old_password", oldPassword)
+                    .add("new_password", newPassword)
+                    .build();
+
+            // Define the request
+            Request request = new Request.Builder()
+                    .url("https://lamp.ms.wits.ac.za/home/s2709514/change_password.php") // Replace with your actual URL
+                    .post(requestBody)
+                    .build();
+
+            try {
+                // Execute the request
+                Response response = client.newCall(request).execute();
+                String responseBody = response.body().string();
+                Log.d("ChangePasswordTask", "Response: " + responseBody);
+                return responseBody;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            // Handle response after changing password
+            if (result != null) {
+                Log.d("ChangePasswordTask", "Result: " + result);
+                try {
+                    JSONObject jsonResponse = new JSONObject(result);
+                    String status = jsonResponse.getString("status");
+                    if (status.equals("success")) {
+                        Toast.makeText(Profile.this, "Password changed successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String message = jsonResponse.getString("message");
+                        Toast.makeText(Profile.this, "Failed to change password: " + message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Profile.this, "Failed to change password: Invalid response", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(Profile.this, "Failed to change password: No response from server", Toast.LENGTH_SHORT).show();
+            }
+            // Dismiss the dialog here to ensure it's dismissed after the task completes
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
+    }
+
+    private void changePassword() {
+        // Inflate the change_password.xml layout
+        View changePasswordView = getLayoutInflater().inflate(R.layout.change_password, null);
+
+        // Find views within the layout
+        EditText oldPasswordEditText = changePasswordView.findViewById(R.id.oldPasswordEditText);
+        EditText newPasswordEditText = changePasswordView.findViewById(R.id.newPasswordEditText);
+        EditText confirmPasswordEditText = changePasswordView.findViewById(R.id.confirmPasswordEditText);
+        Button changePasswordButton = changePasswordView.findViewById(R.id.changePasswordButton);
+
+        // Create AlertDialog to show the change password form
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(changePasswordView);
+        dialog = builder.create();
+        dialog.show();
+
+        // Set click listener for the change password button
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the entered passwords
+                String oldPassword = oldPasswordEditText.getText().toString().trim();
+                String newPassword = newPasswordEditText.getText().toString().trim();
+                String confirmPassword = confirmPasswordEditText.getText().toString().trim();
+
+                // Perform validation
+                if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                    Toast.makeText(Profile.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                } else if (!newPassword.equals(confirmPassword)) {
+                    Toast.makeText(Profile.this, "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Call AsyncTask to change the password
+                    new ChangePasswordTask().execute(email, oldPassword, newPassword);
+                }
+            }
+        });
+    }
+
+
+    // Method to delete account
+    private void deleteAccount(String email) {
+        OkHttpClient client = new OkHttpClient();
+
+        // Define the request body with the user's email
+        RequestBody requestBody = new FormBody.Builder()
+                .add("email", email)
+                .build();
+
+        // Define the request
+        Request request = new Request.Builder()
+                .url("https://lamp.ms.wits.ac.za/home/s2709514/delete_user.php") // Replace with the actual URL of your PHP script
+                .post(requestBody)
+                .build();
+
+        // Execute the request asynchronously
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                // Handle failure (e.g., display an error message)
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Profile.this, "Failed to delete user account. Please try again later.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                // Handle response
+                final String responseData = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(responseData);
+                            String status = jsonResponse.getString("status");
+                            String message = jsonResponse.getString("message");
+                            if (status.equals("success")) {
+                                // User account deleted successfully
+                                Toast.makeText(Profile.this, message, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Profile.this, MainActivity.class);
+                                intent.putExtra("email", newEmail); // Pass the updated email
+                                startActivity(intent);
+                                finish();
+
+                            } else {
+                                // Failed to delete user account
+                                Toast.makeText(Profile.this, message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            // Handle JSON parsing error
+                            Toast.makeText(Profile.this, "An error occurred. Please try again later.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
 }
 
 
