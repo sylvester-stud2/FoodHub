@@ -17,6 +17,7 @@ import java.util.List;
 
 public class dietplan extends AppCompatActivity {
     Intent intent;
+    int userId;
     String email;
     private List<String> selectedIngredients;
     BottomNavigationView bottomNavigationView;

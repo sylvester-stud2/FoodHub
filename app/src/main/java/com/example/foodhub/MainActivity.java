@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -90,13 +92,20 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if ("Login successful".equals(responseData.trim())) {
-                            Intent intent = new Intent(MainActivity.this, homepage.class);
-                            intent.putExtra("email", email);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                        try {
+                            JSONObject jsonResponse = new JSONObject(responseData);
+                            if (jsonResponse.getBoolean("authenticated")) {
+                                int userId = jsonResponse.getInt("user_id");
+                                Intent intent = new Intent(MainActivity.this, homepage.class);
+                                intent.putExtra("user_id", userId);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this, "An error occurred. Please try again.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
