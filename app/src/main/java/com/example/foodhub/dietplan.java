@@ -1,13 +1,11 @@
 package com.example.foodhub;
 
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,43 +13,56 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class dietplan extends AppCompatActivity {
     Intent intent;
     String email;
-    private SharedPreferences sharedPreferences;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> dietItems;
+    private List<String> selectedIngredients;
     BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diet_plan);
+
         intent = getIntent();
         email = intent.getStringExtra("email");
 
-        sharedPreferences = getSharedPreferences("DietPlanPrefs", MODE_PRIVATE);
-        dietItems = new ArrayList<>(sharedPreferences.getStringSet("dietItems", new HashSet<>()));
+        selectedIngredients = new ArrayList<>();
 
-        ListView dietItemsList = findViewById(R.id.diet_items_list);
-        EditText dietItemInput = findViewById(R.id.diet_item_input);
-        Button addButton = findViewById(R.id.add_button);
+        // Set up checkboxes
+        setupCheckBox(R.id.allergic_checkbox, "Water");
+        setupCheckBox(R.id.vegan_checkbox1, "Baby tomatoes");
+        setupCheckBox(R.id.vegan_checkbox2, "Vinegar");
+        setupCheckBox(R.id.vegan_checkbox3, "Salt");
+        setupCheckBox(R.id.vegan_checkbox4, "Soy milk");
+        setupCheckBox(R.id.vegan_checkbox5, "Flour");
+        setupCheckBox(R.id.vegan_checkbox6, "Olive oil");
+        setupCheckBox(R.id.vegan_checkbox8, "Brown sugar");
+        setupCheckBox(R.id.vegan_checkbox9, "Rice");
+        setupCheckBox(R.id.vegan_checkbox10, "Nuts");
+        setupCheckBox(R.id.vegan_checkbox11, "Grains");
+        setupCheckBox(R.id.vegan_checkbox12, "Honey");
+        setupCheckBox(R.id.vegan_checkbox13, "Seeds");
+        setupCheckBox(R.id.vegan_checkbox14, "Broccoli");
+        setupCheckBox(R.id.vegan_checkbox15, "Carrots");
+        setupCheckBox(R.id.vegan_checkbox16, "Garlic");
+        setupCheckBox(R.id.vegan_checkbox17, "Onions");
+        setupCheckBox(R.id.vegan_checkbox18, "Herbs");
+        setupCheckBox(R.id.vegan_checkbox19, "Lemon");
+        setupCheckBox(R.id.vegan_checkbox20, "Spices (turmeric, paprika)");
+        setupCheckBox(R.id.vegan_checkbox21, "Soy sauce");
+        setupCheckBox(R.id.vegan_checkbox22, "Cauliflower");
+        setupCheckBox(R.id.vegan_checkbox23, "Avocado");
+        setupCheckBox(R.id.vegan_checkbox24, "Mushrooms");
+        setupCheckBox(R.id.vegan_checkbox25, "Spinach");
+        setupCheckBox(R.id.vegan_checkbox26, "Cocoa powder");
+        setupCheckBox(R.id.vegan_checkbox27, "Cinnamon");
+        setupCheckBox(R.id.vegan_checkbox28, "Banana");
+        setupCheckBox(R.id.vegan_checkbox29, "Oats");
+        setupCheckBox(R.id.vegan_checkbox30, "Dozen eggs");
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dietItems);
-        dietItemsList.setAdapter(adapter);
-
-        addButton.setOnClickListener(v -> {
-            String item = dietItemInput.getText().toString().trim();
-            if (!item.isEmpty()) {
-                dietItems.add(item);
-                adapter.notifyDataSetChanged();
-                saveDietItems();
-                dietItemInput.setText("");
-            }
-        });
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set listener
@@ -70,8 +81,8 @@ public class dietplan extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.grocery_list) {
                     openGroceryListPage();
                     return true;
-                } else if (item.getItemId() == R.id.friends) {
-                    openFriendsPage();
+                } else if (item.getItemId() == R.id.meal_planner) {
+                    openMealPage();
                     return true;
                 }
                 return false;
@@ -79,15 +90,50 @@ public class dietplan extends AppCompatActivity {
         });
 
     }
-    private void saveDietItems() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Set<String> set = new HashSet<>(dietItems);
-        editor.putStringSet("dietItems", set);
-        editor.apply();
+
+    private void setupCheckBox(int checkBoxId, String ingredient) {
+        CheckBox checkBox = findViewById(checkBoxId);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    selectedIngredients.add(ingredient);
+                } else {
+                    selectedIngredients.remove(ingredient);
+                }
+            }
+        });
     }
+
+    private void checkIngredientsForRecipe(List<String> recipeIngredients) {
+        // List to hold missing ingredients
+        List<String> missingIngredients = new ArrayList<>();
+
+        // Check for missing ingredients
+        for (String ingredient : recipeIngredients) {
+            if (!selectedIngredients.contains(ingredient)) {
+                missingIngredients.add(ingredient);
+            }
+        }
+
+        // Prepare the message to be displayed
+        String message;
+        if (missingIngredients.isEmpty()) {
+            message = "You have all the ingredients needed for the recipe!";
+        } else {
+            message = "You are missing the following ingredients:\n" + String.join(", ", missingIngredients);
+        }
+
+        // Create and show the AlertDialog
+        new AlertDialog.Builder(this)
+                .setTitle("Recipe Check Result")
+                .setMessage(message)
+                .setPositiveButton("OK", null)
+                .show();
+    }
+
     // Methods to open respective pages
     private void openHomePage() {
-
         Intent intent = new Intent(dietplan.this, homepage.class);
         intent.putExtra("email", email);
         startActivity(intent);
@@ -95,30 +141,30 @@ public class dietplan extends AppCompatActivity {
     }
 
     private void openCommunityPage() {
-        // Implement logic to open Community page
-        Intent intent = new Intent(dietplan.this, homepage.class);
+        Intent intent = new Intent(dietplan.this, community.class);
         intent.putExtra("email", email);
         startActivity(intent);
         finish();
     }
 
     private void openFilterPage() {
-        // Implement logic to open Filter page
-//        Intent intent = new Intent(dietplan.this, home.class);
+//        Intent intent = new Intent(dietplan.this, filter.class);
 //        intent.putExtra("email", email);
 //        startActivity(intent);
 //        finish();
     }
 
     private void openGroceryListPage() {
-        // Implement logic to open Grocery List page
-//        Intent intent = new Intent(dietplan.this, CreateProfile.class);
-//        startActivity(intent);
+
+        Intent intent = new Intent(dietplan.this,Grocery.class);
+        intent.putExtra("email", email);
+        startActivity(intent);
+        finish();
+
     }
 
-    private void openFriendsPage() {
-        // Implement logic to open Meal Planner page
-        Intent intent = new Intent(dietplan.this, friends.class);
+    private void openMealPage() {
+        Intent intent = new Intent(dietplan.this, weekplan.class);
         intent.putExtra("email", email);
         startActivity(intent);
         finish();

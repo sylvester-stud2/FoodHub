@@ -5,147 +5,674 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/page1"
+    android:background="@drawable/filterback"
     tools:context=".dietplan">
 
-    <TextView
-        android:id="@+id/dietary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/dietary_preference_and_health_goals"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/allergicLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dietary">
-
-        <CheckBox
-            android:id="@+id/allergic_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/allergy_conscious"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/allergicLayout">
-
-        <CheckBox
-            android:id="@+id/vegan_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/vegetarian"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout2">
-
-        <CheckBox
-            android:id="@+id/vegan_checkbox3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vegetarian"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout3">
-
-        <CheckBox
-            android:id="@+id/vegan_checkbox4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vegetarian"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/diet_item_input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="Enter diet item"
-        android:textColor="#FFFFFF"
-        android:background="#00000000"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout4" />
-
-    <Button
-        android:id="@+id/add_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/diet_item_input"
-        app:layout_constraintBottom_toTopOf="@id/diet_items_list" />
-
-    <ListView
-        android:id="@+id/diet_items_list"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
-        android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_button"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/dietary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingredients_to_avoid:"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/allergicLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/allergic_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+
+                    android:layout_height="wrap_content"
+                    android:text="Water"
+
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Baby tomatoes"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Vinegar"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Salt"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                tools:ignore="DuplicateIds">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Soy milk"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Flour"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Olive oil"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_height="wrap_content"
+                    android:text="Brown sugar"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_height="wrap_content"
+                    android:text="Rice"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nuts"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Grains"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Honey"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Seeds"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Broccoli"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Carrots"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Garlic"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Onions"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Herbs"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lemon"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Spices"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Soy sauce"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cauliflower"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Avocado"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mushrooms"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Spinach"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cocoa pwder"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout27"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cinnamon"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout28"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Banana"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout29"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Oats"
+                    android:textColor="#03A9F4" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/vegan_checkbox30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Dozen eggs"
+                    android:textColor="#E91E63" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -154,10 +681,9 @@
         android:layout_gravity="bottom"
         app:itemIconTint="@color/blue"
         app:itemTextColor="@color/blue"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@layout/bottom_nav_dietplan" />
+        app:menu="@layout/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

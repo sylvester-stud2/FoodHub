@@ -1,6 +1,6 @@
 package com.example.foodhub;
 
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,22 +10,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class addsmeals extends AppCompatActivity {
+public class Grocery extends AppCompatActivity {
+    
+  
     Intent intent;
     String email;
     BottomNavigationView bottomNavigationView;
 
-    @SuppressLint("MissingInflatedId")
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addsmeals);
-        intent=getIntent();
-        email=intent.getStringExtra("email");
 
+        setContentView(R.layout.activity_grocery);
+        intent = getIntent();
+        email = intent.getStringExtra("email");
+
+       
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        // Set listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -49,41 +52,62 @@ public class addsmeals extends AppCompatActivity {
             }
         });
 
+     
     }
 
-    // Methods to open respective pages
-    private void openHomePage() {
-
-        Intent intent = new Intent(addsmeals.this, CreateProfile.class);
+    private void openProfilePage() {
+        Intent intent = new Intent(Grocery.this, Profile.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
         startActivity(intent);
+        finish();
+
+    }
+
+    private void openHomePage() {
+        // Already implemented to open CreateProfile page
+        Intent intent = new Intent(Grocery.this,homepage.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
+
     }
 
     private void openCommunityPage() {
-        // Implement logic to open Community page
-        Intent intent = new Intent(addsmeals.this, community.class);
+        Intent intent = new Intent(Grocery.this,community.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
         startActivity(intent);
-
+        finish();
     }
 
     private void openFilterPage() {
-        // Implement logic to open Filter page
-        Intent intent = new Intent(addsmeals.this, dietplan.class);
+        Intent intent = new Intent(Grocery.this,dietplan.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
         startActivity(intent);
+        finish();
+
     }
 
     private void openGroceryListPage() {
-        // Implement logic to open Grocery List page
-        Intent intent = new Intent(addsmeals.this, Grocery.class);
-        startActivity(intent);
-
-    }
-
-    private void openMealPlannerPage() {
-        // Implement logic to open Meal Planner page
-        Intent intent = new Intent(addsmeals.this, weekplan.class);
+        Intent intent = new Intent(Grocery.this, Grocery.class);
         intent.putExtra("email",email);
         startActivity(intent);
         finish();
     }
+
+    private void openMealPlannerPage() {
+        Intent intent = new Intent(Grocery.this, weekplan.class);
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
+    }
+
+ 
+
+
 }
 

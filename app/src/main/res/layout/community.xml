@@ -10,10 +10,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/communitycook">
+        android:background="@color/blue">
 
         <ImageView
-            android:id="@+id/friendprofile"
+            android:id="@+id/authorprofile"
             android:layout_width="70dp"
             android:layout_height="75dp"
             android:layout_marginStart="16dp"
@@ -23,7 +23,7 @@
             app:srcCompat="@drawable/profile" />
 
         <TextView
-            android:id="@+id/postprofile"
+            android:id="@+id/authorname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -32,8 +32,8 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/friendprofile"
-            app:layout_constraintBottom_toBottomOf="@id/friendprofile" />
+            app:layout_constraintStart_toEndOf="@id/authorprofile"
+            app:layout_constraintBottom_toBottomOf="@id/authorprofile" />
 
         <Button
             android:id="@+id/addfriend"
@@ -45,8 +45,8 @@
             android:text="Make Friend"
             android:textColor="@color/white"
             android:backgroundTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="@id/friendprofile"
-            app:layout_constraintStart_toEndOf="@id/postprofile"
+            app:layout_constraintBottom_toBottomOf="@id/authorprofile"
+            app:layout_constraintStart_toEndOf="@id/authorname"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.589" />
 
@@ -60,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/friendprofile" />
+            app:layout_constraintTop_toBottomOf="@id/authorprofile" />
 
         <ImageView
             android:id="@+id/thumbsup"
@@ -98,17 +98,20 @@
             app:layout_constraintStart_toEndOf="@id/thumbsdown"
             app:layout_constraintTop_toBottomOf="@id/post" />
 
+<!--        android:id="@+id/bottom_navcomm"-->
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navcomm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:menu="@layout/bottom_nav_comm"
-            app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@layout/bottom_nav_comm" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

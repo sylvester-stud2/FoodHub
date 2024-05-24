@@ -2,13 +2,17 @@ package com.example.foodhub;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -156,16 +160,29 @@ public class homepage extends AppCompatActivity {
         try {
             JSONArray parent = new JSONArray(strJson);
             JSONObject child = parent.getJSONObject(0);
-            String imgUrl = child.optString("profile_picture");
-            String name = child.getString("first_name");
+            String imgBase64 = child.optString("profile_picture");
+            String firstName = child.getString("first_name");
 
-            Glide.with(this).load(imgUrl).into(profile_image);
+            if (!imgBase64.isEmpty()) {
+                // Decode base64 to byte array
+                byte[] imageBytes = Base64.decode(imgBase64, Base64.DEFAULT);
+                // Convert byte array to Bitmap
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
-            name_txt.setText(name);
+                // Use Glide to load the Bitmap into the ImageView
+                Glide.with(this)
+                        .load(bitmap)
+                        .circleCrop()
+                        .into(profile_image);
+            }
+
+            name_txt.setText(firstName);
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to parse user data", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     // Methods to open respective pages
     private void openProfilePage() {
@@ -178,10 +195,11 @@ public class homepage extends AppCompatActivity {
 
     private void openHomePage() {
         // Already implemented to open CreateProfile page
+
     }
 
     private void openCommunityPage() {
-        Intent intent = new Intent(homepage.this, community.class);
+        Intent intent = new Intent(homepage.this,community.class);
         intent.putExtra("email", email);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -189,15 +207,22 @@ public class homepage extends AppCompatActivity {
     }
 
     private void openFilterPage() {
-        Intent intent = new Intent(homepage.this, dietplan.class);
+        Intent intent = new Intent(homepage.this,dietplan.class);
         intent.putExtra("email", email);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
+
     }
 
     private void openGroceryListPage() {
-        // Implement logic to open Grocery List page
+        Intent intent = new Intent(homepage.this, Grocery.class);
+
+        intent.putExtra("email", email);
+        overridePendingTransition(0, 0);
+
+        startActivity(intent);
+        finish();
     }
 
     private void openMealPlannerPage() {
