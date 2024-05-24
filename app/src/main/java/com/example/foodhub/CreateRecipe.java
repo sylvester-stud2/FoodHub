@@ -26,7 +26,8 @@ import java.util.List;
 
 public class CreateRecipe extends AppCompatActivity {
     Intent intent;
-    String email;
+    int userId;
+
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final String[] PREDEFINED_INGREDIENTS = {
@@ -45,7 +46,7 @@ public class CreateRecipe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
         intent = getIntent();
-        email = intent.getStringExtra("email");
+        userId = intent.getIntExtra("user_id", -1);
 
         ingredientsLayout = findViewById(R.id.ingredientsLayout);
         uploadImageButton = findViewById(R.id.uploadImageButton);
@@ -62,6 +63,7 @@ public class CreateRecipe extends AppCompatActivity {
             }
         });
 
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,32 +78,32 @@ public class CreateRecipe extends AppCompatActivity {
                 if (itemId == R.id.home) {
                     // Handle home navigation
                     Intent intent = new Intent(CreateRecipe.this, homepage.class);
-                    intent.putExtra("email", email);
+                    intent.putExtra("user_id", userId);
                     startActivity(intent);
                     finish();
                     return true;
                 } else if (itemId == R.id.community) {
                     // Handle community navigation
                     Intent intent = new Intent(CreateRecipe.this, community.class);
-                    intent.putExtra("email", email);
+                    intent.putExtra("user_id", userId);
                     startActivity(intent);
                     finish();return true;
                 } else if (itemId == R.id.filter) {
                     // Handle filter navigation
                     Intent intent = new Intent(CreateRecipe.this, dietplan.class);
-                    intent.putExtra("email", email);
+                    intent.putExtra("user_id", userId);
                     startActivity(intent);
                     finish();return true;
                 } else if (itemId == R.id.grocery_list) {
                     // Handle grocery list navigation
                     Intent intent = new Intent(CreateRecipe.this, Grocery.class);
-                    intent.putExtra("email", email);
+                    intent.putExtra("user_id", userId);
                     startActivity(intent);
                     finish();return true;
                 } else if (itemId == R.id.meal_planner) {
                     // Handle meal planner navigation
                     Intent intent = new Intent(CreateRecipe.this, weekplan.class);
-                    intent.putExtra("email", email);
+                    intent.putExtra("user_id", userId);
                     startActivity(intent);
                     finish();
                     return true;

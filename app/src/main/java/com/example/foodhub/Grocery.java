@@ -14,7 +14,8 @@ public class Grocery extends AppCompatActivity {
     
   
     Intent intent;
-    String email;
+
+    int userId;
     BottomNavigationView bottomNavigationView;
 
 
@@ -25,7 +26,8 @@ public class Grocery extends AppCompatActivity {
 
         setContentView(R.layout.activity_grocery);
         intent = getIntent();
-        email = intent.getStringExtra("email");
+        userId = intent.getIntExtra("user_id", -1);
+
 
        
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -57,7 +59,7 @@ public class Grocery extends AppCompatActivity {
 
     private void openProfilePage() {
         Intent intent = new Intent(Grocery.this, Profile.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
@@ -67,7 +69,7 @@ public class Grocery extends AppCompatActivity {
     private void openHomePage() {
         // Already implemented to open CreateProfile page
         Intent intent = new Intent(Grocery.this,homepage.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
@@ -76,7 +78,7 @@ public class Grocery extends AppCompatActivity {
 
     private void openCommunityPage() {
         Intent intent = new Intent(Grocery.this,community.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
@@ -84,7 +86,7 @@ public class Grocery extends AppCompatActivity {
 
     private void openFilterPage() {
         Intent intent = new Intent(Grocery.this,dietplan.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
@@ -93,14 +95,14 @@ public class Grocery extends AppCompatActivity {
 
     private void openGroceryListPage() {
         Intent intent = new Intent(Grocery.this, Grocery.class);
-        intent.putExtra("email",email);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
     }
 
     private void openMealPlannerPage() {
         Intent intent = new Intent(Grocery.this, weekplan.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();

@@ -36,7 +36,8 @@ public class homepage extends AppCompatActivity {
     ImageView profile_image;
     TextView name_txt;
     Intent intent;
-    String email;
+
+    int userId;
 
     private OkHttpClient client;
     private Response response;
@@ -54,7 +55,8 @@ public class homepage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(homepage.this, CreateRecipe.class);
-                intent.putExtra("email", email);
+
+                intent.putExtra("user_id", userId);
                 startActivity(intent);
                 finish();
             }
@@ -71,12 +73,13 @@ public class homepage extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
 
-        // Get email from intent
+        // Get email and user ID from intent
         intent = getIntent();
-        email = intent.getStringExtra("email");
+
+        userId = intent.getIntExtra("user_id", -1);
 
         // Construct API URL
-        apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/ProfileAndName.php?email=" + email;
+        apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/ProfileAndName.php?user_id=" + userId;
 
         // Execute AsyncTask to fetch user data
         new GetUserDataRequest().execute();
@@ -183,11 +186,11 @@ public class homepage extends AppCompatActivity {
         }
     }
 
-
     // Methods to open respective pages
     private void openProfilePage() {
         Intent intent = new Intent(homepage.this, Profile.class);
-        intent.putExtra("email", email);
+
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
@@ -199,35 +202,38 @@ public class homepage extends AppCompatActivity {
     }
 
     private void openCommunityPage() {
-        Intent intent = new Intent(homepage.this,community.class);
-        intent.putExtra("email", email);
+        Intent intent = new Intent(homepage.this, community.class);
+
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
 
     private void openFilterPage() {
-        Intent intent = new Intent(homepage.this,dietplan.class);
-        intent.putExtra("email", email);
+        Intent intent = new Intent(homepage.this, dietplan.class);
+
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
-
     }
 
     private void openGroceryListPage() {
+        // You need to implement this method
         Intent intent = new Intent(homepage.this, Grocery.class);
 
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
-
         startActivity(intent);
         finish();
     }
 
     private void openMealPlannerPage() {
+        // You need to implement this method
         Intent intent = new Intent(homepage.this, weekplan.class);
-        intent.putExtra("email", email);
+
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
