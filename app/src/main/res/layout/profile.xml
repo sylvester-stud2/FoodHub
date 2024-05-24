@@ -24,18 +24,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
                 android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="20dp"
+                android:gravity="center_vertical">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/profilePicture"
-                    android:layout_width="290dp"
+                    android:layout_width="0dp"
                     android:layout_height="290dp"
+                    android:layout_weight="1"
                     android:layout_marginEnd="16dp"
                     android:background="@color/white"
                     android:padding="4dp"
-                    android:paddingLeft="16dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/person"
                     app:shapeAppearanceOverlay="@style/circularImageView" />
@@ -44,13 +45,14 @@
                     android:id="@+id/uploadImageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:backgroundTint="@color/blue"
                     android:text="+"
-                    android:textSize="40dp" />
-
-
+                    android:textSize="40dp"
+                    android:minWidth="72dp"
+                    android:minHeight="72dp"
+                    android:gravity="center" />
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -157,7 +159,6 @@
                     android:text="Delete Account"
                     android:textColor="@color/white"
                     android:backgroundTint="#FF0000" />
-
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

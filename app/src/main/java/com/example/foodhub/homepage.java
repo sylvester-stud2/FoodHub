@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +32,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class homepage extends AppCompatActivity {
+    private BottomNavigationView bottomNavigationView;
 
-    BottomNavigationView bottomNavigationView;
+
     ImageView profile_image;
     TextView name_txt;
     Intent intent;
@@ -105,25 +107,37 @@ public class homepage extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.home) {
-                    openHomePage();
-                    return true;
-                } else if (item.getItemId() == R.id.community) {
-                    openCommunityPage();
-                    return true;
-                } else if (item.getItemId() == R.id.filter) {
-                    openFilterPage();
-                    return true;
-                } else if (item.getItemId() == R.id.grocery_list) {
-                    openGroceryListPage();
-                    return true;
-                } else if (item.getItemId() == R.id.meal_planner) {
-                    openMealPlannerPage();
-                    return true;
-                }
-                return false;
+                return handleNavigationItemSelected(item);
             }
         });
+        int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.home);
+        bottomNavigationView.setSelectedItemId(selectedItemId);
+    }
+    private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
+            // Current item is already selected, do nothing
+            return false;
+        }
+
+        Intent intent;
+        if (item.getItemId() == R.id.home) {
+            openHomePage();
+            return true;
+        } else if (item.getItemId() == R.id.community) {
+            openCommunityPage();
+            return true;
+        } else if (item.getItemId() == R.id.filter) {
+            openFilterPage();
+            return true;
+        } else if (item.getItemId() == R.id.grocery_list) {
+            openGroceryListPage();
+            return true;
+        } else if (item.getItemId() == R.id.meal_planner) {
+            openMealPlannerPage();
+            return true;
+        }
+
+        return true;
     }
 
     public class GetUserDataRequest extends AsyncTask<Void, Void, String> {
@@ -189,7 +203,6 @@ public class homepage extends AppCompatActivity {
     // Methods to open respective pages
     private void openProfilePage() {
         Intent intent = new Intent(homepage.this, Profile.class);
-
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -198,12 +211,17 @@ public class homepage extends AppCompatActivity {
 
     private void openHomePage() {
         // Already implemented to open CreateProfile page
-
+        Intent intent = new Intent(homepage.this, community.class);
+        intent.putExtra("selected_item_id", R.id.home);
+        intent.putExtra("user_id", userId);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
     }
 
     private void openCommunityPage() {
         Intent intent = new Intent(homepage.this, community.class);
-
+        intent.putExtra("selected_item_id", R.id.community);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -212,7 +230,7 @@ public class homepage extends AppCompatActivity {
 
     private void openFilterPage() {
         Intent intent = new Intent(homepage.this, dietplan.class);
-
+        intent.putExtra("selected_item_id", R.id.filter);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -222,7 +240,7 @@ public class homepage extends AppCompatActivity {
     private void openGroceryListPage() {
         // You need to implement this method
         Intent intent = new Intent(homepage.this, Grocery.class);
-
+        intent.putExtra("selected_item_id", R.id.grocery_list);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -232,7 +250,7 @@ public class homepage extends AppCompatActivity {
     private void openMealPlannerPage() {
         // You need to implement this method
         Intent intent = new Intent(homepage.this, weekplan.class);
-
+        intent.putExtra("selected_item_id", R.id.meal_planner);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
