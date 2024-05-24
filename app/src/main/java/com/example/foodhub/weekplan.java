@@ -9,29 +9,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class weekplan extends AppCompatActivity {
     Intent intent;
-    String email;
-
-
+    int userId;
     BottomNavigationView bottomNavigationView;
-    private static List<String> weeklyMeals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weekplan);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Initialize intent properly
         intent = getIntent();
-        email = intent.getStringExtra("email");
+        userId = intent.getIntExtra("user_id", -1);
 
-        // Initialize the weekly meals
-        initializeWeeklyMeals();
-        // Set listener
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -53,68 +46,42 @@ public class weekplan extends AppCompatActivity {
                 }
                 return false;
             }
-
         });
-
     }
 
-    // Initialize weekly meals
-    private void initializeWeeklyMeals() {
-        weeklyMeals = new ArrayList<>();
-        weeklyMeals.add("Spaghetti");
-        weeklyMeals.add("Tacos");
-        weeklyMeals.add("Chicken Salad");
-        // Add more meals as needed
-    }
-
-    public static List<String> getWeeklyMeals() {
-        return weeklyMeals;
-    }
-
-    // Methods to open respective pages
     private void openHomePage() {
-
         Intent intent = new Intent(weekplan.this, homepage.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
 
     private void openCommunityPage() {
-        // Implement logic to open Community page
         Intent intent = new Intent(weekplan.this, community.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
 
     private void openFilterPage() {
-        // Implement logic to open Filter page
         Intent intent = new Intent(weekplan.this, dietplan.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
 
     private void openGroceryListPage() {
-
         Intent intent = new Intent(weekplan.this, Grocery.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
 
     private void openMealPlannerPage() {
-        // Implement logic to open Meal Planner page
-        Intent intent = new Intent(weekplan.this, weekplan.class);
-        intent.putExtra("email", email);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
+        // Implement logic to open Meal Planner page if needed
     }
 }
-

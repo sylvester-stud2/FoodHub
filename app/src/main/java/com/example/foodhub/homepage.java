@@ -36,7 +36,7 @@ public class homepage extends AppCompatActivity {
     ImageView profile_image;
     TextView name_txt;
     Intent intent;
-    String email;
+
     int userId;
 
     private OkHttpClient client;
@@ -221,9 +221,21 @@ public class homepage extends AppCompatActivity {
 
     private void openGroceryListPage() {
         // You need to implement this method
+        Intent intent = new Intent(homepage.this, Grocery.class);
+
+        intent.putExtra("user_id", userId);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
     }
 
     private void openMealPlannerPage() {
         // You need to implement this method
+        Intent intent = new Intent(homepage.this, weekplan.class);
+
+        intent.putExtra("user_id", userId);
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
     }
 }

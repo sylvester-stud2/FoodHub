@@ -65,6 +65,7 @@ public class Profile extends AppCompatActivity {
     private OkHttpClient client;
     private Response response;
     private Request request;
+    Button ChangeProfilePicture;
     String strJson;
     private ProgressDialog progressDialog;
 
@@ -81,6 +82,7 @@ public class Profile extends AppCompatActivity {
         last_name = findViewById(R.id.lastNameTextView);
         email_txt = findViewById(R.id.emailTextView);
         saveChangesButton = findViewById(R.id.SaveChangesButton);
+        ChangeProfilePicture = findViewById(R.id.uploadImageButton);
 
         // Initialize OkHttpClient
         client = new OkHttpClient();
@@ -89,8 +91,7 @@ public class Profile extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
 
-        // Get email from intent
-        intent = getIntent();
+
 
         intent = getIntent();
 
@@ -103,6 +104,18 @@ public class Profile extends AppCompatActivity {
 
         // Execute AsyncTask to fetch user data
         new GetUserDataRequest().execute();
+
+
+
+        ChangeProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, ChangeProfile.class);
+                intent.putExtra("user_id", userId);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 

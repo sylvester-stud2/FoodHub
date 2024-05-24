@@ -18,7 +18,8 @@ import java.util.List;
 public class dietplan extends AppCompatActivity {
     Intent intent;
     int userId;
-    String email;
+    String emailToChange;
+
     private List<String> selectedIngredients;
     BottomNavigationView bottomNavigationView;
 
@@ -28,7 +29,8 @@ public class dietplan extends AppCompatActivity {
         setContentView(R.layout.diet_plan);
 
         intent = getIntent();
-        email = intent.getStringExtra("email");
+
+        userId = intent.getIntExtra("user_id", -1);
 
         selectedIngredients = new ArrayList<>();
 
@@ -136,14 +138,14 @@ public class dietplan extends AppCompatActivity {
     // Methods to open respective pages
     private void openHomePage() {
         Intent intent = new Intent(dietplan.this, homepage.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
     }
 
     private void openCommunityPage() {
         Intent intent = new Intent(dietplan.this, community.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
     }
@@ -158,7 +160,7 @@ public class dietplan extends AppCompatActivity {
     private void openGroceryListPage() {
 
         Intent intent = new Intent(dietplan.this,Grocery.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
 
@@ -166,7 +168,7 @@ public class dietplan extends AppCompatActivity {
 
     private void openMealPage() {
         Intent intent = new Intent(dietplan.this, weekplan.class);
-        intent.putExtra("email", email);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
     }
