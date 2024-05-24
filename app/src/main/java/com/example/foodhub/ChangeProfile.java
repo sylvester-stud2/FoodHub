@@ -34,9 +34,9 @@ public class ChangeProfile extends AppCompatActivity {
     private static final String SERVER_URL = "https://lamp.ms.wits.ac.za/home/s2709514/USERppUp.php";
 
     private Button btnSelect, btnUpload;
+    int userId;
     private ImageView imagePreview;
     private Uri imageUri;
-    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class ChangeProfile extends AppCompatActivity {
         setContentView(R.layout.changeprofile);
 
         Intent intent = getIntent();
-        email = intent.getStringExtra("email");
+        userId = intent.getIntExtra("user_id", -1);
 
         btnSelect = findViewById(R.id.btnSelect);
         btnUpload = findViewById(R.id.btnUpload);
@@ -55,17 +55,15 @@ public class ChangeProfile extends AppCompatActivity {
 
         Button backToProfile = findViewById(R.id.back);
 
-
         backToProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChangeProfile.this, Profile.class);
-                intent.putExtra("email",email);
+                intent.putExtra("user_id", userId);
                 startActivity(intent);
                 finish();
             }
         });
-
     }
 
     private void openFileChooser() {
@@ -109,7 +107,7 @@ public class ChangeProfile extends AppCompatActivity {
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("image", "image.jpg", RequestBody.create(MediaType.parse("image/*"), imageBytes))
-                    .addFormDataPart("email", email)
+                    .addFormDataPart("user_id", String.valueOf(userId))
                     .build();
 
             Request request = new Request.Builder()

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -24,7 +29,6 @@ public class CreateProfile extends AppCompatActivity {
     ImageView profile_image;
     TextView name_txt;
     Intent intent;
-    String email;
 
     private ProgressDialog progressDialog;
 
@@ -72,6 +76,7 @@ public class CreateProfile extends AppCompatActivity {
 
     private class SignUpTask extends AsyncTask<String, Void, Integer> {
         private String email;
+        private int userId;
 
         @Override
         protected Integer doInBackground(String... params) {
@@ -96,21 +101,34 @@ public class CreateProfile extends AppCompatActivity {
                 os.flush();
                 os.close();
 
-                return conn.getResponseCode();
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String inputLine;
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+                    userId = jsonResponse.getInt("user_id");
+                    Log.d("SignUpTask", "Received user_id: " + userId);
+                }
+                return responseCode;
             } catch (Exception e) {
                 e.printStackTrace();
+                return null;
             }
-
-            return null;
         }
-
 
         @Override
         protected void onPostExecute(Integer responseCode) {
             if (responseCode != null && responseCode == 200) {
                 Toast.makeText(CreateProfile.this, "Sign up successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(CreateProfile.this, homepage.class);
-                intent.putExtra("email", email);
+                intent.putExtra("user_id", userId); // Use user_id instead of email
                 startActivity(intent);
                 finish();
             } else if (responseCode != null && responseCode == 409) {

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -16,7 +16,6 @@
         android:layout_marginStart="30dp"
         android:background="@color/smoke"
         android:layout_marginEnd="30dp"
-
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp"
         app:layout_constraintBottom_toTopOf="parent"
@@ -26,18 +25,6 @@
 
     </androidx.cardview.widget.CardView>
 
-
-    <!--    <Button-->
-    <!--        android:id="@+id/btn1"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="144dp"-->
-
-    <!--        android:layout_marginTop="296dp"-->
-    <!--        android:text="Create Profile"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -46,13 +33,11 @@
         android:paddingRight="0dp"
         android:paddingLeft="0dp"
         android:paddingBottom="0dp"
-
         android:src="@drawable/rabbit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -102,8 +87,6 @@
             android:layout_marginTop="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/blue"
-
-
             app:endIconMode="password_toggle">
 
             <EditText
@@ -111,12 +94,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/custom_edittext"
-
                 android:drawablePadding="8dp"
                 android:hint="password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/blue"
                 android:textColorHint="@color/blue"
@@ -141,7 +122,6 @@
         android:id="@+id/create"
         android:layout_width="355dp"
         android:layout_height="60dp"
-
         android:layout_marginBottom="4dp"
         android:drawableRight="@drawable/forward"
         android:text="Create"
