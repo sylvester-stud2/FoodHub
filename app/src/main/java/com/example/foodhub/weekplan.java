@@ -12,7 +12,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class weekplan extends AppCompatActivity {
     Intent intent;
     int userId;
+
     private BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class weekplan extends AppCompatActivity {
                 return handleNavigationItemSelected(item);
             }
         });
+
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.meal_planner);
         bottomNavigationView.setSelectedItemId(selectedItemId);
     }
@@ -60,6 +63,7 @@ public class weekplan extends AppCompatActivity {
         }
 
         return true;
+
     }
 
     private void openHomePage() {

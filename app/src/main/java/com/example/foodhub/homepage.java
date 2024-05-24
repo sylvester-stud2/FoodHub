@@ -203,6 +203,7 @@ public class homepage extends AppCompatActivity {
     // Methods to open respective pages
     private void openProfilePage() {
         Intent intent = new Intent(homepage.this, Profile.class);
+
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -221,7 +222,9 @@ public class homepage extends AppCompatActivity {
 
     private void openCommunityPage() {
         Intent intent = new Intent(homepage.this, community.class);
+
         intent.putExtra("selected_item_id", R.id.community);
+
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -230,7 +233,9 @@ public class homepage extends AppCompatActivity {
 
     private void openFilterPage() {
         Intent intent = new Intent(homepage.this, dietplan.class);
+
         intent.putExtra("selected_item_id", R.id.filter);
+
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -240,7 +245,9 @@ public class homepage extends AppCompatActivity {
     private void openGroceryListPage() {
         // You need to implement this method
         Intent intent = new Intent(homepage.this, Grocery.class);
+
         intent.putExtra("selected_item_id", R.id.grocery_list);
+
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -250,7 +257,9 @@ public class homepage extends AppCompatActivity {
     private void openMealPlannerPage() {
         // You need to implement this method
         Intent intent = new Intent(homepage.this, weekplan.class);
+
         intent.putExtra("selected_item_id", R.id.meal_planner);
+
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
@@ -20,7 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,8 +164,61 @@ public class CreateRecipe extends AppCompatActivity {
         if (recipeName.isEmpty() || selectedIngredients.isEmpty() || instructions.isEmpty() || imageUri == null) {
             Toast.makeText(this, "Please fill all fields and upload an image", Toast.LENGTH_LONG).show();
         } else {
-            // Handle the submission logic here, such as saving the data to a database or sending it to a server
-            Toast.makeText(this, "Recipe submitted!", Toast.LENGTH_LONG).show();
+            new UploadRecipeTask().execute(recipeName, instructions, selectedIngredients, imageUri.toString());
+        }
+    }
+
+    private class UploadRecipeTask extends AsyncTask<Object, Void, String> {
+        @Override
+        protected String doInBackground(Object... params) {
+            String recipeName = (String) params[0];
+            String instructions = (String) params[1];
+            List<String> selectedIngredients = (List<String>) params[2];
+            String imagePath = (String) params[3];
+
+            try {
+                // Convert image to byte array
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(imagePath));
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] imageBytes = baos.toByteArray();
+
+                // Prepare URL and connection
+                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/CreateRecipe.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+                dos.writeBytes("user_id=" + userId + "&recipeName=" + recipeName + "&instructions=" + instructions);
+                dos.writeBytes("&image=" + new String(imageBytes));
+                for (String ingredient : selectedIngredients) {
+                    dos.writeBytes("&ingredients[]=" + ingredient);
+                }
+                dos.flush();
+                dos.close();
+
+                // Get response
+                InputStream is = conn.getInputStream();
+                ByteArrayOutputStream baosResponse = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = is.read(buffer)) != -1) {
+                    baosResponse.write(buffer, 0, length);
+                }
+                is.close();
+                return baosResponse.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Error: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(CreateRecipe.this, result, Toast.LENGTH_LONG).show();
         }
     }
 }
