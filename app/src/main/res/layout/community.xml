@@ -10,104 +10,105 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/communitycook">
+        android:background="@color/magenta">
 
-        <ImageView
-            android:id="@+id/friendprofile"
-            android:layout_width="70dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile" />
-
-        <TextView
-            android:id="@+id/postprofile"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/feature_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:text="Name"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/friendprofile"
-            app:layout_constraintBottom_toBottomOf="@id/friendprofile" />
+            android:background="@color/blue"
+            android:padding="16dp"
+            tools:ignore="MissingConstraints">
 
-        <Button
-            android:id="@+id/addfriend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="104dp"
-            android:layout_marginTop="16dp"
-            android:onClick="AddFriendonClick"
-            android:text="Make Friend"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="@id/friendprofile"
-            app:layout_constraintStart_toEndOf="@id/postprofile"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.589" />
+            <ImageView
+                android:id="@+id/profilepic"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:contentDescription="Profile picture"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/postpic"
+                app:srcCompat="@drawable/profile" />
 
-        <TextView
-            android:id="@+id/post"
-            android:layout_width="371dp"
-            android:layout_height="216dp"
-            android:layout_marginTop="56dp"
-            android:text="Post Recipe"
-            android:textSize="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/friendprofile" />
+            <TextView
+                android:id="@+id/profilename"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/profilepic"
+                app:layout_constraintStart_toEndOf="@id/profilepic"
+                app:layout_constraintTop_toTopOf="@id/profilepic" />
 
-        <ImageView
-            android:id="@+id/thumbsup"
-            android:layout_width="49dp"
-            android:layout_height="49dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            android:onClick="onThumbsUpClicked"
-            android:src="@drawable/thumbsup"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/post" />
+            <Button
+                android:id="@+id/makefriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/black"
+                android:onClick="MakeFriendonClick"
+                android:text="Make Friend"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/postpic"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:id="@+id/thumbsdown"
-            android:layout_width="49dp"
-            android:layout_height="49dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:onClick="onThumbsDownClicked"
-            android:src="@drawable/thumbsdown"
-            app:layout_constraintStart_toEndOf="@id/thumbsup"
-            app:layout_constraintTop_toBottomOf="@id/post" />
+            <ImageView
+                android:id="@+id/postpic"
+                android:layout_width="369dp"
+                android:layout_height="188dp"
+                android:contentDescription="Post Recipe Image"
+                app:layout_constraintBottom_toTopOf="@id/thumbsup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profilename"
+                android:background="@color/cyan"/>
 
-        <ImageView
-            android:id="@+id/comment"
-            android:layout_width="49dp"
-            android:layout_height="49dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            android:onClick="onCommentClicked"
-            android:src="@drawable/comment"
-            app:layout_constraintStart_toEndOf="@id/thumbsdown"
-            app:layout_constraintTop_toBottomOf="@id/post" />
+            <ImageView
+                android:id="@+id/thumbsup"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:onClick="onThumbsUpClicked"
+                android:src="@drawable/thumbsup"
+                app:layout_constraintTop_toBottomOf="@id/postpic"
+                app:layout_constraintStart_toStartOf="parent" />
 
-<!--        android:id="@+id/bottom_navcomm"-->
+            <ImageView
+                android:id="@+id/thumbsdown"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:onClick="onThumbDownClicked"
+                android:src="@drawable/thumbsdown"
+                app:layout_constraintTop_toBottomOf="@id/postpic"
+                app:layout_constraintStart_toEndOf="@id/thumbsup" />
+
+            <ImageView
+                android:id="@+id/comment"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:onClick="onCommentClicked"
+                android:src="@drawable/comment"
+                app:layout_constraintTop_toBottomOf="@id/postpic"
+                app:layout_constraintStart_toEndOf="@id/thumbsdown" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navcomm"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:itemIconTint="@color/blue"
-            app:itemTextColor="@color/blue"
-
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
