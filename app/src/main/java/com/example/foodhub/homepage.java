@@ -270,12 +270,16 @@ public class homepage extends AppCompatActivity {
     private void showOptionsDialog(JSONObject recipeObject) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Options")
-                .setItems(new CharSequence[]{ "Delete"}, new DialogInterface.OnClickListener() {
+                .setItems(new CharSequence[]{ "Post","Delete"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-
                             case 0:
+                                // Handle delete action
+                                PostRecipe(recipeObject);
+                                break;
+
+                            case 1:
                                 // Handle delete action
                                 deleteRecipe(recipeObject);
                                 break;
@@ -287,6 +291,11 @@ public class homepage extends AppCompatActivity {
 
 
     private void deleteRecipe(JSONObject recipeObject) {
+        // Implement the logic for deleting the recipe
+        // For example, you can make an API call to delete the recipe from the server
+    }
+
+    private void PostRecipe(JSONObject recipeObject) {
         // Implement the logic for deleting the recipe
         // For example, you can make an API call to delete the recipe from the server
     }
