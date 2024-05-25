@@ -30,8 +30,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class homepage extends AppCompatActivity {
@@ -296,8 +298,55 @@ public class homepage extends AppCompatActivity {
     }
 
     private void PostRecipe(JSONObject recipeObject) {
-        // Implement the logic for deleting the recipe
-        // For example, you can make an API call to delete the recipe from the server
+        try {
+            int recipeId = recipeObject.getInt("Recipe_ID");
+
+            new PostRecipeTask().execute(recipeId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to get recipe ID", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class PostRecipeTask extends AsyncTask<Integer, Void, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+            int recipeId = params[0];
+            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/addPost.php";
+            RequestBody requestBody = new FormBody.Builder()
+                    .add("Author_ID", String.valueOf(userId))
+                    .add("Recipe_ID", String.valueOf(recipeId))
+                    .build();
+            Request request = new Request.Builder()
+                    .url(apiUrl)
+                    .post(requestBody)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                return response.isSuccessful();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+            if (result) {
+                Toast.makeText(homepage.this, "Recipe posted successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(homepage.this, "Failed to post recipe", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void openProfilePage() {
