@@ -2,8 +2,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-   >
+    android:padding="16dp">
+
+    <!-- Recipe ID -->
+    <TextView
+        android:id="@+id/recipe_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recipe ID"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp"/>
 
     <!-- Recipe Title -->
     <TextView
@@ -16,9 +25,6 @@
         android:textStyle="bold"
         android:layout_marginBottom="8dp"/>
 
-    <!-- Recipe Instructions -->
-
-
     <!-- Recipe Image -->
     <ImageView
         android:id="@+id/recipe_image"
@@ -27,6 +33,8 @@
         android:scaleType="centerCrop"
         android:src="@drawable/filterback"
         android:layout_marginBottom="8dp"/>
+
+    <!-- Recipe Instructions -->
     <TextView
         android:id="@+id/recipe_instructions"
         android:layout_width="match_parent"
@@ -36,4 +44,18 @@
         android:textColor="@color/black"
         android:layout_marginBottom="8dp"/>
 
+    <!-- Button for options -->
+    <Button
+        android:id="@+id/options_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Options"/>
+
+    <!-- Distinctive Color Block -->
+    <TextView
+        android:id="@+id/color_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:layout_marginBottom="8dp"/>
 </LinearLayout>

@@ -1,6 +1,9 @@
 package com.example.foodhub;
 
 import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -227,15 +230,19 @@ public class homepage extends AppCompatActivity {
             JSONArray recipesArray = new JSONArray(jsonData);
             for (int i = 0; i < recipesArray.length(); i++) {
                 JSONObject recipeObject = recipesArray.getJSONObject(i);
+                String recipeId = recipeObject.getString("Recipe_ID");
                 String title = recipeObject.getString("Title");
                 String instructions = recipeObject.getString("Instructions");
                 String imageBase64 = recipeObject.getString("image");
 
                 View recipeView = getLayoutInflater().inflate(R.layout.recipe_item, null);
+                TextView recipeIdTextView = recipeView.findViewById(R.id.recipe_id);
                 TextView titleTextView = recipeView.findViewById(R.id.recipe_title);
                 TextView instructionsTextView = recipeView.findViewById(R.id.recipe_instructions);
                 ImageView recipeImageView = recipeView.findViewById(R.id.recipe_image);
+                Button optionsButton = recipeView.findViewById(R.id.options_button);
 
+                recipeIdTextView.setText("Recipe ID: " + recipeId);
                 titleTextView.setText(title);
                 instructionsTextView.setText(instructions);
 
@@ -244,12 +251,53 @@ public class homepage extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                 recipeImageView.setImageBitmap(bitmap);
 
+                optionsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showOptionsDialog(recipeObject);
+                    }
+                });
+
                 recipesContainer.addView(recipeView);
             }
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to parse recipes data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private void showOptionsDialog(JSONObject recipeObject) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Options")
+                .setItems(new CharSequence[]{ "Post","Delete"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                // Handle delete action
+                                PostRecipe(recipeObject);
+                                break;
+
+                            case 1:
+                                // Handle delete action
+                                deleteRecipe(recipeObject);
+                                break;
+                        }
+                    }
+                });
+        builder.show();
+    }
+
+
+    private void deleteRecipe(JSONObject recipeObject) {
+        // Implement the logic for deleting the recipe
+        // For example, you can make an API call to delete the recipe from the server
+    }
+
+    private void PostRecipe(JSONObject recipeObject) {
+        // Implement the logic for deleting the recipe
+        // For example, you can make an API call to delete the recipe from the server
     }
 
     private void openProfilePage() {
