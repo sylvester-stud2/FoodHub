@@ -17,8 +17,8 @@ import java.util.List;
 
 public class dietplan extends AppCompatActivity {
 
-    String getURL = "https://lamp.ms.wits.ac.za/mc/test.php";
-    String postURL ="https://lamp.ms.wits.ac.za/mc/test2.php";
+    String getURL = "https://lamp.ms.wits.ac.za/mc/Dietplan.php";
+    String postURL ="https://lamp.ms.wits.ac.za/mc/Dietplan.php";
 
     Intent intent;
     int userId;
@@ -39,36 +39,37 @@ public class dietplan extends AppCompatActivity {
         selectedIngredients = new ArrayList<>();
 
         // Set up checkboxes
-        setupCheckBox(R.id.allergic_checkbox, "Water");
-        setupCheckBox(R.id.vegan_checkbox1, "Baby tomatoes");
-        setupCheckBox(R.id.vegan_checkbox2, "Vinegar");
-        setupCheckBox(R.id.vegan_checkbox3, "Salt");
-        setupCheckBox(R.id.vegan_checkbox4, "Soy milk");
-        setupCheckBox(R.id.vegan_checkbox5, "Flour");
-        setupCheckBox(R.id.vegan_checkbox6, "Olive oil");
-        setupCheckBox(R.id.vegan_checkbox8, "Brown sugar");
-        setupCheckBox(R.id.vegan_checkbox9, "Rice");
-        setupCheckBox(R.id.vegan_checkbox10, "Nuts");
-        setupCheckBox(R.id.vegan_checkbox11, "Grains");
-        setupCheckBox(R.id.vegan_checkbox12, "Honey");
-        setupCheckBox(R.id.vegan_checkbox13, "Seeds");
-        setupCheckBox(R.id.vegan_checkbox14, "Broccoli");
-        setupCheckBox(R.id.vegan_checkbox15, "Carrots");
-        setupCheckBox(R.id.vegan_checkbox16, "Garlic");
-        setupCheckBox(R.id.vegan_checkbox17, "Onions");
-        setupCheckBox(R.id.vegan_checkbox18, "Herbs");
-        setupCheckBox(R.id.vegan_checkbox19, "Lemon");
-        setupCheckBox(R.id.vegan_checkbox20, "Spices (turmeric, paprika)");
-        setupCheckBox(R.id.vegan_checkbox21, "Soy sauce");
-        setupCheckBox(R.id.vegan_checkbox22, "Cauliflower");
-        setupCheckBox(R.id.vegan_checkbox23, "Avocado");
-        setupCheckBox(R.id.vegan_checkbox24, "Mushrooms");
-        setupCheckBox(R.id.vegan_checkbox25, "Spinach");
-        setupCheckBox(R.id.vegan_checkbox26, "Cocoa powder");
-        setupCheckBox(R.id.vegan_checkbox27, "Cinnamon");
-        setupCheckBox(R.id.vegan_checkbox28, "Banana");
-        setupCheckBox(R.id.vegan_checkbox29, "Oats");
-        setupCheckBox(R.id.vegan_checkbox30, "Dozen eggs");
+        setupCheckBox(R.id.allergic_checkbox, "Apples");
+        setupCheckBox(R.id.vegan_checkbox1, "Avocadoe");
+        setupCheckBox(R.id.vegan_checkbox2, "Bacon");
+        setupCheckBox(R.id.vegan_checkbox3, "Baking powder");
+        setupCheckBox(R.id.vegan_checkbox4, "Banana");
+        setupCheckBox(R.id.vegan_checkbox5, "Beans");
+        setupCheckBox(R.id.vegan_checkbox6, "Beef");
+        setupCheckBox(R.id.vegan_checkbox8, "Beetroot");
+        setupCheckBox(R.id.vegan_checkbox9, "Berries");
+        setupCheckBox(R.id.vegan_checkbox10, "Bread");
+        setupCheckBox(R.id.vegan_checkbox11, "Brocolli");
+        setupCheckBox(R.id.vegan_checkbox12, "Butter");
+        setupCheckBox(R.id.vegan_checkbox13, "Butternut");
+        setupCheckBox(R.id.vegan_checkbox14, "Carrot");
+        setupCheckBox(R.id.vegan_checkbox15, "Cereal");
+        setupCheckBox(R.id.vegan_checkbox16, "Cheese");
+        setupCheckBox(R.id.vegan_checkbox17, "Chicken");
+        setupCheckBox(R.id.vegan_checkbox18, "Cinnamon");
+        setupCheckBox(R.id.vegan_checkbox19, "Cream");
+        setupCheckBox(R.id.vegan_checkbox20, "Eggs");
+        setupCheckBox(R.id.vegan_checkbox21, "Fish");
+        setupCheckBox(R.id.vegan_checkbox22, "Flour");
+        setupCheckBox(R.id.vegan_checkbox23, "Garlic");
+        setupCheckBox(R.id.vegan_checkbox24, "Honey");
+        setupCheckBox(R.id.vegan_checkbox25, "Lettuce");
+        setupCheckBox(R.id.vegan_checkbox26, "Lemon");
+        setupCheckBox(R.id.vegan_checkbox27, "Maize meal");
+        setupCheckBox(R.id.vegan_checkbox28, "Mayonaise");
+        setupCheckBox(R.id.vegan_checkbox29, "Milk");
+        setupCheckBox(R.id.vegan_checkbox30, "Mushrooms");
+        setupCheckBox(R.id.vegan_checkbox31,"Oats");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
