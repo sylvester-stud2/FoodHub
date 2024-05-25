@@ -14,6 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/feature_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/blue"
@@ -99,6 +100,7 @@
                 android:src="@drawable/comment"
                 app:layout_constraintTop_toBottomOf="@id/postpic"
                 app:layout_constraintStart_toEndOf="@id/thumbsdown" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

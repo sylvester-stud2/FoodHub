@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class community extends AppCompatActivity {
 
+
     int userId;
     BottomNavigationView bottomNavigationView;
 
@@ -37,6 +38,7 @@ public class community extends AppCompatActivity {
             // Current item is already selected, do nothing
             return false;
         }
+
 
         Intent intent;
         if (item.getItemId() == R.id.home) {
