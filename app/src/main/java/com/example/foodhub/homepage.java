@@ -3,7 +3,6 @@ package com.example.foodhub;
 import android.app.ProgressDialog;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +32,8 @@ import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.RequestBody;
+import okhttp3.FormBody;
 
 public class homepage extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -293,7 +294,71 @@ public class homepage extends AppCompatActivity {
     private void deleteRecipe(JSONObject recipeObject) {
         // Implement the logic for deleting the recipe
         // For example, you can make an API call to delete the recipe from the server
+        try {
+            int recipeId = recipeObject.getInt("Recipe_ID");
+            new DeleteRecipeTask().execute(recipeId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to delete recipe", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    private class DeleteRecipeTask extends AsyncTask<Integer, Void, Boolean> {
+        private String errorMessage = "Failed to delete recipe";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+            int recipeId = params[0];
+            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/deleteRecipe.php";
+            RequestBody formBody = new FormBody.Builder()
+                    .add("recipe_id", String.valueOf(recipeId))
+                    .build();
+            Request request = new Request.Builder()
+                    .url(apiUrl)
+                    .post(formBody)
+                    .build();
+            try (Response response = client.newCall(request).execute()) {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    JSONObject jsonResponse = new JSONObject(responseBody);
+                    if (jsonResponse.getBoolean("success")) {
+                        return true;
+                    } else {
+                        errorMessage = jsonResponse.getString("error");
+                        return false;
+                    }
+                } else {
+                    errorMessage = "Server returned error: " + response.code();
+                    return false;
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+                errorMessage = "Exception: " + e.getMessage();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            super.onPostExecute(success);
+            progressDialog.dismiss();
+            if (success) {
+                Toast.makeText(homepage.this, "Recipe deleted successfully", Toast.LENGTH_SHORT).show();
+                // Refresh recipes list
+                recipesContainer.removeAllViews();
+                new FetchRecipesTask().execute();
+            } else {
+                Toast.makeText(homepage.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     private void PostRecipe(JSONObject recipeObject) {
         // Implement the logic for deleting the recipe
