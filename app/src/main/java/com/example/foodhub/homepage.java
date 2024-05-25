@@ -230,16 +230,19 @@ public class homepage extends AppCompatActivity {
             JSONArray recipesArray = new JSONArray(jsonData);
             for (int i = 0; i < recipesArray.length(); i++) {
                 JSONObject recipeObject = recipesArray.getJSONObject(i);
+                String recipeId = recipeObject.getString("Recipe_ID");
                 String title = recipeObject.getString("Title");
                 String instructions = recipeObject.getString("Instructions");
                 String imageBase64 = recipeObject.getString("image");
 
                 View recipeView = getLayoutInflater().inflate(R.layout.recipe_item, null);
+                TextView recipeIdTextView = recipeView.findViewById(R.id.recipe_id);
                 TextView titleTextView = recipeView.findViewById(R.id.recipe_title);
                 TextView instructionsTextView = recipeView.findViewById(R.id.recipe_instructions);
                 ImageView recipeImageView = recipeView.findViewById(R.id.recipe_image);
                 Button optionsButton = recipeView.findViewById(R.id.options_button);
 
+                recipeIdTextView.setText("Recipe ID: " + recipeId);
                 titleTextView.setText(title);
                 instructionsTextView.setText(instructions);
 
@@ -262,6 +265,7 @@ public class homepage extends AppCompatActivity {
             Toast.makeText(this, "Failed to parse recipes data", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void showOptionsDialog(JSONObject recipeObject) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
