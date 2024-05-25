@@ -1,8 +1,8 @@
 package com.example.foodhub;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,12 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -30,14 +32,25 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class CreateRecipe extends AppCompatActivity {
-    Intent intent;
-    int userId;
 
-
-    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int PICK_IMAGE_REQUEST = 101;
+    private static final String SERVER_URL = "https://lamp.ms.wits.ac.za/home/s2709514/CreateRecipe_yrr.php";
     private static final String[] PREDEFINED_INGREDIENTS = {
-            "Apples", "Avocado", "Bacon", "Baking powder", "Banana", "Beans", "Beef", "Beetroot", "Berries", "Bread", "Broccoli", "Butter", "Butternut", "Carrot", "Cereal", "Cheese", "Chicken", "Cinnamon", "Cream", "Eggs", "Fish", "Flour", "Garlic", "Honey", "Lettuce", "Lemon", "Maize meal", "Mayonnaise", "Milk", "Mushrooms", "Oats", "Oil", "Onion", "Parsley", "Pasta", "Pepper", "Potatoes", "Rice", "Salt", "Soup powder", "Spinach", "Steak", "Sugar", "Tomato sauce", "Tomato", "Vanilla essence", "Vinegar", "Water", "Yeast", "Yogurt", "Stock (beef/chicken)"
+            "Apples", "Avocado", "Bacon", "Baking powder", "Banana", "Beans", "Beef", "Beetroot",
+            "Berries", "Bread", "Broccoli", "Butter", "Butternut", "Carrot", "Cereal", "Cheese",
+            "Chicken", "Cinnamon", "Cream", "Eggs", "Fish", "Flour", "Garlic", "Honey", "Lettuce",
+            "Lemon", "Maize meal", "Mayonnaise", "Milk", "Mushrooms", "Oats", "Oil", "Onion",
+            "Parsley", "Pasta", "Pepper", "Potatoes", "Rice", "Salt", "Soup powder", "Spinach",
+            "Steak", "Sugar", "Tomato sauce", "Tomato", "Vanilla essence", "Vinegar", "Water",
+            "Yeast", "Yogurt", "Stock (beef/chicken)"
     };
 
     private LinearLayout ingredientsLayout;
@@ -45,13 +58,15 @@ public class CreateRecipe extends AppCompatActivity {
     private ImageView imagePreview;
     private Button submitButton;
     private Uri imageUri;
+    private int userId;
     private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-        intent = getIntent();
+
+        Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
 
         ingredientsLayout = findViewById(R.id.ingredientsLayout);
@@ -65,10 +80,9 @@ public class CreateRecipe extends AppCompatActivity {
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openImagePicker();
+                openFileChooser();
             }
         });
-
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,43 +94,59 @@ public class CreateRecipe extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == R.id.home) {
-                    // Handle home navigation
-                    Intent intent = new Intent(CreateRecipe.this, homepage.class);
-                    intent.putExtra("user_id", userId);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                } else if (itemId == R.id.community) {
-                    // Handle community navigation
-                    Intent intent = new Intent(CreateRecipe.this, community.class);
-                    intent.putExtra("user_id", userId);
-                    startActivity(intent);
-                    finish();return true;
-                } else if (itemId == R.id.filter) {
-                    // Handle filter navigation
-                    Intent intent = new Intent(CreateRecipe.this, dietplan.class);
-                    intent.putExtra("user_id", userId);
-                    startActivity(intent);
-                    finish();return true;
-                } else if (itemId == R.id.grocery_list) {
-                    // Handle grocery list navigation
-                    Intent intent = new Intent(CreateRecipe.this, Grocery.class);
-                    intent.putExtra("user_id", userId);
-                    startActivity(intent);
-                    finish();return true;
-                } else if (itemId == R.id.meal_planner) {
-                    // Handle meal planner navigation
-                    Intent intent = new Intent(CreateRecipe.this, weekplan.class);
-                    intent.putExtra("user_id", userId);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-                return false;
+                return handleNavigationItemSelected(item);
             }
         });
+    }
+
+    private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
+            // Current item is already selected, do nothing
+            return false;
+        }
+
+        Intent intent;
+        if (item.getItemId() == R.id.home) {
+            openHomePage();
+            return true;
+        } else if (item.getItemId() == R.id.community) {
+            openCommunityPage();
+            return true;
+        } else if (item.getItemId() == R.id.filter) {
+            openFilterPage();
+            return true;
+        } else if (item.getItemId() == R.id.grocery_list) {
+            openGroceryListPage();
+            return true;
+        } else if (item.getItemId() == R.id.meal_planner) {
+            openMealPlannerPage();
+            return true;
+        }
+
+        return true;
+    }
+
+    private void openFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                imagePreview.setImageBitmap(bitmap);
+                imagePreview.setVisibility(ImageView.VISIBLE);
+                submitButton.setVisibility(Button.VISIBLE);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void populateIngredients() {
@@ -124,25 +154,6 @@ public class CreateRecipe extends AppCompatActivity {
             CheckBox checkBox = new CheckBox(this);
             checkBox.setText(ingredient);
             ingredientsLayout.addView(checkBox);
-        }
-    }
-
-    private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            imageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                imagePreview.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -177,38 +188,39 @@ public class CreateRecipe extends AppCompatActivity {
             String imagePath = (String) params[3];
 
             try {
-                // Convert image to byte array
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(imagePath));
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] imageBytes = baos.toByteArray();
+                // Prepare the multipart request body
+                MultipartBody.Builder builder = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("user_id", String.valueOf(userId))
+                        .addFormDataPart("recipeName", recipeName)
+                        .addFormDataPart("instructions", instructions);
 
-                // Prepare URL and connection
-                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/CreateRecipe.php");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setDoOutput(true);
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-                DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-                dos.writeBytes("user_id=" + userId + "&recipeName=" + recipeName + "&instructions=" + instructions);
-                dos.writeBytes("&image=" + new String(imageBytes));
+                // Add ingredients
                 for (String ingredient : selectedIngredients) {
-                    dos.writeBytes("&ingredients[]=" + ingredient);
+                    builder.addFormDataPart("ingredients[]", ingredient);
                 }
-                dos.flush();
-                dos.close();
 
-                // Get response
-                InputStream is = conn.getInputStream();
-                ByteArrayOutputStream baosResponse = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = is.read(buffer)) != -1) {
-                    baosResponse.write(buffer, 0, length);
-                }
-                is.close();
-                return baosResponse.toString();
+                // Add image
+                InputStream inputStream = getContentResolver().openInputStream(Uri.parse(imagePath));
+                byte[] imageBytes = new byte[inputStream.available()];
+                inputStream.read(imageBytes);
+                inputStream.close();
+
+                builder.addFormDataPart("image", "image.jpg",
+                        RequestBody.create(MediaType.parse("image/*"), imageBytes));
+
+                RequestBody requestBody = builder.build();
+
+                // Create request
+                Request request = new Request.Builder()
+                        .url(SERVER_URL)
+                        .post(requestBody)
+                        .build();
+
+                // Execute request
+                OkHttpClient client = new OkHttpClient();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -221,4 +233,41 @@ public class CreateRecipe extends AppCompatActivity {
             Toast.makeText(CreateRecipe.this, result, Toast.LENGTH_LONG).show();
         }
     }
+
+
+    private void openHomePage() {
+        Intent intent = new Intent(CreateRecipe.this, homepage.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
+        finish();
+    }
+
+    private void openCommunityPage() {
+        Intent intent = new Intent(CreateRecipe.this, community.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
+        finish();
+    }
+
+    private void openFilterPage() {
+        Intent intent = new Intent(CreateRecipe.this, dietplan.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
+        finish();
+    }
+
+    private void openGroceryListPage() {
+        Intent intent = new Intent(CreateRecipe.this, Grocery.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
+        finish();
+    }
+
+    private void openMealPlannerPage() {
+        Intent intent = new Intent(CreateRecipe.this, weekplan.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
+        finish();
+    }
 }
+
