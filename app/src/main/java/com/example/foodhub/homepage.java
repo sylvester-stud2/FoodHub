@@ -10,8 +10,8 @@ import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,18 +33,12 @@ import okhttp3.Response;
 
 public class homepage extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
-
-
-    ImageView profile_image;
-    TextView name_txt;
-    Intent intent;
-
-    int userId;
-
+    private LinearLayout recipesContainer;
+    private ImageView profile_image;
+    private TextView name_txt;
+    private Intent intent;
+    private int userId;
     private OkHttpClient client;
-    private Response response;
-    private Request request;
-    String strJson, apiUrl;
     private ProgressDialog progressDialog;
 
     @Override
@@ -57,7 +51,6 @@ public class homepage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(homepage.this, CreateRecipe.class);
-
                 intent.putExtra("user_id", userId);
                 startActivity(intent);
                 finish();
@@ -67,6 +60,7 @@ public class homepage extends AppCompatActivity {
         // Initialize views
         profile_image = findViewById(R.id.profile_image_id);
         name_txt = findViewById(R.id.NameTest);
+        recipesContainer = findViewById(R.id.recipes_container);
 
         // Initialize OkHttpClient
         client = new OkHttpClient();
@@ -77,14 +71,14 @@ public class homepage extends AppCompatActivity {
 
         // Get email and user ID from intent
         intent = getIntent();
-
         userId = intent.getIntExtra("user_id", -1);
 
         // Construct API URL
-        apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/ProfileAndName.php?user_id=" + userId;
+        String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/getRecipes.php?user_id=" + userId;
 
         // Execute AsyncTask to fetch user data
         new GetUserDataRequest().execute();
+        new FetchRecipesTask().execute();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -110,16 +104,17 @@ public class homepage extends AppCompatActivity {
                 return handleNavigationItemSelected(item);
             }
         });
+
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.home);
         bottomNavigationView.setSelectedItemId(selectedItemId);
     }
+
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
             // Current item is already selected, do nothing
             return false;
         }
 
-        Intent intent;
         if (item.getItemId() == R.id.home) {
             openHomePage();
             return true;
@@ -140,19 +135,19 @@ public class homepage extends AppCompatActivity {
         return true;
     }
 
-    public class GetUserDataRequest extends AsyncTask<Void, Void, String> {
+    private class GetUserDataRequest extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.show(); // Show the ProgressDialog here
+            progressDialog.show();
         }
 
         @Override
         protected String doInBackground(Void... voids) {
-            // Create a form-encoded request body
-            request = new Request.Builder().url(apiUrl).build();
+            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/ProfileAndName.php?user_id=" + userId;
+            Request request = new Request.Builder().url(apiUrl).build();
             try {
-                response = client.newCall(request).execute();
+                Response response = client.newCall(request).execute();
                 return response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -163,13 +158,12 @@ public class homepage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            progressDialog.dismiss();
             if (result != null) {
                 updateUserData(result);
             } else {
-                // Handle the error
-                // You might want to show a message to the user here
+                Toast.makeText(homepage.this, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
             }
-            progressDialog.dismiss(); // Dismiss the ProgressDialog here
         }
     }
 
@@ -181,12 +175,8 @@ public class homepage extends AppCompatActivity {
             String firstName = child.getString("first_name");
 
             if (!imgBase64.isEmpty()) {
-                // Decode base64 to byte array
                 byte[] imageBytes = Base64.decode(imgBase64, Base64.DEFAULT);
-                // Convert byte array to Bitmap
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-
-                // Use Glide to load the Bitmap into the ImageView
                 Glide.with(this)
                         .load(bitmap)
                         .circleCrop()
@@ -200,10 +190,70 @@ public class homepage extends AppCompatActivity {
         }
     }
 
-    // Methods to open respective pages
+    private class FetchRecipesTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/getRecipes.php?user_id=" + userId;
+            Request request = new Request.Builder().url(apiUrl).build();
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+            if (result != null) {
+                displayRecipes(result);
+            } else {
+                Toast.makeText(homepage.this, "Failed to fetch recipes", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void displayRecipes(String jsonData) {
+        try {
+            JSONArray recipesArray = new JSONArray(jsonData);
+            for (int i = 0; i < recipesArray.length(); i++) {
+                JSONObject recipeObject = recipesArray.getJSONObject(i);
+                String title = recipeObject.getString("Title");
+                String instructions = recipeObject.getString("Instructions");
+                String imageBase64 = recipeObject.getString("image");
+
+                View recipeView = getLayoutInflater().inflate(R.layout.recipe_item, null);
+                TextView titleTextView = recipeView.findViewById(R.id.recipe_title);
+                TextView instructionsTextView = recipeView.findViewById(R.id.recipe_instructions);
+                ImageView recipeImageView = recipeView.findViewById(R.id.recipe_image);
+
+                titleTextView.setText(title);
+                instructionsTextView.setText(instructions);
+
+                // Decode base64 image and set to ImageView
+                byte[] imageBytes = Base64.decode(imageBase64, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                recipeImageView.setImageBitmap(bitmap);
+
+                recipesContainer.addView(recipeView);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to parse recipes data", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void openProfilePage() {
         Intent intent = new Intent(homepage.this, Profile.class);
-
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -211,7 +261,6 @@ public class homepage extends AppCompatActivity {
     }
 
     private void openHomePage() {
-        // Already implemented to open CreateProfile page
         Intent intent = new Intent(homepage.this, community.class);
         intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
@@ -222,9 +271,7 @@ public class homepage extends AppCompatActivity {
 
     private void openCommunityPage() {
         Intent intent = new Intent(homepage.this, community.class);
-
         intent.putExtra("selected_item_id", R.id.community);
-
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -233,9 +280,7 @@ public class homepage extends AppCompatActivity {
 
     private void openFilterPage() {
         Intent intent = new Intent(homepage.this, dietplan.class);
-
         intent.putExtra("selected_item_id", R.id.filter);
-
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -243,11 +288,8 @@ public class homepage extends AppCompatActivity {
     }
 
     private void openGroceryListPage() {
-        // You need to implement this method
         Intent intent = new Intent(homepage.this, Grocery.class);
-
         intent.putExtra("selected_item_id", R.id.grocery_list);
-
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
@@ -255,11 +297,8 @@ public class homepage extends AppCompatActivity {
     }
 
     private void openMealPlannerPage() {
-        // You need to implement this method
         Intent intent = new Intent(homepage.this, weekplan.class);
-
         intent.putExtra("selected_item_id", R.id.meal_planner);
-
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);
