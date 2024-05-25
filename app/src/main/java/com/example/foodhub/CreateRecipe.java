@@ -68,6 +68,18 @@ public class CreateRecipe extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
+        Button backToHome = findViewById(R.id.back);
+        backToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateRecipe.this, homepage.class);
+                intent.putExtra("selected_item_id", R.id.home);
+                intent.putExtra("user_id", userId);
+                overridePendingTransition(0, 0);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         ingredientsLayout = findViewById(R.id.ingredientsLayout);
         uploadImageButton = findViewById(R.id.uploadImageButton);
@@ -97,6 +109,9 @@ public class CreateRecipe extends AppCompatActivity {
                 return handleNavigationItemSelected(item);
             }
         });
+
+        int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.home);
+        bottomNavigationView.setSelectedItemId(selectedItemId);
     }
 
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
@@ -105,7 +120,6 @@ public class CreateRecipe extends AppCompatActivity {
             return false;
         }
 
-        Intent intent;
         if (item.getItemId() == R.id.home) {
             openHomePage();
             return true;
@@ -237,7 +251,9 @@ public class CreateRecipe extends AppCompatActivity {
 
     private void openHomePage() {
         Intent intent = new Intent(CreateRecipe.this, homepage.class);
+        intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
+        overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
