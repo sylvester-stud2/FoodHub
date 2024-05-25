@@ -64,10 +64,10 @@ public class community extends AppCompatActivity {
                 }
 
                 private void openFilter() {
-                    Intent intent = new Intent(community.this, dietplan.class);
-                    intent.putExtra("user_id", userId);
-                    startActivity(intent);
-                    finish();
+                //    Intent intent = new Intent(community.this, dietplan.class);
+                //    intent.putExtra("user_id", userId);
+                //    startActivity(intent);
+                //    finish();
                 }
 
                 private void openHome() {

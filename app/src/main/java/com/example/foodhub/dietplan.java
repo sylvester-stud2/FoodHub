@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class dietplan extends AppCompatActivity {
+
+    String getURL = "https://lamp.ms.wits.ac.za/mc/test.php";
+    String postURL ="https://lamp.ms.wits.ac.za/mc/test2.php";
+
     Intent intent;
     int userId;
     String emailToChange;
@@ -162,10 +166,10 @@ public class dietplan extends AppCompatActivity {
     }
 
     private void openFilterPage() {
-//        Intent intent = new Intent(dietplan.this, dietplan.class);
-//        intent.putExtra("user_id", userId);
-//        startActivity(intent);
-//        finish();
+        Intent intent = new Intent(dietplan.this, dietplan.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
+        finish();
     }
 
     private void openGroceryListPage() {
