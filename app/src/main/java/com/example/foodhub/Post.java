@@ -6,6 +6,8 @@ public class Post {
     private String imageUrl;
     private String ingredients;
     private int recipeId;
+    private String imageBase64;
+
 
     public String getTitle() {
         return title;
@@ -45,5 +47,13 @@ public class Post {
 
     public int getRecipeId() {
         return recipeId;
+    }
+
+    public byte[] getImageBase64() {
+        return imageBase64.getBytes();
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
     }
 }
