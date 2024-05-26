@@ -666,6 +666,7 @@
                     android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Mushrooms"
+
                     android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
@@ -795,6 +796,7 @@
                     android:textColor="#E91E63" />
             </LinearLayout>
             <LinearLayout
+
                 android:id="@+id/linearLayout37"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -834,7 +836,9 @@
                     android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Rice"
+
                     android:textColor="#E91E63" />
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout39"
@@ -876,7 +880,9 @@
                     android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Soup powder"
+
                     android:textColor="#E91E63" />
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout41"
@@ -918,7 +924,9 @@
                     android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Steak"
+
                     android:textColor="#E91E63" />
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout43"
@@ -960,7 +968,9 @@
                     android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Tomato sauce"
+
                     android:textColor="#E91E63" />
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout45"
@@ -1002,7 +1012,9 @@
                     android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Vanilla essence"
+
                     android:textColor="#E91E63" />
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout47"
@@ -1044,7 +1056,9 @@
                     android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Water"
+
                     android:textColor="#E91E63" />
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout49"
@@ -1086,7 +1100,9 @@
                     android:textSize="20dp"
                     android:layout_height="wrap_content"
                     android:text="Yogurt"
+
                     android:textColor="#E91E63" />
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearLayout51"
