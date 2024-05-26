@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
@@ -11,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="518dp"
         android:padding="16dp">
 
         <ImageView
@@ -19,9 +20,9 @@
             android:layout_width="70dp"
             android:layout_height="75dp"
             android:contentDescription="Profile picture"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/postpic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/profile" />
 
         <TextView
@@ -38,26 +39,34 @@
 
         <ImageView
             android:id="@+id/postpic"
-            android:layout_width="0dp"
+            android:layout_width="347dp"
             android:layout_height="188dp"
+            android:background="@color/cyan"
             android:contentDescription="Post Recipe Image"
-            app:layout_constraintBottom_toTopOf="@id/instructions"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profilename"
-            android:background="@color/cyan"/>
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="103dp" />
+
+        <TextView
+            android:id="@+id/recipe_title"
+            android:layout_width="344dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="12dp"
+            android:text="Recipe Title"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/postpic"
+            tools:layout_editor_absoluteX="0dp" />
 
         <TextView
             android:id="@+id/instructions"
-            android:layout_width="0dp"
+            android:layout_width="347dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:text="Instructions"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/postpic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/recipe_title"
+            tools:layout_editor_absoluteX="2dp" />
 
         <TextView
             android:id="@+id/ingredients"
@@ -67,9 +76,65 @@
             android:text="Ingredients"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/instructions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/instructions" />
+
+        <Button
+            android:id="@+id/makefriend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:text="+ friend"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="246dp"
+            tools:layout_editor_absoluteY="30dp" /><![CDATA[
+
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="90dp" />
+
+
+
+
+
+        ]]>
+
+        <ImageView
+            android:id="@+id/thumbsup"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:onClick="onThumbsUpClicked"
+            android:src="@drawable/thumbsup"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="3dp" />
+
+        <ImageView
+            android:id="@+id/thumbsdown"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:onClick="onThumbsDownClicked"
+            android:src="@drawable/thumbsdown"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="68dp" />
+
+        <ImageView
+            android:id="@+id/comment"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="17dp"
+            android:clickable="true"
+            android:onClick="onCommentClicked"
+            android:src="@drawable/comment"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="137dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
