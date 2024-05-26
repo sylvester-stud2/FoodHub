@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/smoke"
+    android:background="@color/cyan"
     >
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
+        android:backgroundTint="#2B2F30"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/cyan"
+                android:background="@color/black"
                 android:padding="10dp">
 
                 <ImageView
@@ -67,7 +68,7 @@
                     android:layout_margin="20dp"
                     android:backgroundTint="@color/blue"
 
-                    android:text="Create A receipe from scrath ~ Nara Smith" />
+                    android:text="Create A receipe from scratch ~ Nara Smith" />
 
 
             </LinearLayout>
@@ -77,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+
                 android:padding="16dp" />
 
             <!-- Bottom Buttons -->
