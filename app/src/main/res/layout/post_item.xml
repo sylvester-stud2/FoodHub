@@ -43,9 +43,9 @@
             android:layout_height="188dp"
             android:background="@color/cyan"
             android:contentDescription="Post Recipe Image"
+            tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="2dp"
-            tools:layout_editor_absoluteY="103dp"
-            tools:ignore="MissingConstraints" />
+            tools:layout_editor_absoluteY="103dp" />
 
         <TextView
             android:id="@+id/recipe_title"
@@ -56,33 +56,31 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/postpic"
-            tools:layout_editor_absoluteX="0dp"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp" />
 
         <TextView
             android:id="@+id/instructions"
             android:layout_width="347dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="Instructions"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_title"
-            tools:layout_editor_absoluteX="2dp"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp" />
 
         <TextView
             android:id="@+id/ingredients"
-            android:layout_width="0dp"
+            android:layout_width="347dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="Ingredients"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/instructions" />
+            app:layout_constraintTop_toBottomOf="@+id/recipe_title"
+            tools:layout_editor_absoluteX="1dp" />
 
         <Button
             android:id="@+id/makefriend"
@@ -91,9 +89,9 @@
             android:backgroundTint="@color/black"
             android:text="+ friend"
             android:textColor="@color/white"
+            tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="246dp"
-            tools:layout_editor_absoluteY="30dp"
-            tools:ignore="MissingConstraints" />
+            tools:layout_editor_absoluteY="30dp" />
 
         <ImageView
             android:id="@+id/thumbsup"
@@ -103,9 +101,9 @@
             android:clickable="true"
             android:onClick="onThumbsUpClicked"
             android:src="@drawable/thumbsup"
-            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            app:layout_constraintTop_toBottomOf="@+id/instructions"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="3dp" />
+            tools:layout_editor_absoluteX="-1dp" />
 
         <ImageView
             android:id="@+id/thumbsdown"
@@ -115,21 +113,21 @@
             android:clickable="true"
             android:onClick="onThumbsDownClicked"
             android:src="@drawable/thumbsdown"
-            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            app:layout_constraintTop_toBottomOf="@+id/instructions"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="68dp" />
+            tools:layout_editor_absoluteX="65dp" />
 
         <ImageView
             android:id="@+id/comment"
             android:layout_width="49dp"
             android:layout_height="49dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:onClick="onCommentClicked"
             android:src="@drawable/comment"
-            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            app:layout_constraintTop_toBottomOf="@+id/instructions"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="137dp" />
+            tools:layout_editor_absoluteX="130dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

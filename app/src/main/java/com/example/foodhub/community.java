@@ -1,6 +1,5 @@
 package com.example.foodhub;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,10 +28,13 @@ import java.util.List;
 
 public class community extends AppCompatActivity {
 
+
+
     private LinearLayout postsContainer;
     private BottomNavigationView bottomNavigationView;
     private Intent intent;
     private int userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class community extends AppCompatActivity {
         postsContainer = findViewById(R.id.posts_container);
         bottomNavigationView = findViewById(R.id.bottom_navcomm);
 
-        fetchPostDetails(); // Call the function to fetch post details
+        fetchPosts();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -57,11 +58,10 @@ public class community extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(selectedItemId);
     }
 
-    private void fetchPostDetails() {
-        String url = "https://lamp.ms.wits.ac.za/home/s2709514/getpostdetails.php"; // Use the getpostdetails.php URL
-        new FetchPostDetailsTask().execute(url);
+    private void fetchPosts() {
+        String url = "https://lamp.ms.wits.ac.za/home/s2709514/fetch_posts.php";
+        new FetchPostsTask().execute(url);
     }
-
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
             // Current item is already selected, do nothing
@@ -83,6 +83,7 @@ public class community extends AppCompatActivity {
         return true;
     }
 
+
     private void openHomePage() {
         // Already implemented to open CreateProfile page
         Intent intent = new Intent(community.this, homepage.class);
@@ -94,7 +95,12 @@ public class community extends AppCompatActivity {
     }
 
     private void openCommunityPage() {
-        // Implement if needed
+//        Intent intent = new Intent(community.this, community.class);
+//        intent.putExtra("selected_item_id", R.id.community);
+//        intent.putExtra("user_id", userId);
+//        overridePendingTransition(0, 0);
+//        startActivity(intent);
+//        finish();
     }
 
     private void openFriendsPage() {
@@ -106,7 +112,7 @@ public class community extends AppCompatActivity {
         finish();
     }
 
-    private class FetchPostDetailsTask extends AsyncTask<String, Void, String> {
+    private class FetchPostsTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
             return getJsonResponseFromUrl(urls[0]);
@@ -173,30 +179,7 @@ public class community extends AppCompatActivity {
 
             Glide.with(this).load(post.getImageUrl()).into(postPic);
 
-            // Add OnClickListener to postPic ImageView to display details when clicked
-            postPic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showPostDetails(post);
-                }
-            });
-
             postsContainer.addView(postView);
         }
-    }
-
-    // Function to show post details when postPic is clicked
-    private void showPostDetails(Post post) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(post.getTitle());
-        builder.setMessage("Ingredients: " + post.getIngredients() + "\n\nInstructions: " + post.getInstructions());
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 }
