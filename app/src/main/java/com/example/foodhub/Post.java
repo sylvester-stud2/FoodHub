@@ -5,6 +5,7 @@ public class Post {
     private String instructions;
     private String imageUrl;
     private String ingredients;
+    private int recipeId;
 
     public String getTitle() {
         return title;
@@ -36,5 +37,13 @@ public class Post {
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
     }
 }
