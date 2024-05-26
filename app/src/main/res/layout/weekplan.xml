@@ -75,6 +75,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/monday_breakfast_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -83,7 +84,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -109,6 +111,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/monday_lunch_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -117,7 +120,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -143,6 +147,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/monday_supper_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -151,14 +156,12 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Add some spacing between days -->
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,6 +201,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/tuesday_breakfast_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -206,7 +210,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -232,6 +237,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/tuesday_lunch_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -240,7 +246,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -266,6 +273,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/tuesday_supper_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -274,12 +282,10 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
             </LinearLayout>
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -319,6 +325,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/wednesday_breakfast_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -327,7 +334,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -353,6 +361,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/wednesday_lunch_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -361,7 +370,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -387,6 +397,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/wednesday_supper_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -395,12 +406,11 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
             </LinearLayout>
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -440,6 +450,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/thursday_breakfast_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -448,7 +459,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -474,6 +486,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/thursday_lunch_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -482,7 +495,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -508,6 +522,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/thursday_supper_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -516,12 +531,10 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
             </LinearLayout>
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -530,7 +543,7 @@
 
                 <!-- TextView for Monday title -->
                 <TextView
-                    android:id="@+id/friday_title"
+                    android:id="@+id/Friday_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -561,6 +574,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/friday_breakfast_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -569,7 +583,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -595,6 +610,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/friday_lunch_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -603,7 +619,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -629,6 +646,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/friday_supper_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -637,12 +655,10 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
             </LinearLayout>
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -682,6 +698,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/saturday_breakfast_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -690,7 +707,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -716,6 +734,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/saturday_lunch_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -724,7 +743,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -750,6 +770,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/saturday_supper_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -758,12 +779,10 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
             </LinearLayout>
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -803,6 +822,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/sunday_breakfast_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -811,7 +831,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -837,6 +858,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/sunday_lunch_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -845,7 +867,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
 
                 <!-- Add some spacing -->
@@ -871,6 +894,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        android:id="@+id/sunday_supper_select"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -879,29 +903,25 @@
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="16dp" />
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onSelectMealClick" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Tuesday -->
-
-            <!-- Repeat for the remaining days -->
+            <!-- Add other days in a similar way -->
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation View -->
+    <!-- Bottom navigation view -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         app:itemIconTint="@color/blue"
         app:itemTextColor="@color/blue"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@layout/bottom_nav_menu" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

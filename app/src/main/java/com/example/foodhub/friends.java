@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class friends extends AppCompatActivity {
+    private Intent intent;
 
     int userId;
     BottomNavigationView bottomNavigationView;
@@ -47,30 +48,18 @@ public class friends extends AppCompatActivity {
         } else if (item.getItemId() == R.id.community) {
             openCommunityPage();
             return true;
-        } else if (item.getItemId() == R.id.filter) {
-            openFilterPage();
-            return true;
-        } else if (item.getItemId() == R.id.grocery_list) {
-            openGroceryListPage();
-            return true;
-        } else if (item.getItemId() == R.id.meal_planner) {
-            openMealPlannerPage();
+        } else if (item.getItemId() == R.id.friends) {
+            openFriendsPage();
             return true;
         }
 
         return true;
     }
-    private void openProfilePage() {
-        Intent intent = new Intent(friends.this, Profile.class);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
-    }
+
 
     private void openHomePage() {
         // Already implemented to open CreateProfile page
-        Intent intent = new Intent(friends.this, community.class);
+        Intent intent = new Intent(friends.this, homepage.class);
         intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
@@ -87,32 +76,14 @@ public class friends extends AppCompatActivity {
         finish();
     }
 
-    private void openFilterPage() {
-        Intent intent = new Intent(friends.this, dietplan.class);
-        intent.putExtra("selected_item_id", R.id.filter);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
+    private void openFriendsPage() {
+//        Intent intent = new Intent(friends.this, friends.class);
+//        intent.putExtra("selected_item_id", R.id.friends);
+//        intent.putExtra("user_id", userId);
+//        overridePendingTransition(0, 0);
+//        startActivity(intent);
+//        finish();
     }
 
-    private void openGroceryListPage() {
-        // You need to implement this method
-        Intent intent = new Intent(friends.this, Grocery.class);
-        intent.putExtra("selected_item_id", R.id.grocery_list);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
-    }
 
-    private void openMealPlannerPage() {
-        // You need to implement this method
-        Intent intent = new Intent(friends.this, weekplan.class);
-        intent.putExtra("selected_item_id", R.id.meal_planner);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
-    }
 }
