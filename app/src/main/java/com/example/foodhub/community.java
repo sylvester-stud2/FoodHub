@@ -1,5 +1,6 @@
 package com.example.foodhub;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ public class community extends AppCompatActivity {
     int userId;
     BottomNavigationView bottomNavigationView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,20 +57,12 @@ public class community extends AppCompatActivity {
             openMealPlannerPage();
             return true;
         }
-
         return true;
-    }
-    private void openProfilePage() {
-        Intent intent = new Intent(community.this, Profile.class);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
     }
 
     private void openHomePage() {
         // Already implemented to open CreateProfile page
-        Intent intent = new Intent(community.this, community.class);
+        Intent intent = new Intent(community.this, homepage.class);
         intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
@@ -78,7 +72,7 @@ public class community extends AppCompatActivity {
 
     private void openFriendPage() {
         Intent intent = new Intent(community.this, friends.class);
-        intent.putExtra("selected_item_id", R.id.community);
+        intent.putExtra("selected_item_id", R.id.friends);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
         startActivity(intent);

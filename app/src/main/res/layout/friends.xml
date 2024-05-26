@@ -54,7 +54,6 @@
             android:layout_gravity="bottom"
             app:itemIconTint="@color/blue"
             app:itemTextColor="@color/blue"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

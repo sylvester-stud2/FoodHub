@@ -60,17 +60,10 @@ public class friends extends AppCompatActivity {
 
         return true;
     }
-    private void openProfilePage() {
-        Intent intent = new Intent(friends.this, Profile.class);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
-    }
 
     private void openHomePage() {
         // Already implemented to open CreateProfile page
-        Intent intent = new Intent(friends.this, community.class);
+        Intent intent = new Intent(friends.this, homepage.class);
         intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
