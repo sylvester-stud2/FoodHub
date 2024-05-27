@@ -1,5 +1,6 @@
 package com.example.foodhub;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -58,7 +62,6 @@ public class community extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
 
-        fetchPosts();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -72,9 +75,10 @@ public class community extends AppCompatActivity {
     }
 
     private void fetchPosts() {
-        String url = "https://lamp.ms.wits.ac.za/home/s2709514/getpostdetails.php";
+        String url = "https://lamp.ms.wits.ac.za/home/s2709514/postdetails.php";
         new FetchPostsTask().execute(url);
     }
+
 
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
@@ -117,6 +121,7 @@ public class community extends AppCompatActivity {
         finish();
     }
 
+
     private class FetchPostsTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -124,7 +129,6 @@ public class community extends AppCompatActivity {
             progressDialog.show();
         }
 
-        @Override
         protected String doInBackground(String... urls) {
             String apiUrl = urls[0];
             Request request = new Request.Builder().url(apiUrl).build();
@@ -142,56 +146,60 @@ public class community extends AppCompatActivity {
             super.onPostExecute(jsonResponse);
             progressDialog.dismiss();
             if (jsonResponse != null) {
-                try {
-                    Log.d("community", "JSON Response: " + jsonResponse);
-                    JSONArray postsArray = new JSONArray(jsonResponse);
-                    List<Post> posts = new ArrayList<>();
-
-                    for (int i = 0; i < postsArray.length(); i++) {
-                        JSONObject postObject = postsArray.getJSONObject(i);
-                        Post post = new Post();
-                        post.setTitle(postObject.getString("Title"));
-                        post.setInstructions(postObject.getString("Instructions"));
-                        post.setImageBase64(postObject.getString("image"));
-                        post.setIngredients(postObject.getString("Ingredients"));
-                        posts.add(post);
-                    }
-
-                    // Call method to display posts
-                    displayPosts(posts);
-                } catch (JSONException e) {
-                    Log.e("community", "Error parsing JSON data", e);
-                }
+                displayPosts(jsonResponse);
             } else {
                 Toast.makeText(community.this, "Failed to fetch posts", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void displayPosts(List<Post> posts) {
-        // Clear existing posts before adding new ones
-        postsContainer.removeAllViews();
+    private void displayPosts(String jsonData) {
 
-        for (Post post : posts) {
-            View postView = LayoutInflater.from(this).inflate(R.layout.post_item, postsContainer, false);
+        // Inside displayPosts method
+        Log.d("JSON_RESPONSE", "Response: " + jsonData); // Check if jsonData is not null and contains expected data
+        try {
+            JSONArray posts = new JSONArray(jsonData);
+            for (int i = 0; i < posts.length(); i++) {
+                JSONObject postObject = posts.getJSONObject(i);
+                Log.d("POST_DATA", "Post Object: " + postObject.toString()); // Check if each post object is parsed correctly
+                // Remaining code...
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage()); // Log JSON parsing errors
+        }
 
-            TextView profileName = postView.findViewById(R.id.profilename);
-            ImageView postPic = postView.findViewById(R.id.postpic);
-            TextView recipeTitle = postView.findViewById(R.id.recipe_title);
-            TextView instructions = postView.findViewById(R.id.instructions);
-            TextView ingredients = postView.findViewById(R.id.ingredients);
 
-            profileName.setText(post.getTitle());
-            recipeTitle.setText(post.getTitle());
-            instructions.setText(post.getInstructions());
-            ingredients.setText(post.getIngredients());
+        try {
+            JSONArray Posts = new JSONArray(jsonData);
+            for (int i = 0; i < Posts.length(); i++) {
+                JSONObject postObject = Posts.getJSONObject(i);
+                String ingredients = postObject.getString("Ingredients");
+                String title = postObject.getString("Title");
+                String instructions = postObject.getString("Instructions");
+                String imageBase64 = postObject.getString("Image");
 
-            // Decode base64 image and set to ImageView
-            byte[] imageBytes = Base64.decode(post.getImageBase64(), Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-            postPic.setImageBitmap(bitmap);
+                View postView = LayoutInflater.from(this).inflate(R.layout.post_item, postsContainer, false);
+                TextView ingredientsview = postView.findViewById(R.id.ingredients);
+                TextView titleview = postView.findViewById(R.id.recipe_title);
+                TextView instructionsview = postView.findViewById(R.id.instructions);
+                ImageView postPic = postView.findViewById(R.id.postpic);
 
-            postsContainer.addView(postView);
+                ingredientsview.setText(ingredients);
+                titleview.setText(title);
+                instructionsview.setText(instructions);
+
+                // Decode base64 image and set to ImageView
+                byte[] imageBytes = Base64.decode(imageBase64, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                postPic.setImageBitmap(bitmap);
+
+                postsContainer.addView(postView);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to parse recipes data", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
