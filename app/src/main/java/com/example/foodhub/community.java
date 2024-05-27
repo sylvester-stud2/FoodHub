@@ -1,5 +1,6 @@
 package com.example.foodhub;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,40 +14,51 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class community extends AppCompatActivity {
-
-
 
     private LinearLayout postsContainer;
     private BottomNavigationView bottomNavigationView;
     private Intent intent;
     private int userId;
 
+    // Instances of Comment and Rate classes
+    private Comment commentManager;
+    private Rate rateManager;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community);
+
         intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
 
         postsContainer = findViewById(R.id.posts_container);
         bottomNavigationView = findViewById(R.id.bottom_navcomm);
 
+        // Initialize instances of Comment and Rate classes
+        commentManager = new Comment(this, (RecyclerView) findViewById(R.id.comments_recycler_view));
+        rateManager = new Rate();
+
         fetchPosts();
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -62,6 +74,7 @@ public class community extends AppCompatActivity {
         String url = "https://lamp.ms.wits.ac.za/home/s2709514/fetch_posts.php";
         new FetchPostsTask().execute(url);
     }
+
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
             // Current item is already selected, do nothing
@@ -83,9 +96,7 @@ public class community extends AppCompatActivity {
         return true;
     }
 
-
     private void openHomePage() {
-        // Already implemented to open CreateProfile page
         Intent intent = new Intent(community.this, homepage.class);
         intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
@@ -95,12 +106,7 @@ public class community extends AppCompatActivity {
     }
 
     private void openCommunityPage() {
-//        Intent intent = new Intent(community.this, community.class);
-//        intent.putExtra("selected_item_id", R.id.community);
-//        intent.putExtra("user_id", userId);
-//        overridePendingTransition(0, 0);
-//        startActivity(intent);
-//        finish();
+        // Already implemented to open Community page
     }
 
     private void openFriendsPage() {
@@ -179,7 +185,23 @@ public class community extends AppCompatActivity {
 
             Glide.with(this).load(post.getImageUrl()).into(postPic);
 
+            // Fetch and display comments for this post
+            fetchCommentsForPost(post.getPostId());
+
+            // Fetch and display ratings for this post
+            fetchRatingsForPost(post.getPostId());
+
             postsContainer.addView(postView);
         }
+    }
+
+    // Method to fetch comments for a post
+    private void fetchCommentsForPost(int postId) {
+        commentManager.fetchComments(postId);
+    }
+
+    // Method to fetch ratings for a post
+    private void fetchRatingsForPost(int postId) {
+        rateManager.fetchRatings(postId);
     }
 }

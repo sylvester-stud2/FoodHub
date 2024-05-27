@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="thumbs_down" type="id">4</item>
+    <item name="thumbs_up" type="id">8</item>
+    <item name="username_text_view" type="id">name</item>
+    <item name="comment_text_view" type="id">com</item>
+    <item name="comments_recycler_view" type="id">5</item>
+</resources>

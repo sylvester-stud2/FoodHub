@@ -37,4 +37,16 @@ public class Post {
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
+
+    public int getId() {
+        return 0;
+    }
+
+    public void setId(int id) {
+        return;
+    }
+
+    public int getPostId() {
+        return 0;
+    }
 }
