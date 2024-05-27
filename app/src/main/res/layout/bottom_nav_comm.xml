@@ -15,7 +15,10 @@
         android:id="@+id/friends"
         android:icon="@drawable/friends"
         android:title="Friends" />
-
+    <item
+        android:id="@+id/meal_planner"
+        android:icon="@drawable/plan"
+        android:title="Meal Plan" />
 
 
 </menu>

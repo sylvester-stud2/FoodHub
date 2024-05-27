@@ -118,6 +118,10 @@ public class community extends AppCompatActivity {
             openFilterPage();
             return true;
         }
+        else if (item.getItemId() == R.id.meal_planner) {
+            openPlannerPage();
+            return true;
+        }
 
         return true;
     }
@@ -303,6 +307,19 @@ public class community extends AppCompatActivity {
                     Log.d("ProfileImage", "Profile image base64 string is empty");
                 }
 
+                // Add an "Add to Meal Planner" button
+                Button addToMealPlannerButton = new Button(this);
+                addToMealPlannerButton.setText("Add to Meal Planner");
+                addToMealPlannerButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showAddToMealPlannerDialog(recipeObject);
+                    }
+                });
+
+                // Add the button to the recipe view
+                ((LinearLayout) recipeView).addView(addToMealPlannerButton);
+
                 // Add the recipe view to the top of the container
                 recipesContainer.addView(recipeView, 0);
             }
@@ -375,6 +392,12 @@ public class community extends AppCompatActivity {
         Intent intent = new Intent(community.this, dietplan.class);
         intent.putExtra("user_id", userId);
         intent.putExtra("selected_item_id", R.id.filter);
+        startActivity(intent);
+        finish();
+    }private void openPlannerPage() {
+        Intent intent = new Intent(community.this, weekplan.class);
+        intent.putExtra("user_id", userId);
+        intent.putExtra("selected_item_id", R.id.meal_planner);
         startActivity(intent);
         finish();
     }
