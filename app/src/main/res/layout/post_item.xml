@@ -1,108 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/white">
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/white">
+        android:layout_height="518dp"
+        android:padding="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/profilepic"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:contentDescription="Profile picture"
+            app:layout_constraintBottom_toTopOf="@id/postpic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/profilename"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/profilepic"
+            app:layout_constraintStart_toEndOf="@id/profilepic"
+            app:layout_constraintTop_toTopOf="@id/profilepic" />
+
+        <ImageView
+            android:id="@+id/postpic"
+            android:layout_width="347dp"
+            android:layout_height="188dp"
+            android:background="@color/cyan"
+            android:contentDescription="Post Recipe Image"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="103dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/recipe_title"
+            android:layout_width="344dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="12dp"
+            android:text="Recipe Title"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/postpic"
+            tools:layout_editor_absoluteX="0dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/instructions"
+            android:layout_width="347dp"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_marginTop="12dp"
+            android:text="Instructions"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_title"
+            tools:layout_editor_absoluteX="2dp"
+            tools:ignore="MissingConstraints" />
 
-            <ImageView
-                android:id="@+id/profilepic"
-                android:layout_width="70dp"
-                android:layout_height="75dp"
-                android:contentDescription="Profile picture"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/postpic"
-                app:srcCompat="@drawable/profile" />
+        <TextView
+            android:id="@+id/ingredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ingredients"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/instructions" />
 
-            <TextView
-                android:id="@+id/profilename"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:text="Name"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/profilepic"
-                app:layout_constraintStart_toEndOf="@id/profilepic"
-                app:layout_constraintTop_toTopOf="@id/profilepic" />
+        <Button
+            android:id="@+id/makefriend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:text="+ friend"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="246dp"
+            tools:layout_editor_absoluteY="30dp"
+            tools:ignore="MissingConstraints" />
 
-            <ImageView
-                android:id="@+id/postpic"
-                android:layout_width="0dp"
-                android:layout_height="188dp"
-                android:contentDescription="Post Recipe Image"
-                app:layout_constraintBottom_toTopOf="@id/instructions"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profilename"
-                android:background="@color/cyan"/>
+        <ImageView
+            android:id="@+id/thumbsup"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:onClick="onThumbsUpClicked"
+            android:src="@drawable/thumbsup"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="3dp" />
 
-            <TextView
-                android:id="@+id/instructions"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Instructions"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/postpic"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+        <ImageView
+            android:id="@+id/thumbsdown"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:onClick="onThumbsDownClicked"
+            android:src="@drawable/thumbsdown"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="68dp" />
 
-            <TextView
-                android:id="@+id/ingredients"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Ingredients"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/instructions"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+        <ImageView
+            android:id="@+id/comment"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="17dp"
+            android:clickable="true"
+            android:onClick="onCommentClicked"
+            android:src="@drawable/comment"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="137dp" />
 
-            <LinearLayout
-                android:id="@+id/rating_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/ingredients"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <TextView
-                    android:id="@+id/thumbs_up_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Thumbs Up: 0"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:layout_marginEnd="16dp"/>
-
-                <TextView
-                    android:id="@+id/thumbs_down_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Thumbs Down: 0"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

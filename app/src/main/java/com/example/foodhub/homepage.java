@@ -226,6 +226,7 @@ public class homepage extends AppCompatActivity {
     }
 
     private void displayRecipes(String jsonData) {
+
         try {
             JSONArray recipesArray = new JSONArray(jsonData);
             for (int i = 0; i < recipesArray.length(); i++) {

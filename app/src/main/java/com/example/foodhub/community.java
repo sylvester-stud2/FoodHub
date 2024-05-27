@@ -1,6 +1,6 @@
 package com.example.foodhub;
 
-import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,22 +13,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class community extends AppCompatActivity {
 
@@ -37,28 +35,17 @@ public class community extends AppCompatActivity {
     private Intent intent;
     private int userId;
 
-    // Instances of Comment and Rate classes
-    private Comment commentManager;
-    private Rate rateManager;
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community);
-
         intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
 
         postsContainer = findViewById(R.id.posts_container);
         bottomNavigationView = findViewById(R.id.bottom_navcomm);
 
-        // Initialize instances of Comment and Rate classes
-        commentManager = new Comment(this, (RecyclerView) findViewById(R.id.comments_recycler_view));
-        rateManager = new Rate();
-
-        fetchPosts();
-
+        fetchPostDetails(); // Call the function to fetch post details
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -70,9 +57,9 @@ public class community extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(selectedItemId);
     }
 
-    private void fetchPosts() {
-        String url = "https://lamp.ms.wits.ac.za/home/s2709514/fetch_posts.php";
-        new FetchPostsTask().execute(url);
+    private void fetchPostDetails() {
+        String url = "https://lamp.ms.wits.ac.za/home/s2709514/getpostdetails.php"; // Use the getpostdetails.php URL
+        new FetchPostDetailsTask().execute(url);
     }
 
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
@@ -97,6 +84,7 @@ public class community extends AppCompatActivity {
     }
 
     private void openHomePage() {
+        // Already implemented to open CreateProfile page
         Intent intent = new Intent(community.this, homepage.class);
         intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
@@ -106,7 +94,7 @@ public class community extends AppCompatActivity {
     }
 
     private void openCommunityPage() {
-        // Already implemented to open Community page
+        // Implement if needed
     }
 
     private void openFriendsPage() {
@@ -118,7 +106,7 @@ public class community extends AppCompatActivity {
         finish();
     }
 
-    private class FetchPostsTask extends AsyncTask<String, Void, String> {
+    private class FetchPostDetailsTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
             return getJsonResponseFromUrl(urls[0]);
@@ -185,23 +173,30 @@ public class community extends AppCompatActivity {
 
             Glide.with(this).load(post.getImageUrl()).into(postPic);
 
-            // Fetch and display comments for this post
-            fetchCommentsForPost(post.getPostId());
-
-            // Fetch and display ratings for this post
-            fetchRatingsForPost(post.getPostId());
+            // Add OnClickListener to postPic ImageView to display details when clicked
+            postPic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showPostDetails(post);
+                }
+            });
 
             postsContainer.addView(postView);
         }
     }
 
-    // Method to fetch comments for a post
-    private void fetchCommentsForPost(int postId) {
-        commentManager.fetchComments(postId);
-    }
-
-    // Method to fetch ratings for a post
-    private void fetchRatingsForPost(int postId) {
-        rateManager.fetchRatings(postId);
+    // Function to show post details when postPic is clicked
+    private void showPostDetails(Post post) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(post.getTitle());
+        builder.setMessage("Ingredients: " + post.getIngredients() + "\n\nInstructions: " + post.getInstructions());
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
