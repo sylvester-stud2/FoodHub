@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +16,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.OutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 
 public class Grocery extends AppCompatActivity {
 
@@ -33,19 +32,11 @@ public class Grocery extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ListView groceryListView;
     private ArrayAdapter<String> groceryAdapter;
-    private List<GroceryItem> groceryList = new ArrayList<>();
     private List<String> groceryDisplayList = new ArrayList<>();
 
-    // Mapping of meal plan IDs to names
-    private static final Map<Integer, String> mealPlanNames = new HashMap<>();
     private static final Map<Integer, String> ingredientNames = new HashMap<>();
 
     static {
-        mealPlanNames.put(1, "Breakfast Plan");
-        mealPlanNames.put(2, "Lunch Plan");
-        mealPlanNames.put(3, "Dinner Plan");
-        // Add more meal plans as needed
-
         ingredientNames.put(1, "Apples");
         ingredientNames.put(2, "Avocado");
         ingredientNames.put(3, "Bacon");
@@ -106,14 +97,10 @@ public class Grocery extends AppCompatActivity {
 
         intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
+        Log.d("Grocery", "User ID: " + userId);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return handleNavigationItemSelected(item);
-            }
-        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(this::handleNavigationItemSelected);
 
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.grocery_list);
         bottomNavigationView.setSelectedItemId(selectedItemId);
@@ -122,26 +109,8 @@ public class Grocery extends AppCompatActivity {
         groceryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, groceryDisplayList);
         groceryListView.setAdapter(groceryAdapter);
 
-        // Example of adding items to the grocery list
-        groceryList.add(new GroceryItem(1, 20, 2));
-        groceryList.add(new GroceryItem(1, 29, 3));
-
-        // Update the display list and notify the adapter
-        updateGroceryDisplayList();
-
-        // Store the grocery list in the database
-        new StoreGroceryListTask().execute();
-    }
-
-    private void updateGroceryDisplayList() {
-        groceryDisplayList.clear();
-        for (GroceryItem item : groceryList) {
-            String mealPlanName = mealPlanNames.getOrDefault(item.getMealPlanId(), "Unknown Meal Plan");
-            String ingredientName = ingredientNames.getOrDefault(item.getIngredientId(), "Unknown Ingredient");
-            String displayText = mealPlanName + ": " + ingredientName + " - Quantity: " + item.getQuantity();
-            groceryDisplayList.add(displayText);
-        }
-        groceryAdapter.notifyDataSetChanged();
+        // Fetch and display the stored grocery list
+        new FetchStoredGroceryListTask().execute();
     }
 
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
@@ -213,75 +182,71 @@ public class Grocery extends AppCompatActivity {
         finish();
     }
 
-    // AsyncTask to store the grocery list
-    private class StoreGroceryListTask extends AsyncTask<Void, Void, String> {
+    // AsyncTask to fetch and display the stored grocery list
+    private class FetchStoredGroceryListTask extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/store_grocery_list.php");
+                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/get_grocery_list.php?user_id=" + userId);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setDoOutput(true);
-
-                JSONObject data = new JSONObject();
-                data.put("user_id", userId);
-
-                JSONArray groceryArray = new JSONArray();
-                for (GroceryItem item : groceryList) {
-                    JSONObject groceryItem = new JSONObject();
-                    groceryItem.put("meal_plan_id", item.getMealPlanId());
-                    groceryItem.put("ingredient_id", item.getIngredientId());
-                    groceryItem.put("quantity", item.getQuantity());
-                    groceryArray.put(groceryItem);
-                }
-                data.put("grocery_list", groceryArray);
-
-                OutputStream os = connection.getOutputStream();
-                os.write(data.toString().getBytes());
-                os.flush();
-                os.close();
+                connection.setRequestMethod("GET");
 
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    return "Grocery list stored successfully";
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+                    Log.d("FetchStoredGroceryListTask", "Response: " + response.toString());  // Log the full response
+                    return response.toString();
                 } else {
-                    return "Failed to store grocery list";
+                    Log.e("FetchStoredGroceryListTask", "Failed to fetch stored grocery list: " + responseCode);
+                    return null;
                 }
             } catch (Exception e) {
-                Log.e("StoreGroceryListTask", "Error storing grocery list", e);
-                return "Exception: " + e.getMessage();
+                Log.e("FetchStoredGroceryListTask", "Error fetching stored grocery list", e);
+                return null;
             }
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("StoreGroceryListTask", result);
+            if (result != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    groceryDisplayList.clear();  // Clear the existing list to avoid duplicates
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        int ingredientId = jsonObject.getInt("Ingredient_ID");
+                        String ingredientName = ingredientNames.get(ingredientId);
+                        if (ingredientName != null) {
+                            groceryDisplayList.add(ingredientName);
+                            Log.d("FetchStoredGroceryListTask", "Added ingredient: " + ingredientName);
+                        } else {
+                            Log.e("FetchStoredGroceryListTask", "Ingredient ID not found: " + ingredientId);
+                        }
+                    }
+
+                    // Update the UI on the main thread
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            groceryAdapter.notifyDataSetChanged();  // Notify adapter to refresh the list view
+                            Log.d("FetchStoredGroceryListTask", "Grocery list updated");
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e("FetchStoredGroceryListTask", "Error parsing stored grocery list", e);
+                }
+            } else {
+                Log.e("FetchStoredGroceryListTask", "Result is null, cannot update grocery list");
+            }
         }
     }
 
-    // GroceryItem class to represent each grocery item
-    private static class GroceryItem {
-        private int mealPlanId;
-        private int ingredientId;
-        private int quantity;
 
-        public GroceryItem(int mealPlanId, int ingredientId, int quantity) {
-            this.mealPlanId = mealPlanId;
-            this.ingredientId = ingredientId;
-            this.quantity = quantity;
-        }
-
-        public int getMealPlanId() {
-            return mealPlanId;
-        }
-
-        public int getIngredientId() {
-            return ingredientId;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-    }
 }
