@@ -1,5 +1,9 @@
 package com.example.foodhub;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 public class Post {
     private String title;
     private String instructions;
@@ -45,5 +49,10 @@ public class Post {
 
     public int getRecipeId() {
         return recipeId;
+    }
+
+    public Bitmap getDecodedImage() {
+        byte[] decodedString = Base64.decode(imageUrl, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 }
