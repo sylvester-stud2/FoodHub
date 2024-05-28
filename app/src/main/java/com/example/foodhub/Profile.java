@@ -52,6 +52,7 @@ public class Profile extends AppCompatActivity {
     ImageView profile_image;
     EditText name_txt;
     Button changePasswordButton;
+    Button LogoutButton;
     Button deleteAccountButton;
     EditText last_name;
     EditText email_txt;
@@ -86,6 +87,7 @@ public class Profile extends AppCompatActivity {
         email_txt = findViewById(R.id.emailTextView);
         saveChangesButton = findViewById(R.id.SaveChangesButton);
         ChangeProfilePicture = findViewById(R.id.uploadImageButton);
+        LogoutButton = findViewById(R.id.logout);
 
         client = new OkHttpClient();
 
@@ -103,6 +105,15 @@ public class Profile extends AppCompatActivity {
         apiUrlUpdateUserInfo = "https://lamp.ms.wits.ac.za/home/s2709514/update_user.php";
 
         new GetUserDataRequest().execute();
+
+        LogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 
