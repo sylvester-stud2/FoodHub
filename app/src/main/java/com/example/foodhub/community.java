@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -42,6 +44,7 @@ public class community extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private LinearLayout recipesContainer;
     private ImageView profile_image;
+
     private TextView name_txt;
     private Intent intent;
     private int userId;
@@ -52,30 +55,32 @@ public class community extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community);
+        ImageButton searchButton = findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                performSearch();
+            }
+        });
 
-        // Initialize views
+
         profile_image = findViewById(R.id.profile_image_id);
         name_txt = findViewById(R.id.NameTest);
         recipesContainer = findViewById(R.id.recipes_container);
 
-        // Initialize OkHttpClient
         client = new OkHttpClient();
 
-        // Initialize progressDialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
 
-        // Get email and user ID from intent
         intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
 
-        // Execute AsyncTask to fetch user data
         new GetUserDataRequest().execute();
         new FetchRecipesTask().execute();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set listener for profile image
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +88,6 @@ public class community extends AppCompatActivity {
             }
         });
 
-        // Set OnClickListener on name text
         name_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +102,7 @@ public class community extends AppCompatActivity {
             }
         });
 
-        int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.home);
+        int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.community);
         bottomNavigationView.setSelectedItemId(selectedItemId);
     }
 
@@ -115,7 +119,7 @@ public class community extends AppCompatActivity {
             openCommunityPage();
             return true;
         } else if (item.getItemId() == R.id.friends) {
-            openFilterPage();
+            openFriendsPage();
             return true;
         }
         else if (item.getItemId() == R.id.meal_planner) {
@@ -236,7 +240,7 @@ public class community extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/getRCOMM2.php"; // Updated to remove user_id parameter
+            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/getRCOMM_TEST2.php"; // Updated to remove user_id parameter
             Request request = new Request.Builder().url(apiUrl).build();
             try {
                 Response response = client.newCall(request).execute();
@@ -271,16 +275,13 @@ public class community extends AppCompatActivity {
                 String authorName = recipeObject.getString("author_name");
                 String profilePicBase64 = recipeObject.getString("profile_picture");
 
-                // Create a new view for each recipe
                 View recipeView = getLayoutInflater().inflate(R.layout.post_item_moloko, null);
 
-                // Set recipe title and instructions
                 TextView titleTextView = recipeView.findViewById(R.id.recipe_title);
                 TextView instructionsTextView = recipeView.findViewById(R.id.recipe_instructions);
                 titleTextView.setText(title);
                 instructionsTextView.setText(instructions);
 
-                // Set recipe image using Glide
                 ImageView recipeImageView = recipeView.findViewById(R.id.recipe_image);
                 if (!imageBase64.isEmpty()) {
                     byte[] imageBytes = Base64.decode(imageBase64, Base64.DEFAULT);
@@ -289,10 +290,9 @@ public class community extends AppCompatActivity {
                             .load(imageBytes)
                             .into(recipeImageView);
                 } else {
-                    Log.d("RecipeImage", "Image base64 string is empty");
+                    Log.d("RecipeImage", "empty");
                 }
 
-                // Set author name and profile picture
                 TextView authorNameTextView = recipeView.findViewById(R.id.author_name);
                 ImageView profileImageView = recipeView.findViewById(R.id.profile_image);
                 authorNameTextView.setText(authorName);
@@ -304,7 +304,7 @@ public class community extends AppCompatActivity {
                             .circleCrop()
                             .into(profileImageView);
                 } else {
-                    Log.d("ProfileImage", "Profile image base64 string is empty");
+                    Log.d("ProfileImage", "empty");
                 }
 
                 // Add an "Add to Meal Planner" button
@@ -326,6 +326,58 @@ public class community extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to parse recipes data", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void performSearch() {
+
+        EditText searchEditText = findViewById(R.id.search_edit_text);
+        String searchQuery = searchEditText.getText().toString().toLowerCase();
+        new SearchRecipesTask().execute(searchQuery);
+    }
+
+
+    private class SearchRecipesTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String searchQuery = strings[0];
+            client = new OkHttpClient();
+
+            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/search.php?search=" + searchQuery;
+            Request request = new Request.Builder().url(apiUrl).build();
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+                displaySearchResults(result);
+            } else {
+                Toast.makeText(community.this, "Failed to search", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    private void displaySearchResults(String searchResultJson) {
+
+        try {
+            JSONArray recipesArray = new JSONArray(searchResultJson);
+            for (int i = 0; i < recipesArray.length(); i++) {
+                JSONObject recipeObject = recipesArray.getJSONObject(i);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(community.this, "Failed to parse search results", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -388,10 +440,10 @@ public class community extends AppCompatActivity {
 //        finish();
     }
 
-    private void openFilterPage() {
-        Intent intent = new Intent(community.this, dietplan.class);
+    private void openFriendsPage() {
+        Intent intent = new Intent(community.this, friends.class);
         intent.putExtra("user_id", userId);
-        intent.putExtra("selected_item_id", R.id.filter);
+        intent.putExtra("selected_item_id", R.id.friends);
         startActivity(intent);
         finish();
     }private void openPlannerPage() {

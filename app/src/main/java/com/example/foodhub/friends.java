@@ -14,7 +14,8 @@ public class friends extends AppCompatActivity {
     private Intent intent;
 
     int userId;
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -24,7 +25,7 @@ public class friends extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
 
-        bottomNavigationView = findViewById(R.id.bottom_navcomm);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -32,6 +33,7 @@ public class friends extends AppCompatActivity {
                 return handleNavigationItemSelected(item);
             }
         });
+
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.friends);
         bottomNavigationView.setSelectedItemId(selectedItemId);
     }

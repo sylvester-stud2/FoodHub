@@ -31,19 +31,21 @@
                     android:id="@+id/profile_image"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
+                    android:src="@drawable/person"
                     android:contentDescription="Profile picture"
                     android:scaleType="centerCrop"
                     android:layout_marginEnd="8dp"/>
 
                 <TextView
                     android:id="@+id/author_name"
+                    android:paddingTop="20dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="Name"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp"
-                    android:gravity="center_vertical"/>
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/makefriend"
@@ -119,12 +121,7 @@
             </LinearLayout>
 
             <!-- Add to Meal Planner Button -->
-            <Button
-                android:id="@+id/add_to_meal_planner_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add to Meal Planner"
-                style="@style/Widget.AppCompat.Button.Colored"/>
+            
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
