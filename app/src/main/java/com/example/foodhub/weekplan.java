@@ -263,12 +263,12 @@ public class weekplan extends AppCompatActivity {
     public class GroceryItem {
         private int mealPlanId;
         private int ingredientId;
-        private int quantity;
+        //private int quantity;
 
-        public GroceryItem(int mealPlanId, int ingredientId, int quantity) {
+        public GroceryItem(int mealPlanId, int ingredientId ) {
             this.mealPlanId = mealPlanId;
             this.ingredientId = ingredientId;
-            this.quantity = quantity;
+            //this.quantity = quantity;
         }
 
         public int getMealPlanId() {
@@ -287,13 +287,13 @@ public class weekplan extends AppCompatActivity {
             this.ingredientId = ingredientId;
         }
 
-        public int getQuantity() {
-            return quantity;
-        }
+       // public int getQuantity() {
+      //      return quantity;
+      //  }
 
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
+    //    public void setQuantity(int quantity) {
+     //       this.quantity = quantity;
+     //   }
     }
 
     // Method to generate the grocery list based on the meal plan
@@ -307,9 +307,9 @@ public class weekplan extends AppCompatActivity {
                 for (int i = 0; i < ingredients.length(); i++) {
                     JSONObject ingredient = ingredients.getJSONObject(i);
                     int ingredientId = ingredient.getInt("Ingredient_ID");
-                    int quantity = ingredient.getInt("Quantity");
+                    //int quantity = ingredient.getInt("Quantity");
 
-                    groceryList.add(new GroceryItem(meal.getInt("Meal_Plan_ID"), ingredientId, quantity));
+                    groceryList.add(new GroceryItem(meal.getInt("Meal_Plan_ID"), ingredientId ));
                 }
             } catch (Exception e) {
                 Log.e("generateGroceryList", "Error generating grocery list", e);
@@ -345,7 +345,7 @@ public class weekplan extends AppCompatActivity {
                     JSONObject groceryItem = new JSONObject();
                     groceryItem.put("meal_plan_id", item.getMealPlanId());
                     groceryItem.put("ingredient_id", item.getIngredientId());
-                    groceryItem.put("quantity", item.getQuantity());
+                    //groceryItem.put("quantity", item.getQuantity());
                     groceryArray.put(groceryItem);
                 }
                 data.put("grocery_list", groceryArray);
