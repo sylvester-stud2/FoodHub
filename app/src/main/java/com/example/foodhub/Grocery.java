@@ -5,8 +5,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,96 +19,29 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.OutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 
 public class Grocery extends AppCompatActivity {
 
-    Intent intent;
-    int userId;
-    private BottomNavigationView bottomNavigationView;
     private ListView groceryListView;
     private ArrayAdapter<String> groceryAdapter;
-    private List<GroceryItem> groceryList = new ArrayList<>();
+    private BottomNavigationView bottomNavigationView;
     private List<String> groceryDisplayList = new ArrayList<>();
-
-    // Mapping of meal plan IDs to names
-    private static final Map<Integer, String> mealPlanNames = new HashMap<>();
-    private static final Map<Integer, String> ingredientNames = new HashMap<>();
-
-    static {
-        mealPlanNames.put(1, "Breakfast Plan");
-        mealPlanNames.put(2, "Lunch Plan");
-        mealPlanNames.put(3, "Dinner Plan");
-        // Add more meal plans as needed
-
-        ingredientNames.put(1, "Apples");
-        ingredientNames.put(2, "Avocado");
-        ingredientNames.put(3, "Bacon");
-        ingredientNames.put(4, "Baking powder");
-        ingredientNames.put(5, "Banana");
-        ingredientNames.put(6, "Beans");
-        ingredientNames.put(7, "Beef");
-        ingredientNames.put(8, "Beetroot");
-        ingredientNames.put(9, "Berries");
-        ingredientNames.put(10, "Bread");
-        ingredientNames.put(11, "Broccoli");
-        ingredientNames.put(12, "Butter");
-        ingredientNames.put(13, "Butternut");
-        ingredientNames.put(14, "Carrot");
-        ingredientNames.put(15, "Cereal");
-        ingredientNames.put(16, "Cheese");
-        ingredientNames.put(17, "Chicken");
-        ingredientNames.put(18, "Cinnamon");
-        ingredientNames.put(19, "Cream");
-        ingredientNames.put(20, "Eggs");
-        ingredientNames.put(21, "Fish");
-        ingredientNames.put(22, "Flour");
-        ingredientNames.put(23, "Garlic");
-        ingredientNames.put(24, "Honey");
-        ingredientNames.put(25, "Lettuce");
-        ingredientNames.put(26, "Lemon");
-        ingredientNames.put(27, "Maize meal");
-        ingredientNames.put(28, "Mayonnaise");
-        ingredientNames.put(29, "Milk");
-        ingredientNames.put(30, "Mushrooms");
-        ingredientNames.put(31, "Oats");
-        ingredientNames.put(32, "Oil");
-        ingredientNames.put(33, "Onion");
-        ingredientNames.put(34, "Parsley");
-        ingredientNames.put(35, "Pasta");
-        ingredientNames.put(36, "Pepper");
-        ingredientNames.put(37, "Potatoes");
-        ingredientNames.put(38, "Rice");
-        ingredientNames.put(39, "Salt");
-        ingredientNames.put(40, "Soup powder");
-        ingredientNames.put(41, "Spinach");
-        ingredientNames.put(42, "Steak");
-        ingredientNames.put(43, "Sugar");
-        ingredientNames.put(44, "Tomato sauce");
-        ingredientNames.put(45, "Tomato");
-        ingredientNames.put(46, "Vanilla essence");
-        ingredientNames.put(47, "Vinegar");
-        ingredientNames.put(48, "Water");
-        ingredientNames.put(49, "Yeast");
-        ingredientNames.put(50, "Yogurt");
-        ingredientNames.put(51, "Stock (beef/chicken)");
-    }
+    private Map<String, JSONObject> weekPlan = new HashMap<>();
+    private Intent intent;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery);
-
-        intent = getIntent();
-        userId = intent.getIntExtra("user_id", -1);
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -114,7 +49,6 @@ public class Grocery extends AppCompatActivity {
                 return handleNavigationItemSelected(item);
             }
         });
-
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.grocery_list);
         bottomNavigationView.setSelectedItemId(selectedItemId);
 
@@ -122,26 +56,81 @@ public class Grocery extends AppCompatActivity {
         groceryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, groceryDisplayList);
         groceryListView.setAdapter(groceryAdapter);
 
-        // Example of adding items to the grocery list
-        groceryList.add(new GroceryItem(1, 20, 2));
-        groceryList.add(new GroceryItem(1, 29, 3));
+        intent = getIntent();
+        userId = intent.getIntExtra("user_id", -1);
 
-        // Update the display list and notify the adapter
-        updateGroceryDisplayList();
 
-        // Store the grocery list in the database
-        new StoreGroceryListTask().execute();
+        new FetchGroceryListTask().execute();
     }
 
-    private void updateGroceryDisplayList() {
-        groceryDisplayList.clear();
-        for (GroceryItem item : groceryList) {
-            String mealPlanName = mealPlanNames.getOrDefault(item.getMealPlanId(), "Unknown Meal Plan");
-            String ingredientName = ingredientNames.getOrDefault(item.getIngredientId(), "Unknown Ingredient");
-            String displayText = mealPlanName + ": " + ingredientName + " - Quantity: " + item.getQuantity();
-            groceryDisplayList.add(displayText);
+
+    private class FetchGroceryListTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+
+                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/get_ingredients.php?user_id=" + userId);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+                    return response.toString();
+                } else {
+                    Log.e("FetchGroceryListTask", "Failed to fetch grocery list: " + responseCode);
+                    return null;
+                }
+            } catch (Exception e) {
+                Log.e("FetchGroceryListTask", "Error fetching grocery list", e);
+                return null;
+            }
         }
-        groceryAdapter.notifyDataSetChanged();
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    groceryDisplayList.clear();  // Clear the existing list
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String ingredientName = jsonObject.getString("Name");
+                        groceryDisplayList.add(ingredientName);
+                    }
+
+                    // Notify adapter to refresh the list view
+                    groceryAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Log.e("FetchGroceryListTask", "Error parsing grocery list", e);
+                }
+            } else {
+                Log.e("FetchGroceryListTask", "Result is null, cannot update grocery list");
+            }
+        }
+    }
+
+
+    private void setMealSelectionListeners() {
+        int[] mealTextViewIds = {
+                R.id.monday_breakfast_select, R.id.monday_lunch_select, R.id.monday_supper_select,
+
+        };
+
+        for (int id : mealTextViewIds) {
+            TextView textView = findViewById(id);
+            if (textView != null) {
+                textView.setOnClickListener(this::onSelectMealClick);
+                textView.setText("Select");
+            }
+        }
     }
 
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
@@ -169,17 +158,10 @@ public class Grocery extends AppCompatActivity {
         return true;
     }
 
-    private void openProfilePage() {
-        Intent intent = new Intent(Grocery.this, Profile.class);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
-    }
-
     private void openHomePage() {
         Intent intent = new Intent(Grocery.this, homepage.class);
         intent.putExtra("user_id", userId);
+        intent.putExtra("selected_item_id", R.id.home);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
@@ -188,6 +170,7 @@ public class Grocery extends AppCompatActivity {
     private void openCommunityPage() {
         Intent intent = new Intent(Grocery.this, community.class);
         intent.putExtra("user_id", userId);
+        intent.putExtra("selected_item_id", R.id.community);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
@@ -196,92 +179,57 @@ public class Grocery extends AppCompatActivity {
     private void openFilterPage() {
         Intent intent = new Intent(Grocery.this, dietplan.class);
         intent.putExtra("user_id", userId);
+        intent.putExtra("selected_item_id", R.id.filter);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
 
     private void openGroceryListPage() {
-        // Implement if needed
+
     }
 
     private void openMealPlannerPage() {
         Intent intent = new Intent(Grocery.this, weekplan.class);
         intent.putExtra("user_id", userId);
+        intent.putExtra("selected_item_id", R.id.meal_planner);
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
     }
+    public void onSelectMealClick(View view) {
+        TextView textView = (TextView) view;
+        String selectedMeal = textView.getText().toString();
+        Log.d("weekplan", "Selected meal: " + selectedMeal);
 
-    // AsyncTask to store the grocery list
-    private class StoreGroceryListTask extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... voids) {
-            try {
-                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/store_grocery_list.php");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setDoOutput(true);
+        if (!selectedMeal.equals("Select") && !selectedMeal.equals("No Recipe")) {
+            Intent intent = new Intent(this, RecipeDetailActivity.class);
+            intent.putExtra("user_id", userId);
 
-                JSONObject data = new JSONObject();
-                data.put("user_id", userId);
-
-                JSONArray groceryArray = new JSONArray();
-                for (GroceryItem item : groceryList) {
-                    JSONObject groceryItem = new JSONObject();
-                    groceryItem.put("meal_plan_id", item.getMealPlanId());
-                    groceryItem.put("ingredient_id", item.getIngredientId());
-                    groceryItem.put("quantity", item.getQuantity());
-                    groceryArray.put(groceryItem);
+            boolean mealFound = false;
+            for (Map.Entry<String, JSONObject> entry : weekPlan.entrySet()) {
+                JSONObject mealDetails = entry.getValue();
+                try {
+                    if (mealDetails.getString("Recipe_Title").equals(selectedMeal)) {
+                        intent.putExtra("recipe_details", mealDetails.toString());
+                        mealFound = true;
+                        break;
+                    }
+                } catch (Exception e) {
+                    Log.e("weekplan", "Error getting recipe details from mealPlan map", e);
                 }
-                data.put("grocery_list", groceryArray);
-
-                OutputStream os = connection.getOutputStream();
-                os.write(data.toString().getBytes());
-                os.flush();
-                os.close();
-
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    return "Grocery list stored successfully";
-                } else {
-                    return "Failed to store grocery list";
-                }
-            } catch (Exception e) {
-                Log.e("StoreGroceryListTask", "Error storing grocery list", e);
-                return "Exception: " + e.getMessage();
             }
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            Log.d("StoreGroceryListTask", result);
-        }
-    }
-
-    // GroceryItem class to represent each grocery item
-    private static class GroceryItem {
-        private int mealPlanId;
-        private int ingredientId;
-        private int quantity;
-
-        public GroceryItem(int mealPlanId, int ingredientId, int quantity) {
-            this.mealPlanId = mealPlanId;
-            this.ingredientId = ingredientId;
-            this.quantity = quantity;
-        }
-
-        public int getMealPlanId() {
-            return mealPlanId;
-        }
-
-        public int getIngredientId() {
-            return ingredientId;
-        }
-
-        public int getQuantity() {
-            return quantity;
+            if (mealFound) {
+                Log.d("weekplan", "Starting RecipeDetailActivity with recipe details.");
+                startActivity(intent);
+            } else {
+                Log.d("weekplan", "No recipe details found for the selected meal.");
+                Toast.makeText(this, "No recipe details found for the selected meal", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Log.d("weekplan", "No recipe selected or no recipe available.");
+            Toast.makeText(this, "No recipe selected or no recipe available", Toast.LENGTH_SHORT).show();
         }
     }
 }

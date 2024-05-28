@@ -42,19 +42,17 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Get the JSON string containing recipe details from the intent
+
         String jsonString = getIntent().getStringExtra("recipe_details");
         Log.d(TAG, "Received JSON: " + jsonString);
 
         if (jsonString != null && !jsonString.isEmpty()) {
             try {
-                // Parse the JSON string to extract recipe details
+
                 JSONObject jsonObject = new JSONObject(jsonString);
                 String recipeTitle = jsonObject.optString("Recipe_Title");
                 String recipeInstructions = jsonObject.optString("Recipe_Instructions");
                 String recipeImage = jsonObject.optString("Recipe_Image");
-
-                // Display the recipe details in the UI
                 TextView recipeTitleTextView = findViewById(R.id.recipe_name);
                 TextView recipeInstructionsTextView = findViewById(R.id.recipe_instructions);
                 ImageView recipeImageView = findViewById(R.id.recipe_image);
@@ -68,7 +66,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 }
 
                 if (recipeImageView != null && recipeImage != null && !recipeImage.isEmpty()) {
-                    // Decode base64 string to bitmap and set to ImageView
+
                     Bitmap bitmap = decodeBase64(recipeImage);
                     recipeImageView.setImageBitmap(bitmap);
                 }
@@ -86,7 +84,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
 
-    // Method to decode base64 string to bitmap
     private Bitmap decodeBase64(String base64Str) throws IllegalArgumentException {
         byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);

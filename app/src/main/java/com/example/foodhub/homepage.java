@@ -237,14 +237,14 @@ public class homepage extends AppCompatActivity {
                 String imageBase64 = recipeObject.getString("image");
 
                 View recipeView = getLayoutInflater().inflate(R.layout.recipe_item, null);
-                TextView recipeIdTextView = recipeView.findViewById(R.id.recipe_id);
+//                TextView recipeIdTextView = recipeView.findViewById(R.id.recipe_id);
                 TextView titleTextView = recipeView.findViewById(R.id.recipe_title);
                 TextView instructionsTextView = recipeView.findViewById(R.id.recipe_instructions);
                 ImageView recipeImageView = recipeView.findViewById(R.id.recipe_image);
                 Button optionsButton = recipeView.findViewById(R.id.options_button);
                 Button addToMealPlannerButton = recipeView.findViewById(R.id.add_to_meal_planner_button);
 
-                recipeIdTextView.setText("Recipe ID: " + recipeId);
+//                recipeIdTextView.setText("Recipe ID: " + recipeId);
                 titleTextView.setText(title);
                 instructionsTextView.setText(instructions);
 
@@ -278,16 +278,14 @@ public class homepage extends AppCompatActivity {
     private void showOptionsDialog(JSONObject recipeObject) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Options")
-                .setItems(new CharSequence[]{"Post", "Delete"}, new DialogInterface.OnClickListener() {
+                .setItems(new CharSequence[]{"Delete"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                PostRecipe(recipeObject);
-                                break;
-                            case 1:
                                 DeleteRecipe(recipeObject);
                                 break;
+
                         }
                     }
                 })

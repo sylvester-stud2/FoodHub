@@ -21,14 +21,14 @@
             android:padding="16dp">
 
             <!-- Recipe ID -->
-            <TextView
-                android:id="@+id/recipe_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Recipe ID"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="8dp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/recipe_id"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Recipe ID"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_marginBottom="8dp"/>-->
 
             <!-- Recipe Title -->
             <TextView
@@ -88,7 +88,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="+" />
+                    android:drawableLeft="@drawable/delete_re"
+                    android:text="" />
 
             </LinearLayout>
 
