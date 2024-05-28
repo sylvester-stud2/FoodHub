@@ -52,6 +52,10 @@ public class friends extends AppCompatActivity {
             openFriendsPage();
             return true;
         }
+        else if (item.getItemId() == R.id.meal_planner) {
+            openMealPlannerPage();
+            return true;
+        }
 
         return true;
     }
@@ -72,6 +76,13 @@ public class friends extends AppCompatActivity {
         intent.putExtra("selected_item_id", R.id.community);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
+        startActivity(intent);
+        finish();
+    }
+    private void openMealPlannerPage() {
+        Intent intent = new Intent(friends.this, weekplan.class);
+        intent.putExtra("user_id", userId);
+        intent.putExtra("selected_item_id", R.id.meal_planner);
         startActivity(intent);
         finish();
     }

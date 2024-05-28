@@ -1,13 +1,15 @@
 package com.example.foodhub;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 public class Post {
     private String title;
     private String instructions;
     private String imageUrl;
     private String ingredients;
     private int recipeId;
-    private String imageBase64;
-
 
     public String getTitle() {
         return title;
@@ -49,11 +51,8 @@ public class Post {
         return recipeId;
     }
 
-    public byte[] getImageBase64() {
-        return imageBase64.getBytes();
-    }
-
-    public void setImageBase64(String imageBase64) {
-        this.imageBase64 = imageBase64;
+    public Bitmap getDecodedImage() {
+        byte[] decodedString = Base64.decode(imageUrl, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 }

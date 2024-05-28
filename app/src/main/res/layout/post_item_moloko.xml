@@ -1,0 +1,141 @@
+<!-- community.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".community">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#CBD3D6"
+        android:layout_marginTop="16dp"
+        android:radius="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Profile Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:contentDescription="Profile picture"
+                    android:scaleType="centerCrop"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/author_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"/>
+
+                <Button
+                    android:id="@+id/makefriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/black"
+                    android:text="+ friend"
+                    android:onClick="addFriend"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <!-- Recipe Title -->
+            <TextView
+                android:id="@+id/recipe_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Recipe Title"
+                android:textSize="22sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"/>
+
+            <!-- Recipe Image -->
+            <ImageView
+                android:id="@+id/recipe_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="8dp"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"/>
+
+            <!-- Recipe Instructions -->
+            <TextView
+                android:id="@+id/recipe_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Recipe Instructions"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="16dp"
+                android:lineSpacingExtra="4dp"/>
+
+            <!-- Interaction Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/thumbsup"
+                    android:layout_width="49dp"
+                    android:layout_height="49dp"
+                    android:layout_marginEnd="8dp"
+                    android:clickable="true"
+                    android:onClick="UpdateRatingTask"
+                    android:src="@drawable/thumbsup"/>
+
+                <ImageView
+                    android:id="@+id/thumbsdown"
+                    android:layout_width="49dp"
+                    android:layout_height="49dp"
+                    android:layout_marginEnd="8dp"
+                    android:clickable="true"
+                    android:onClick="UpdateRatingTask"
+                    android:src="@drawable/thumbsdown"/>
+
+                <ImageView
+                    android:id="@+id/comment"
+                    android:layout_width="49dp"
+                    android:layout_height="49dp"
+                    android:clickable="true"
+                    android:onClick="ShowCommentDialog"
+                    android:src="@drawable/comment"/>
+            </LinearLayout>
+
+            <!-- Add to Meal Planner Button -->
+            <Button
+                android:id="@+id/add_to_meal_planner_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add to Meal Planner"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Distinctive Color Block -->
+    <TextView
+        android:id="@+id/color_block"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black"/>
+</LinearLayout>

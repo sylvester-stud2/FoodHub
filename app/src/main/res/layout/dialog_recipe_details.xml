@@ -1,0 +1,32 @@
+<!-- dialog_recipe_details.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Recipe Title -->
+    <TextView
+        android:id="@+id/recipe_details_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Recipe Instructions -->
+    <TextView
+        android:id="@+id/recipe_details_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- Recipe Image -->
+    <ImageView
+        android:id="@+id/recipe_details_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
+
+</LinearLayout>

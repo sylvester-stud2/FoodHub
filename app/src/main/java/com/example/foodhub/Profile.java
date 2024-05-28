@@ -416,7 +416,7 @@ public class Profile extends AppCompatActivity {
     }
 
 
-    // Method to delete account
+
     private void deleteAccount() {
         // Check if userId is valid
         if (userId == -1) {
@@ -426,14 +426,14 @@ public class Profile extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
 
-        // Define the request body with the user's ID
+
         RequestBody requestBody = new FormBody.Builder()
                 .add("user_id", String.valueOf(userId))
                 .build();
 
         // Define the request
         Request request = new Request.Builder()
-                .url("https://lamp.ms.wits.ac.za/home/s2709514/delete_user.php") // Replace with the actual URL of your PHP script
+                .url("https://lamp.ms.wits.ac.za/home/s2709514/delete_user.php?user_id="+String.valueOf(userId))
                 .post(requestBody)
                 .build();
 
@@ -482,7 +482,6 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
-
 
 }
 
