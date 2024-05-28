@@ -1,0 +1,146 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Profile Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/profilepic"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:contentDescription="Profile picture"
+            android:src="@drawable/profile"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/profilename"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/makefriend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@android:color/black"
+            android:text="+ friend"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Recipe Title -->
+    <TextView
+        android:id="@+id/recipe_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Recipe Title"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <!-- Recipe Image -->
+    <ImageView
+        android:id="@+id/recipe_image"
+        android:layout_width="match_parent"
+        android:layout_height="199dp"
+        android:layout_marginBottom="8dp"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop" />
+
+    <!-- Recipe Ingredients -->
+    <TextView
+        android:id="@+id/recipe_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:lineSpacingExtra="4dp"
+        android:text="Ingredients"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <!-- Recipe Instructions -->
+    <TextView
+        android:id="@+id/recipe_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:lineSpacingExtra="4dp"
+        android:text="Recipe Instructions"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <!-- Interaction Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Thumbs Up Button -->
+        <Button
+            android:id="@+id/up_vote_button"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/thumbsup"
+            android:clickable="true" />
+
+        <!-- Up Votes Count -->
+        <TextView
+            android:id="@+id/up_votes_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <!-- Thumbs Down Button -->
+        <Button
+            android:id="@+id/down_vote_button"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/thumbsdown"
+            android:clickable="true" />
+
+        <!-- Down Votes Count -->
+        <TextView
+            android:id="@+id/down_votes_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <!-- Comment Button -->
+        <ImageView
+            android:id="@+id/comment"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:background="@drawable/comment"
+            android:onClick="showCommentDialog" />
+    </LinearLayout>
+
+    <!-- Add to Meal Planner Button -->
+    <Button
+        android:id="@+id/add_to_meal_planner_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add to Meal Planner"
+        style="@style/Widget.AppCompat.Button.Colored" />
+</LinearLayout>
