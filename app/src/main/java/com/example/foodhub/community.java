@@ -59,7 +59,7 @@ public class community extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                performSearch();
+//                performSearch();
             }
         });
 
@@ -329,12 +329,12 @@ public class community extends AppCompatActivity {
         }
     }
 
-    private void performSearch() {
-
-        EditText searchEditText = findViewById(R.id.search_edit_text);
-        String searchQuery = searchEditText.getText().toString().toLowerCase();
-        new SearchRecipesTask().execute(searchQuery);
-    }
+//    private void performSearch() {
+//
+////        EditText searchEditText = findViewById(R.id.search_edit_text);
+//        String searchQuery = searchEditText.getText().toString().toLowerCase();
+//        new SearchRecipesTask().execute(searchQuery);
+//    }
 
 
     private class SearchRecipesTask extends AsyncTask<String, Void, String> {
