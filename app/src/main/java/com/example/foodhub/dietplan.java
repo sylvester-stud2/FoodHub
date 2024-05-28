@@ -61,8 +61,8 @@ public class dietplan extends AppCompatActivity {
         selectedIngredients = new ArrayList<>();
         linearLayouts = new ArrayList<>();
 
-        // Add LinearLayouts that contain checkboxes to the list
-        linearLayouts.add(findViewById(R.id.linearLayout1)); // Make sure these IDs exist in your layout file
+
+        linearLayouts.add(findViewById(R.id.linearLayout1));
         linearLayouts.add(findViewById(R.id.linearLayout2));
         linearLayouts.add(findViewById(R.id.linearLayout3));
         linearLayouts.add(findViewById(R.id.linearLayout4));
@@ -115,10 +115,6 @@ public class dietplan extends AppCompatActivity {
         linearLayouts.add(findViewById(R.id.linearLayout51));
 
 
-
-        // Add all your linear layouts here...
-
-        // Set up checkboxes
         setupCheckBox(R.id.allergic_checkbox, "Apples");
         setupCheckBox(R.id.vegan_checkbox1, "Avocado");
         setupCheckBox(R.id.vegan_checkbox2, "Bacon");
@@ -171,11 +167,9 @@ public class dietplan extends AppCompatActivity {
         setupCheckBox(R.id.vegan_checkbox50, "Yogurt");
         setupCheckBox(R.id.vegan_checkbox51, "Stock (beef/chicken)");
 
-        // Add all your checkboxes here...
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -185,13 +179,13 @@ public class dietplan extends AppCompatActivity {
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.filter);
         bottomNavigationView.setSelectedItemId(selectedItemId);
 
-        // Load the previously selected ingredients
+
         loadSelectedIngredients();
     }
 
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
-            // Current item is already selected, do nothing
+
             return false;
         }
 
@@ -234,10 +228,10 @@ public class dietplan extends AppCompatActivity {
     public void saveSelections() {
         selectedIngredients.clear();
 
-        // Iterate through all LinearLayouts containing checkboxes
+
         for (LinearLayout linearLayout : linearLayouts) {
             if (linearLayout != null) {
-                // Iterate through all child views in the LinearLayout
+
                 for (int i = 0; i < linearLayout.getChildCount(); i++) {
                     View child = linearLayout.getChildAt(i);
                     if (child instanceof CheckBox) {
@@ -298,15 +292,15 @@ public class dietplan extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         Set<String> set = sharedPreferences.getStringSet(SELECTED_INGREDIENTS_KEY, new HashSet<>());
 
-        // Iterate through all LinearLayouts containing checkboxes
+
         for (LinearLayout linearLayout : linearLayouts) {
             if (linearLayout != null) {
-                // Iterate through all child views in the LinearLayout
+
                 for (int i = 0; i < linearLayout.getChildCount(); i++) {
                     View child = linearLayout.getChildAt(i);
                     if (child instanceof CheckBox) {
                         CheckBox checkBox = (CheckBox) child;
-                        TextView textView = (TextView) linearLayout.getChildAt(i + 1); // Assuming TextView is next to CheckBox
+                        TextView textView = (TextView) linearLayout.getChildAt(i + 1);
 
                         if (textView != null && set.contains(textView.getText().toString())) {
                             checkBox.setChecked(true);
@@ -319,7 +313,7 @@ public class dietplan extends AppCompatActivity {
     }
 
     private void handleUnselectedIngredients() {
-        // Define the full list of possible ingredients
+
         List<String> allIngredients = new ArrayList<>();
         allIngredients.add("Apples");
         allIngredients.add("Avocado");
@@ -373,11 +367,10 @@ public class dietplan extends AppCompatActivity {
         allIngredients.add("Yogurt");
         allIngredients.add("Stock (beef/chicken)");
 
-        // Identify unselected ingredients
         List<String> unselectedIngredients = new ArrayList<>(allIngredients);
         unselectedIngredients.removeAll(selectedIngredients);
 
-        // Display unselected ingredients in an AlertDialog
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Unselected Ingredients");
         builder.setMessage(unselectedIngredients.toString());

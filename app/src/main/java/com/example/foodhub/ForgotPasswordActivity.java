@@ -24,7 +24,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends AppCompatActivity {
 
     private OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(20, TimeUnit.SECONDS)
@@ -33,53 +33,57 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
     private EditText emailEditText;
-    private EditText passwordEditText;
+    private EditText newPasswordEditText;
+    private EditText confirmPasswordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome);
+        setContentView(R.layout.activity_forgot_password);
 
         emailEditText = findViewById(R.id.email);
-        passwordEditText = findViewById(R.id.password);
-        Button loginButton = findViewById(R.id.login);
-        Button createButton = findViewById(R.id.create);
-        Button forgotPasswordButton = findViewById(R.id.forgot_password);
+        newPasswordEditText = findViewById(R.id.new_password);
+        confirmPasswordEditText = findViewById(R.id.confirm_password);
+        Button resetPasswordButton = findViewById(R.id.reset_password);
+        Button backButton = findViewById(R.id.back);
 
-        createButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateProfile.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        resetPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                authenticateUser(email, password);
-            }
-        });
+                String newPassword = newPasswordEditText.getText().toString();
+                String confirmPassword = confirmPasswordEditText.getText().toString();
 
-        forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ForgotPasswordActivity.class);
-                startActivity(intent);
+                if (!email.isEmpty() && !newPassword.isEmpty() && !confirmPassword.isEmpty()) {
+                    if (newPassword.equals(confirmPassword)) {
+                        resetPassword(email, newPassword);
+                    } else {
+                        Toast.makeText(ForgotPasswordActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(ForgotPasswordActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void authenticateUser(String email, String password) {
+    private void resetPassword(String email, String newPassword) {
         RequestBody requestBody = new FormBody.Builder()
                 .add("email", email)
-                .add("password", password)
+                .add("new_password", newPassword)
                 .build();
 
         Request request = new Request.Builder()
-                .url("https://lamp.ms.wits.ac.za/home/s2709514/USERS.php")
+                .url("https://lamp.ms.wits.ac.za/home/s2709514/reset_password.php")
                 .post(requestBody)
                 .build();
 
@@ -90,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this, "Network error. Please try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgotPasswordActivity.this, "Network error. Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -103,18 +107,15 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             JSONObject jsonResponse = new JSONObject(responseData);
-                            if (jsonResponse.getBoolean("authenticated")) {
-                                int userId = jsonResponse.getInt("user_id");
-                                Intent intent = new Intent(MainActivity.this, homepage.class);
-                                intent.putExtra("user_id", userId);
-                                startActivity(intent);
+                            if (jsonResponse.getBoolean("success")) {
+                                Toast.makeText(ForgotPasswordActivity.this, "Password reset successfully", Toast.LENGTH_SHORT).show();
                                 finish();
                             } else {
-                                Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ForgotPasswordActivity.this, "Email not found", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MainActivity.this, "An error occurred. Please try again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ForgotPasswordActivity.this, "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -80,10 +80,10 @@ public class addsmeals extends AppCompatActivity {
 
     private void openMealPlannerPage() {
         // Implement logic to open Meal Planner page
-        Intent intent = new Intent(addsmeals.this, weekplan.class);
-        intent.putExtra("email",email);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(addsmeals.this, weekplan.class);
+//        intent.putExtra("email",email);
+//        startActivity(intent);
+//        finish();
     }
 }
 
