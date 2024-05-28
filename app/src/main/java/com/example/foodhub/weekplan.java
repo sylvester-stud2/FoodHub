@@ -19,9 +19,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -206,6 +209,10 @@ public class weekplan extends AppCompatActivity {
                             textView.setText(recipeName);
                         }
                     }
+
+                    // Generate the grocery list based on the meal plan
+                    generateGroceryList();
+
                 } catch (Exception e) {
                     Log.e("LoadMealPlanTask", "Error parsing JSON response", e);
                     Toast.makeText(weekplan.this, "Failed to load meal plan: JSON parsing error", Toast.LENGTH_SHORT).show();
@@ -252,5 +259,138 @@ public class weekplan extends AppCompatActivity {
             Toast.makeText(this, "No recipe selected or no recipe available", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public class GroceryItem {
+        private int mealPlanId;
+        private int ingredientId;
+        private int quantity;
+
+        public GroceryItem(int mealPlanId, int ingredientId, int quantity) {
+            this.mealPlanId = mealPlanId;
+            this.ingredientId = ingredientId;
+            this.quantity = quantity;
+        }
+
+        public int getMealPlanId() {
+            return mealPlanId;
+        }
+
+        public void setMealPlanId(int mealPlanId) {
+            this.mealPlanId = mealPlanId;
+        }
+
+        public int getIngredientId() {
+            return ingredientId;
+        }
+
+        public void setIngredientId(int ingredientId) {
+            this.ingredientId = ingredientId;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
+    }
+
+    // Method to generate the grocery list based on the meal plan
+    private void generateGroceryList() {
+        // Compile the list of ingredients needed for the week
+        List<GroceryItem> groceryList = new ArrayList<>();
+
+        for (JSONObject meal : mealPlan.values()) {
+            try {
+                JSONArray ingredients = meal.getJSONArray("Ingredients");
+                for (int i = 0; i < ingredients.length(); i++) {
+                    JSONObject ingredient = ingredients.getJSONObject(i);
+                    int ingredientId = ingredient.getInt("Ingredient_ID");
+                    int quantity = ingredient.getInt("Quantity");
+
+                    groceryList.add(new GroceryItem(meal.getInt("Meal_Plan_ID"), ingredientId, quantity));
+                }
+            } catch (Exception e) {
+                Log.e("generateGroceryList", "Error generating grocery list", e);
+            }
+        }
+
+        // Store the grocery list in the database
+        new StoreGroceryListTask(groceryList).execute();
+    }
+
+    // AsyncTask to store grocery list in the database
+    private class StoreGroceryListTask extends AsyncTask<Void, Void, String> {
+        private List<GroceryItem> groceryList;
+
+        public StoreGroceryListTask(List<GroceryItem> groceryList) {
+            this.groceryList = groceryList;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/store_grocery_list.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setDoOutput(true);
+
+                JSONObject data = new JSONObject();
+                data.put("user_id", userId);
+
+                JSONArray groceryArray = new JSONArray();
+                for (GroceryItem item : groceryList) {
+                    JSONObject groceryItem = new JSONObject();
+                    groceryItem.put("meal_plan_id", item.getMealPlanId());
+                    groceryItem.put("ingredient_id", item.getIngredientId());
+                    groceryItem.put("quantity", item.getQuantity());
+                    groceryArray.put(groceryItem);
+                }
+                data.put("grocery_list", groceryArray);
+
+                OutputStream os = connection.getOutputStream();
+                os.write(data.toString().getBytes());
+                os.flush();
+                os.close();
+
+                int responseCode = connection.getResponseCode();
+                InputStream inputStream;
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = connection.getInputStream();
+                } else {
+                    inputStream = connection.getErrorStream();
+                }
+                Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
+                String response = scanner.hasNext() ? scanner.next() : "";
+
+                return response;
+            } catch (Exception e) {
+                Log.e("StoreGroceryListTask", "Error storing grocery list", e);
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("StoreGroceryListTask", result);
+            try {
+                JSONObject response = new JSONObject(result);
+                String status = response.getString("status");
+                String message = response.getString("message");
+
+                if ("success".equals(status)) {
+                    Toast.makeText(weekplan.this, message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(weekplan.this, "Failed to store grocery list: " + message, Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Log.e("StoreGroceryListTask", "Error parsing server response", e);
+                Toast.makeText(weekplan.this, "Error parsing server response", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
 
