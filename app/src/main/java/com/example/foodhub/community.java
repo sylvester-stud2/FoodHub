@@ -120,7 +120,7 @@ public class community extends AppCompatActivity {
             openCommunityPage();
             return true;
         } else if (item.getItemId() == R.id.friends) {
-            openFilterPage();
+            openFriendPage();
             return true;
         }
         else if (item.getItemId() == R.id.meal_planner) {
@@ -585,10 +585,10 @@ public class community extends AppCompatActivity {
 //        finish();
     }
 
-    private void openFilterPage() {
-        Intent intent = new Intent(community.this, dietplan.class);
+    private void openFriendPage() {
+        Intent intent = new Intent(community.this, friends.class);
         intent.putExtra("user_id", userId);
-        intent.putExtra("selected_item_id", R.id.filter);
+        intent.putExtra("selected_item_id", R.id.friends);
         startActivity(intent);
         finish();
     }private void openPlannerPage() {

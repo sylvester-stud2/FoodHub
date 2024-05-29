@@ -1,5 +1,6 @@
 package com.example.foodhub;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,23 +33,21 @@ public class weekplan extends AppCompatActivity {
     int userId;
 
     private BottomNavigationView bottomNavigationView;
-    private Map<String, JSONObject> mealPlan = new HashMap<>(); // Map to store meal details
+    private Map<String, JSONObject> mealPlan = new HashMap<>();
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weekplan);
 
-        // Set onClickListeners for meal selection
         setMealSelectionListeners();
 
-        // Get user ID from intent
         intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        // Set bottom navigation item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -58,31 +57,30 @@ public class weekplan extends AppCompatActivity {
 
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.meal_planner);
         bottomNavigationView.setSelectedItemId(selectedItemId);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading meal plan...");
+        progressDialog.setCancelable(false);
 
-        // Load meal plan from server
         loadMealPlan();
     }
 
-    // Method to set onClickListeners for meal selection
     private void setMealSelectionListeners() {
-        // Add the onClickListener for each meal selection TextView
         int[] mealTextViewIds = {
                 R.id.monday_breakfast_select, R.id.monday_lunch_select, R.id.monday_supper_select,
-                // Add other meal TextView IDs here
+
         };
 
         for (int id : mealTextViewIds) {
             TextView textView = findViewById(id);
             if (textView != null) {
                 textView.setOnClickListener(this::onSelectMealClick);
+                textView.setText("Select");
             }
         }
     }
 
-    // Method to handle bottom navigation item selection
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
-            // Current item is already selected, do nothing
             return false;
         }
 
@@ -106,12 +104,10 @@ public class weekplan extends AppCompatActivity {
         return true;
     }
 
-    // Methods to open different pages
     private void openHomePage() {
         Intent intent = new Intent(weekplan.this, homepage.class);
         intent.putExtra("user_id", userId);
         intent.putExtra("selected_item_id", R.id.home);
-
         overridePendingTransition(0, 0);
         startActivity(intent);
         finish();
@@ -145,21 +141,20 @@ public class weekplan extends AppCompatActivity {
     }
 
     private void openMealPlannerPage() {
-        // Implement logic to open Meal Planner page if needed
+
     }
 
-    // Method to load meal plan from server
     private void loadMealPlan() {
-        // Start AsyncTask to load meal plan from server
+
+        progressDialog.show();
         new LoadMealPlanTask().execute();
     }
 
-    // AsyncTask to load meal plan from server
     private class LoadMealPlanTask extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/meal_plan.php?user_id=" + userId);
+                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2709514/meal_plan_test.php?user_id=" + userId);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.connect();
@@ -188,24 +183,26 @@ public class weekplan extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            // Dismiss ProgressDialog after executing AsyncTask
+            progressDialog.dismiss();
+
             if (result != null) {
                 try {
                     Log.d("LoadMealPlanTask", "Parsing JSON response");
                     JSONObject jsonResponse = new JSONObject(result);
                     JSONArray mealArray = jsonResponse.getJSONArray("meals");
 
-                    // Loop through each meal in the meal plan
                     for (int i = 0; i < mealArray.length(); i++) {
                         JSONObject meal = mealArray.getJSONObject(i);
                         String day = meal.getString("Plan_Day");
                         String mealType = meal.getString("Meal_Type");
-                        String recipeName = meal.getString("Recipe_Title");
+                        String recipeName = meal.optString("Recipe_Title", "Select");
+                        String recipeInstructions = meal.optString("Recipe_Instructions", "No Instructions Available");
+                        String recipeImage = meal.optString("Recipe_Image", "");
 
-                        // Store the recipe details in the mealPlan map
                         String key = day + "_" + mealType;
                         mealPlan.put(key, meal);
 
-                        // Update the TextView for the meal with the recipe name
                         int resID = getResources().getIdentifier(day.toLowerCase() + "_" + mealType.toLowerCase() + "_select", "id", getPackageName());
                         TextView textView = findViewById(resID);
                         if (textView != null) {
@@ -227,24 +224,22 @@ public class weekplan extends AppCompatActivity {
         }
     }
 
-    // Method to handle meal selection click
     public void onSelectMealClick(View view) {
         TextView textView = (TextView) view;
         String selectedMeal = textView.getText().toString();
-        if (!selectedMeal.equals("Select")) {
-            // Log the selected meal
-            Log.d("weekplan", "Selected meal: " + selectedMeal);
+        Log.d("weekplan", "Selected meal: " + selectedMeal);
 
-            // Create an intent and add the JSON data to it
+        if (!selectedMeal.equals("Select") && !selectedMeal.equals("No Recipe")) {
             Intent intent = new Intent(this, RecipeDetailActivity.class);
             intent.putExtra("user_id", userId);
 
-            // Find the meal details from the map
+            boolean mealFound = false;
             for (Map.Entry<String, JSONObject> entry : mealPlan.entrySet()) {
                 JSONObject mealDetails = entry.getValue();
                 try {
                     if (mealDetails.getString("Recipe_Title").equals(selectedMeal)) {
                         intent.putExtra("recipe_details", mealDetails.toString());
+                        mealFound = true;
                         break;
                     }
                 } catch (Exception e) {
@@ -252,21 +247,28 @@ public class weekplan extends AppCompatActivity {
                 }
             }
 
-            startActivity(intent);
+            if (mealFound) {
+                Log.d("weekplan", "Starting RecipeDetailActivity with recipe details.");
+                startActivity(intent);
+            } else {
+                Log.d("weekplan", "No recipe details found for the selected meal.");
+                Toast.makeText(this, "No recipe details found for the selected meal", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "No recipe selected", Toast.LENGTH_SHORT).show();
+            Log.d("weekplan", "No recipe selected or no recipe available.");
+            Toast.makeText(this, "No recipe selected or no recipe available", Toast.LENGTH_SHORT).show();
         }
     }
 
     public class GroceryItem {
         private int mealPlanId;
         private int ingredientId;
-        private int quantity;
+        //private int quantity;
 
-        public GroceryItem(int mealPlanId, int ingredientId, int quantity) {
+        public GroceryItem(int mealPlanId, int ingredientId ) {
             this.mealPlanId = mealPlanId;
             this.ingredientId = ingredientId;
-            this.quantity = quantity;
+            //this.quantity = quantity;
         }
 
         public int getMealPlanId() {
@@ -285,13 +287,13 @@ public class weekplan extends AppCompatActivity {
             this.ingredientId = ingredientId;
         }
 
-        public int getQuantity() {
-            return quantity;
-        }
+       // public int getQuantity() {
+      //      return quantity;
+      //  }
 
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
+    //    public void setQuantity(int quantity) {
+     //       this.quantity = quantity;
+     //   }
     }
 
     // Method to generate the grocery list based on the meal plan
@@ -305,9 +307,9 @@ public class weekplan extends AppCompatActivity {
                 for (int i = 0; i < ingredients.length(); i++) {
                     JSONObject ingredient = ingredients.getJSONObject(i);
                     int ingredientId = ingredient.getInt("Ingredient_ID");
-                    int quantity = ingredient.getInt("Quantity");
+                    //int quantity = ingredient.getInt("Quantity");
 
-                    groceryList.add(new GroceryItem(meal.getInt("Meal_Plan_ID"), ingredientId, quantity));
+                    groceryList.add(new GroceryItem(meal.getInt("Meal_Plan_ID"), ingredientId ));
                 }
             } catch (Exception e) {
                 Log.e("generateGroceryList", "Error generating grocery list", e);
@@ -343,7 +345,7 @@ public class weekplan extends AppCompatActivity {
                     JSONObject groceryItem = new JSONObject();
                     groceryItem.put("meal_plan_id", item.getMealPlanId());
                     groceryItem.put("ingredient_id", item.getIngredientId());
-                    groceryItem.put("quantity", item.getQuantity());
+                    //groceryItem.put("quantity", item.getQuantity());
                     groceryArray.put(groceryItem);
                 }
                 data.put("grocery_list", groceryArray);
@@ -391,3 +393,4 @@ public class weekplan extends AppCompatActivity {
     }
 
 }
+

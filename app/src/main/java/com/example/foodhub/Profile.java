@@ -38,6 +38,8 @@ import org.json.JSONArray;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,6 +52,7 @@ public class Profile extends AppCompatActivity {
     ImageView profile_image;
     EditText name_txt;
     Button changePasswordButton;
+    Button LogoutButton;
     Button deleteAccountButton;
     EditText last_name;
     EditText email_txt;
@@ -66,6 +69,7 @@ public class Profile extends AppCompatActivity {
     private Response response;
     private Request request;
     Button ChangeProfilePicture;
+    private Map<String, JSONObject> Grocery = new HashMap<>();
     String strJson;
     private ProgressDialog progressDialog;
 
@@ -76,18 +80,17 @@ public class Profile extends AppCompatActivity {
         changePasswordButton = findViewById(R.id.changePasswordButton);
         deleteAccountButton = findViewById(R.id.deleteProfileButton);
 
-        // Initialize views
+
         profile_image = findViewById(R.id.profilePicture);
         name_txt = findViewById(R.id.firstName);
         last_name = findViewById(R.id.lastNameTextView);
         email_txt = findViewById(R.id.emailTextView);
         saveChangesButton = findViewById(R.id.SaveChangesButton);
         ChangeProfilePicture = findViewById(R.id.uploadImageButton);
+        LogoutButton = findViewById(R.id.logout);
 
-        // Initialize OkHttpClient
         client = new OkHttpClient();
 
-        // Initialize progressDialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
 
@@ -97,13 +100,20 @@ public class Profile extends AppCompatActivity {
 
         userId = intent.getIntExtra("user_id", -1);
 
-        // Construct API URLs
         apiUrlGetUserInfo = "https://lamp.ms.wits.ac.za/home/s2709514/infoProfile.php?user_id=" + userId;
 
         apiUrlUpdateUserInfo = "https://lamp.ms.wits.ac.za/home/s2709514/update_user.php";
 
-        // Execute AsyncTask to fetch user data
         new GetUserDataRequest().execute();
+
+        LogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 
@@ -125,7 +135,7 @@ public class Profile extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.home) {
-                    // Handle home navigation
+
                     Intent intent = new Intent(Profile.this, homepage.class);
                     intent.putExtra("user_id", userId);
                     overridePendingTransition(0, 0);
@@ -133,7 +143,7 @@ public class Profile extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (itemId == R.id.community) {
-                    // Handle community navigation
+
                     Intent intent = new Intent(Profile.this, community.class);
 
                     intent.putExtra("user_id", userId);
@@ -142,7 +152,7 @@ public class Profile extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (itemId == R.id.filter) {
-                    // Handle filter navigation
+
                     Intent intent = new Intent(Profile.this, dietplan.class);
                     intent.putExtra("user_id", userId);
                     overridePendingTransition(0, 0);
@@ -150,7 +160,7 @@ public class Profile extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (itemId == R.id.grocery_list) {
-                    // Handle grocery list navigation
+
                     Intent intent = new Intent(Profile.this, Grocery.class);
                     intent.putExtra("user_id", userId);
                     overridePendingTransition(0, 0);
@@ -158,7 +168,7 @@ public class Profile extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (itemId == R.id.meal_planner) {
-                    // Handle meal planner navigation
+
                     Intent intent = new Intent(Profile.this, weekplan.class);
                     intent.putExtra("user_id", userId);
                     overridePendingTransition(0, 0);
@@ -171,7 +181,6 @@ public class Profile extends AppCompatActivity {
         });
 
 
-        // Set listener for Save Changes button
         saveChangesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,7 +198,7 @@ public class Profile extends AppCompatActivity {
         deleteAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Call method to delete account
+
                 deleteAccount();
             }
         });
@@ -199,12 +208,12 @@ public class Profile extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.show(); // Show the ProgressDialog here
+            progressDialog.show();
         }
 
         @Override
         protected String doInBackground(Void... voids) {
-            // Create a form-encoded request body
+
             request = new Request.Builder().url(apiUrlGetUserInfo).build();
             try {
                 response = client.newCall(request).execute();
@@ -221,10 +230,10 @@ public class Profile extends AppCompatActivity {
             if (result != null) {
                 updateUserData(result);
             } else {
-                // Handle the error
+
                 Toast.makeText(Profile.this, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
             }
-            progressDialog.dismiss(); // Dismiss the ProgressDialog here
+            progressDialog.dismiss();
         }
     }
     private void updateUserData(String strJson) {
@@ -238,13 +247,11 @@ public class Profile extends AppCompatActivity {
             String email = child.getString("email");
 
             if (!imgBase64.isEmpty()) {
-                // Decode base64 to byte array
+
                 byte[] imageBytes = Base64.decode(imgBase64, Base64.DEFAULT);
-                // Convert byte array to Bitmap
                 InputStream inputStream = new ByteArrayInputStream(imageBytes);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
-                // Use Glide to load the Bitmap into the ImageView
                 Glide.with(this)
                         .load(bitmap)
                         .into(profile_image);
@@ -267,7 +274,7 @@ public class Profile extends AppCompatActivity {
         String newEmail = email_txt.getText().toString().trim();
 
 
-        // Execute AsyncTask to update user information
+
         new UpdateUserInfoRequest().execute(newFirstName, newLastName, newEmail);
     }
 
@@ -278,7 +285,6 @@ public class Profile extends AppCompatActivity {
             String newLastName = params[1];
             String newEmail = params[2];
 
-            // Create form body with updated information
             RequestBody formBody = new FormBody.Builder()
                     .add("user_id", String.valueOf(userId))
                     .add("new_email", newEmail)
@@ -286,14 +292,14 @@ public class Profile extends AppCompatActivity {
                     .add("last_name", newLastName)
                     .build();
 
-            // Create POST request to update user information
+
             Request request = new Request.Builder()
                     .url(apiUrlUpdateUserInfo)
                     .post(formBody)
                     .build();
 
             try {
-                // Execute request
+
                 response = client.newCall(request).execute();
                 return response.body().string();
             } catch (IOException e) {
@@ -305,7 +311,7 @@ public class Profile extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            // Handle response after updating user information
+
             if (result != null && result.equals("{\"status\":\"success\"}")) {
                 Toast.makeText(Profile.this, "User information updated successfully", Toast.LENGTH_SHORT).show();
             } else {
@@ -323,21 +329,21 @@ public class Profile extends AppCompatActivity {
 
             OkHttpClient client = new OkHttpClient();
 
-            // Define the request body with user ID, old password, and new password
+
             RequestBody requestBody = new FormBody.Builder()
                     .add("user_id", userId)
                     .add("old_password", oldPassword)
                     .add("new_password", newPassword)
                     .build();
 
-            // Define the request
+
             Request request = new Request.Builder()
-                    .url("https://lamp.ms.wits.ac.za/home/s2709514/change_password.php") // Replace with your actual URL
+                    .url("https://lamp.ms.wits.ac.za/home/s2709514/change_password.php")
                     .post(requestBody)
                     .build();
 
             try {
-                // Execute the request
+
                 Response response = client.newCall(request).execute();
                 String responseBody = response.body().string();
                 Log.d("ChangePasswordTask", "Response: " + responseBody);
@@ -351,7 +357,7 @@ public class Profile extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            // Handle response after changing password
+
             if (result != null) {
                 Log.d("ChangePasswordTask", "Result: " + result);
                 try {
@@ -370,7 +376,7 @@ public class Profile extends AppCompatActivity {
             } else {
                 Toast.makeText(Profile.this, "Failed to change password: No response from server", Toast.LENGTH_SHORT).show();
             }
-            // Dismiss the dialog here to ensure it's dismissed after the task completes
+
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
@@ -378,37 +384,30 @@ public class Profile extends AppCompatActivity {
     }
 
     private void changePassword() {
-        // Inflate the change_password.xml layout
+
         View changePasswordView = getLayoutInflater().inflate(R.layout.change_password, null);
 
-        // Find views within the layout
         EditText oldPasswordEditText = changePasswordView.findViewById(R.id.oldPasswordEditText);
         EditText newPasswordEditText = changePasswordView.findViewById(R.id.newPasswordEditText);
         EditText confirmPasswordEditText = changePasswordView.findViewById(R.id.confirmPasswordEditText);
         Button changePasswordButton = changePasswordView.findViewById(R.id.changePasswordButton);
-
-        // Create AlertDialog to show the change password form
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(changePasswordView);
         dialog = builder.create();
         dialog.show();
-
-        // Set click listener for the change password button
         changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the entered passwords
+
                 String oldPassword = oldPasswordEditText.getText().toString().trim();
                 String newPassword = newPasswordEditText.getText().toString().trim();
                 String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
-                // Perform validation
                 if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                     Toast.makeText(Profile.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 } else if (!newPassword.equals(confirmPassword)) {
                     Toast.makeText(Profile.this, "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Call AsyncTask to change the password
                     new ChangePasswordTask().execute(String.valueOf(userId), oldPassword, newPassword);
                 }
             }
@@ -418,7 +417,7 @@ public class Profile extends AppCompatActivity {
 
 
     private void deleteAccount() {
-        // Check if userId is valid
+
         if (userId == -1) {
             Toast.makeText(this, "Invalid user ID. Cannot delete account.", Toast.LENGTH_SHORT).show();
             return;
@@ -431,18 +430,16 @@ public class Profile extends AppCompatActivity {
                 .add("user_id", String.valueOf(userId))
                 .build();
 
-        // Define the request
         Request request = new Request.Builder()
                 .url("https://lamp.ms.wits.ac.za/home/s2709514/delete_user.php?user_id="+String.valueOf(userId))
                 .post(requestBody)
                 .build();
 
-        // Execute the request asynchronously
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                // Handle failure (e.g., display an error message)
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -453,7 +450,7 @@ public class Profile extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                // Handle response
+
                 final String responseData = response.body().string();
                 runOnUiThread(new Runnable() {
                     @Override
