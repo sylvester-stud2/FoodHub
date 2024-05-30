@@ -103,7 +103,7 @@ public class community extends AppCompatActivity {
             }
         });
 
-        int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.home);
+        int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.community);
         bottomNavigationView.setSelectedItemId(selectedItemId);
     }
 
