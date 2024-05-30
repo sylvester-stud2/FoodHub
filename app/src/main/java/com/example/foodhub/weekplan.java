@@ -386,8 +386,8 @@ public class weekplan extends AppCompatActivity {
                     Toast.makeText(weekplan.this, "Failed to store grocery list: " + message, Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
-                Log.e("StoreGroceryListTask", "Error parsing server response", e);
-                Toast.makeText(weekplan.this, "Error parsing server response", Toast.LENGTH_SHORT).show();
+                Log.e("", "", e);
+                Toast.makeText(weekplan.this, "", Toast.LENGTH_SHORT).show();
             }
         }
     }

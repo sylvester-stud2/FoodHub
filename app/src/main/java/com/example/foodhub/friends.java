@@ -19,8 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,16 +28,16 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class friends extends AppCompatActivity {
     private Intent intent;
-
     int userId;
+
     private BottomNavigationView bottomNavigationView;
     private LinearLayout friendsContainer;
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -62,9 +62,7 @@ public class friends extends AppCompatActivity {
 
         // Fetch friends details
         new FetchFriendsTask().execute(userId);
-
     }
-
 
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
@@ -82,8 +80,7 @@ public class friends extends AppCompatActivity {
         } else if (item.getItemId() == R.id.friends) {
             openFriendsPage();
             return true;
-        }
-        else if (item.getItemId() == R.id.meal_planner) {
+        } else if (item.getItemId() == R.id.meal_planner) {
             openMealPlannerPage();
             return true;
         }
@@ -91,10 +88,7 @@ public class friends extends AppCompatActivity {
         return true;
     }
 
-
-
     private void openHomePage() {
-        // Already implemented to open CreateProfile page
         Intent intent = new Intent(friends.this, homepage.class);
         intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
@@ -111,6 +105,7 @@ public class friends extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     private void openMealPlannerPage() {
         Intent intent = new Intent(friends.this, weekplan.class);
         intent.putExtra("user_id", userId);
@@ -120,21 +115,15 @@ public class friends extends AppCompatActivity {
     }
 
     private void openFriendsPage() {
-//        Intent intent = new Intent(friends.this, friends.class);
-//        intent.putExtra("selected_item_id", R.id.friends);
-//        intent.putExtra("user_id", userId);
-//        overridePendingTransition(0, 0);
-//        startActivity(intent);
-//        finish();
+        // No implementation needed as we are already on the Friends page
     }
 
-    // AsyncTask to fetch friends' details
     @SuppressLint("StaticFieldLeak")
     private class FetchFriendsTask extends AsyncTask<Integer, Void, String> {
         @Override
         protected String doInBackground(Integer... params) {
             int userId = params[0];
-            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/fetchfriends.php"; // Replace with your server URL
+            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/fetchfriends.php";
 
             try {
                 URL url = new URL(apiUrl);
@@ -143,7 +132,10 @@ public class friends extends AppCompatActivity {
                 connection.setDoOutput(true);
 
                 String postParams = "user_id=" + userId;
-                connection.getOutputStream().write(postParams.getBytes());
+                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+                writer.write(postParams);
+                writer.flush();
+                writer.close();
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
@@ -195,24 +187,32 @@ public class friends extends AppCompatActivity {
 
         friendNameTextView.setText(firstName + " " + lastName);
 
-        if (profileImageBase64 != null) {
-            byte[] decodedString = Base64.decode(String.valueOf(profileImageBase64), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            profileImageBase64.setImageBitmap(decodedByte);
+        if (profileImage != null && !profileImage.isEmpty()) {
+            byte[] imageBytes = Base64.decode(profileImage, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            Glide.with(this)
+                    .load(bitmap)
+                    .circleCrop()
+                    .into(profileImageBase64);
         } else {
-            profileImageBase64.setImageResource(R.drawable.person);
+            Glide.with(this)
+                    .load(R.drawable.avator)
+                    .circleCrop()
+                    .into(profileImageBase64);
         }
 
         likesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(friends.this, com.example.foodhub.LikesActivity.class);
-                intent.putExtra("friend_id", userId); // Pass the friend ID here
+                Intent intent = new Intent(friends.this,LikesActivity.class);
+                intent.putExtra("selected_item_id", R.id.home);
+                intent.putExtra("user_id", userId);
+                overridePendingTransition(0, 0);
                 startActivity(intent);
+                finish();
             }
         });
 
         friendsContainer.addView(friendItemView);
     }
 }
-
