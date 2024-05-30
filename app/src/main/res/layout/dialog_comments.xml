@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Comments Container -->
+    <LinearLayout
+        android:id="@+id/comments_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- This is where comments will be dynamically added -->
+    </LinearLayout>
+
+    <!-- Comment Input -->
+    <EditText
+        android:id="@+id/comment_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Write a comment..."
+        android:inputType="textMultiLine"
+        android:gravity="start|top"
+        android:maxLines="3"
+        android:padding="8dp"/>
+
+    <!-- Post Comment Button -->
+    <Button
+        android:id="@+id/post_comment_button"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="Post" />
+
+</LinearLayout>

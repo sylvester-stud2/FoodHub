@@ -1,25 +1,24 @@
-<!-- res/layout/comment_item.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/comment_user_image"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/person"
-        android:contentDescription="User profile picture"
-        android:scaleType="centerCrop"
-        android:layout_marginEnd="8dp" />
+    <TextView
+        android:id="@+id/username_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/comment_text"
-        android:layout_width="0dp"
+        android:id="@+id/comment_text_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Comment"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        android:text="Comment text"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
 </LinearLayout>
