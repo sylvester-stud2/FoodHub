@@ -30,30 +30,6 @@
                 android:background="@color/cyan"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="84dp"
-                    android:layout_height="79dp"
-                    android:src="@drawable/person"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/author_name"
-                    android:layout_width="119dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="20dp"
-                    android:text="Name"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.117"
-                    app:layout_constraintStart_toEndOf="@+id/profileimage"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.487"
-                    tools:ignore="NotSibling" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

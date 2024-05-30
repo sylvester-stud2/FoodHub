@@ -8,11 +8,12 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="587dp"
         android:backgroundTint="#2B2F30"
         android:fillViewport="true"
-        tools:layout_editor_absoluteY="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -30,30 +31,6 @@
                 android:background="@color/cyan"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/friend_like_profile"
-                    android:layout_width="84dp"
-                    android:layout_height="79dp"
-                    android:src="@drawable/person"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/friend_like_name"
-                    android:layout_width="119dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="20dp"
-                    android:text="Name"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.117"
-                    app:layout_constraintStart_toEndOf="@+id/friend_like_profile"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.487"
-                    tools:ignore="NotSibling" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

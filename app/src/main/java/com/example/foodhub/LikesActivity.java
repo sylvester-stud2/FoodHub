@@ -1,8 +1,12 @@
 package com.example.foodhub;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +25,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 
 public class LikesActivity extends AppCompatActivity {
 
@@ -46,7 +51,7 @@ public class LikesActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Integer... params) {
             int friendId = params[0];
-            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/fetchlikes.php"; // Replace with your server URL
+            String apiUrl = "https://lamp.ms.wits.ac.za/home/s2709514/fetchlikes.php"; // Ensure this URL matches your server URL
 
             try {
                 URL url = new URL(apiUrl);
@@ -82,6 +87,7 @@ public class LikesActivity extends AppCompatActivity {
             }
 
             try {
+                Log.d("LikesActivity", "Response: " + result);
                 JSONArray likesArray = new JSONArray(result);
                 for (int i = 0; i < likesArray.length(); i++) {
                     JSONObject likeObject = likesArray.getJSONObject(i);
@@ -100,7 +106,7 @@ public class LikesActivity extends AppCompatActivity {
     }
 
     private void addLikeItem(String title, String image, String ingredients, String instructions) {
-        View likeItemView = getLayoutInflater().inflate(R.layout.like_item, likesContainer, false);
+        View likeItemView = getLayoutInflater().inflate(R.layout.like_item, null);
 
         TextView titleTextView = likeItemView.findViewById(R.id.recipe_title);
         ImageView imageView = likeItemView.findViewById(R.id.recipe_image);
@@ -108,8 +114,13 @@ public class LikesActivity extends AppCompatActivity {
         TextView instructionsTextView = likeItemView.findViewById(R.id.recipe_instructions);
 
         titleTextView.setText(title);
-        // Assuming you have a method to load images from a URL
-        Picasso.get().load(image).into(imageView);
+        if (image != null && !image.isEmpty()) {
+            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            imageView.setImageBitmap(decodedByte);
+        } else {
+            imageView.setImageResource(R.drawable.profile); // Default image resource
+        }
         ingredientsTextView.setText(ingredients);
         instructionsTextView.setText(instructions);
 
