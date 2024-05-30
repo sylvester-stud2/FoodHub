@@ -49,6 +49,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
     implementation ("androidx.annotation:annotation:1.3.0")
+    implementation(libs.filament.android)
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
 

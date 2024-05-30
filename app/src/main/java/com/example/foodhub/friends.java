@@ -2,11 +2,15 @@ package com.example.foodhub;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -186,15 +190,27 @@ public class friends extends AppCompatActivity {
         View friendItemView = LayoutInflater.from(this).inflate(R.layout.friend_item, friendsContainer, false);
 
         TextView friendNameTextView = friendItemView.findViewById(R.id.friend_name);
-        ImageView friendProfileImageView = friendItemView.findViewById(R.id.friend_profile);
+        ImageView profileImageBase64 = friendItemView.findViewById(R.id.friend_profile);
+        Button likesButton = friendItemView.findViewById(R.id.friendlikes);
 
         friendNameTextView.setText(firstName + " " + lastName);
 
-        if (!profileImage.isEmpty()) {
-            Picasso.get().load("data:image/jpeg;base64," + profileImage).into(friendProfileImageView);
+        if (profileImageBase64 != null) {
+            byte[] decodedString = Base64.decode(String.valueOf(profileImageBase64), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            profileImageBase64.setImageBitmap(decodedByte);
         } else {
-            friendProfileImageView.setImageResource(R.drawable.person);
+            profileImageBase64.setImageResource(R.drawable.person);
         }
+
+        likesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(friends.this, com.example.foodhub.LikesActivity.class);
+                intent.putExtra("friend_id", userId); // Pass the friend ID here
+                startActivity(intent);
+            }
+        });
 
         friendsContainer.addView(friendItemView);
     }

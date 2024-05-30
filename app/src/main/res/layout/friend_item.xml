@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/black"
                     android:text="LIKES"
-                    android:onClick="addFriend"
+                    android:onClick="viewlikes"
                     android:textColor="@android:color/white"/>
             </LinearLayout>
 
