@@ -1,11 +1,19 @@
 package com.example.foodhub;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,66 +21,70 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class dietplan extends AppCompatActivity {
 
-    String getURL = "https://lamp.ms.wits.ac.za/mc/test.php";
-    String postURL ="https://lamp.ms.wits.ac.za/mc/test2.php";
+    private static final String PREFS_NAME = "DietPlanPrefs";
+    private static final String SELECTED_INGREDIENTS_KEY = "SelectedIngredients";
+
+    String postURL = "https://lamp.ms.wits.ac.za/mc/Dietplan.php";
 
     Intent intent;
     int userId;
-    String emailToChange;
 
     private List<String> selectedIngredients;
     private BottomNavigationView bottomNavigationView;
+    private List<LinearLayout> linearLayouts;
 
+    private static final String[] INGREDIENTS = {
+            "Apples", "Avocado", "Bacon", "Baking powder", "Banana", "Beans", "Beef", "Beetroot",
+            "Berries", "Bread", "Broccoli", "Butter", "Butternut", "Carrot", "Cereal", "Cheese",
+            "Chicken", "Cinnamon", "Cream", "Eggs", "Fish", "Flour", "Garlic", "Honey", "Lettuce",
+            "Lemon", "Maize meal", "Mayonnaise", "Milk", "Mushrooms", "Oats", "Oil", "Onion",
+            "Parsley", "Pasta", "Pepper", "Potatoes", "Rice", "Salt", "Soup powder", "Spinach",
+            "Steak", "Sugar", "Tomato sauce", "Tomato", "Vanilla", "Vinegar", "Water", "Yeast",
+            "Yogurt", "Stock (beef/chicken)"
+    };
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diet_plan);
 
-        intent = getIntent();
+        Button saveButton = findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSelections();
+                saveSelectedIngredients();
+                handleUnselectedIngredients();
+            }
+        });
 
+        intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
 
         selectedIngredients = new ArrayList<>();
+        linearLayouts = new ArrayList<>();
 
-        // Set up checkboxes
-        setupCheckBox(R.id.allergic_checkbox, "Water");
-        setupCheckBox(R.id.vegan_checkbox1, "Baby tomatoes");
-        setupCheckBox(R.id.vegan_checkbox2, "Vinegar");
-        setupCheckBox(R.id.vegan_checkbox3, "Salt");
-        setupCheckBox(R.id.vegan_checkbox4, "Soy milk");
-        setupCheckBox(R.id.vegan_checkbox5, "Flour");
-        setupCheckBox(R.id.vegan_checkbox6, "Olive oil");
-        setupCheckBox(R.id.vegan_checkbox8, "Brown sugar");
-        setupCheckBox(R.id.vegan_checkbox9, "Rice");
-        setupCheckBox(R.id.vegan_checkbox10, "Nuts");
-        setupCheckBox(R.id.vegan_checkbox11, "Grains");
-        setupCheckBox(R.id.vegan_checkbox12, "Honey");
-        setupCheckBox(R.id.vegan_checkbox13, "Seeds");
-        setupCheckBox(R.id.vegan_checkbox14, "Broccoli");
-        setupCheckBox(R.id.vegan_checkbox15, "Carrots");
-        setupCheckBox(R.id.vegan_checkbox16, "Garlic");
-        setupCheckBox(R.id.vegan_checkbox17, "Onions");
-        setupCheckBox(R.id.vegan_checkbox18, "Herbs");
-        setupCheckBox(R.id.vegan_checkbox19, "Lemon");
-        setupCheckBox(R.id.vegan_checkbox20, "Spices (turmeric, paprika)");
-        setupCheckBox(R.id.vegan_checkbox21, "Soy sauce");
-        setupCheckBox(R.id.vegan_checkbox22, "Cauliflower");
-        setupCheckBox(R.id.vegan_checkbox23, "Avocado");
-        setupCheckBox(R.id.vegan_checkbox24, "Mushrooms");
-        setupCheckBox(R.id.vegan_checkbox25, "Spinach");
-        setupCheckBox(R.id.vegan_checkbox26, "Cocoa powder");
-        setupCheckBox(R.id.vegan_checkbox27, "Cinnamon");
-        setupCheckBox(R.id.vegan_checkbox28, "Banana");
-        setupCheckBox(R.id.vegan_checkbox29, "Oats");
-        setupCheckBox(R.id.vegan_checkbox30, "Dozen eggs");
+        for (int i = 1; i <= 51; i++) {
+            String linearLayoutId = "linearLayout" + i;
+            int resID = getResources().getIdentifier(linearLayoutId, "id", getPackageName());
+            linearLayouts.add(findViewById(resID));
+        }
+
+        for (int i = 0; i < INGREDIENTS.length; i++) {
+            String checkBoxId = "vegan_checkbox" + (i + 1);
+            int resID = getResources().getIdentifier(checkBoxId, "id", getPackageName());
+            setupCheckBox(resID, INGREDIENTS[i]);
+        }
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -81,10 +93,13 @@ public class dietplan extends AppCompatActivity {
         });
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.filter);
         bottomNavigationView.setSelectedItemId(selectedItemId);
+
+        loadSelectedIngredients();
     }
+
     private boolean handleNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
-            // Current item is already selected, do nothing
+
             return false;
         }
 
@@ -94,9 +109,6 @@ public class dietplan extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.community) {
             openCommunityPage();
-            return true;
-        } else if (item.getItemId() == R.id.filter) {
-            openFilterPage();
             return true;
         } else if (item.getItemId() == R.id.grocery_list) {
             openGroceryListPage();
@@ -111,46 +123,46 @@ public class dietplan extends AppCompatActivity {
 
     private void setupCheckBox(int checkBoxId, String ingredient) {
         CheckBox checkBox = findViewById(checkBoxId);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    selectedIngredients.add(ingredient);
-                } else {
-                    selectedIngredients.remove(ingredient);
+        if (checkBox != null) {
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        selectedIngredients.add(ingredient);
+                    } else {
+                        selectedIngredients.remove(ingredient);
+                    }
                 }
-            }
-        });
-    }
-
-    private void checkIngredientsForRecipe(List<String> recipeIngredients) {
-        // List to hold missing ingredients
-        List<String> missingIngredients = new ArrayList<>();
-
-        // Check for missing ingredients
-        for (String ingredient : recipeIngredients) {
-            if (!selectedIngredients.contains(ingredient)) {
-                missingIngredients.add(ingredient);
-            }
-        }
-
-        // Prepare the message to be displayed
-        String message;
-        if (missingIngredients.isEmpty()) {
-            message = "You have all the ingredients needed for the recipe!";
+            });
         } else {
-            message = "You are missing the following ingredients:\n" + String.join(", ", missingIngredients);
+            Log.e("SetupCheckBox", "CheckBox not found for ID: " + checkBoxId);
         }
-
-        // Create and show the AlertDialog
-        new AlertDialog.Builder(this)
-                .setTitle("Recipe Check Result")
-                .setMessage(message)
-                .setPositiveButton("OK", null)
-                .show();
     }
 
-    // Methods to open respective pages
+    public void saveSelections() {
+        selectedIngredients.clear();
+
+        for (LinearLayout linearLayout : linearLayouts) {
+            if (linearLayout != null) {
+                for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                    View child = linearLayout.getChildAt(i);
+                    if (child instanceof CheckBox) {
+                        CheckBox checkBox = (CheckBox) child;
+                        if (checkBox.isChecked()) {
+                            TextView textView = (TextView) linearLayout.getChildAt(i + 1);
+                            selectedIngredients.add(textView.getText().toString());
+                        }
+                    }
+                }
+            } else {
+                Log.e("SaveSelections", "LinearLayout is null");
+            }
+        }
+
+        // Log the selected ingredients
+        Log.d("Selected Ingredients", selectedIngredients.toString());
+    }
+
     private void openHomePage() {
         Intent intent = new Intent(dietplan.this, homepage.class);
         intent.putExtra("user_id", userId);
@@ -165,20 +177,11 @@ public class dietplan extends AppCompatActivity {
         finish();
     }
 
-    private void openFilterPage() {
-        Intent intent = new Intent(dietplan.this, dietplan.class);
-        intent.putExtra("user_id", userId);
-        startActivity(intent);
-        finish();
-    }
-
     private void openGroceryListPage() {
-
-        Intent intent = new Intent(dietplan.this,Grocery.class);
+        Intent intent = new Intent(dietplan.this, Grocery.class);
         intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
-
     }
 
     private void openMealPlannerPage() {
@@ -186,5 +189,50 @@ public class dietplan extends AppCompatActivity {
         intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
+    }
+
+    private void saveSelectedIngredients() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Set<String> set = new HashSet<>(selectedIngredients);
+        editor.putStringSet(SELECTED_INGREDIENTS_KEY, set);
+        editor.apply();
+    }
+
+    private void loadSelectedIngredients() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        Set<String> set = sharedPreferences.getStringSet(SELECTED_INGREDIENTS_KEY, new HashSet<>());
+
+        for (LinearLayout linearLayout : linearLayouts) {
+            if (linearLayout != null) {
+                for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                    View child = linearLayout.getChildAt(i);
+                    if (child instanceof CheckBox) {
+                        CheckBox checkBox = (CheckBox) child;
+                        TextView textView = (TextView) linearLayout.getChildAt(i + 1);
+                        if (textView != null && set.contains(textView.getText().toString())) {
+                            checkBox.setChecked(true);
+                            selectedIngredients.add(textView.getText().toString());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void handleUnselectedIngredients() {
+        List<String> allIngredients = new ArrayList<>();
+        for (String ingredient : INGREDIENTS) {
+            allIngredients.add(ingredient);
+        }
+
+        List<String> unselectedIngredients = new ArrayList<>(allIngredients);
+        unselectedIngredients.removeAll(selectedIngredients);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Unselected Ingredients");
+        builder.setMessage(unselectedIngredients.toString());
+        builder.setPositiveButton("OK", null);
+        builder.show();
     }
 }

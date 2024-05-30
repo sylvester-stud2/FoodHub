@@ -11,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class friends extends AppCompatActivity {
+    private Intent intent;
 
     int userId;
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -23,7 +25,7 @@ public class friends extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("user_id", -1);
 
-        bottomNavigationView = findViewById(R.id.bottom_navcomm);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -31,6 +33,7 @@ public class friends extends AppCompatActivity {
                 return handleNavigationItemSelected(item);
             }
         });
+
         int selectedItemId = getIntent().getIntExtra("selected_item_id", R.id.friends);
         bottomNavigationView.setSelectedItemId(selectedItemId);
     }
@@ -47,30 +50,22 @@ public class friends extends AppCompatActivity {
         } else if (item.getItemId() == R.id.community) {
             openCommunityPage();
             return true;
-        } else if (item.getItemId() == R.id.filter) {
-            openFilterPage();
+        } else if (item.getItemId() == R.id.friends) {
+            openFriendsPage();
             return true;
-        } else if (item.getItemId() == R.id.grocery_list) {
-            openGroceryListPage();
-            return true;
-        } else if (item.getItemId() == R.id.meal_planner) {
+        }
+        else if (item.getItemId() == R.id.meal_planner) {
             openMealPlannerPage();
             return true;
         }
 
         return true;
     }
-    private void openProfilePage() {
-        Intent intent = new Intent(friends.this, Profile.class);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
-    }
+
 
     private void openHomePage() {
         // Already implemented to open CreateProfile page
-        Intent intent = new Intent(friends.this, community.class);
+        Intent intent = new Intent(friends.this, homepage.class);
         intent.putExtra("selected_item_id", R.id.home);
         intent.putExtra("user_id", userId);
         overridePendingTransition(0, 0);
@@ -86,33 +81,22 @@ public class friends extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    private void openFilterPage() {
-        Intent intent = new Intent(friends.this, dietplan.class);
-        intent.putExtra("selected_item_id", R.id.filter);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
-    }
-
-    private void openGroceryListPage() {
-        // You need to implement this method
-        Intent intent = new Intent(friends.this, Grocery.class);
-        intent.putExtra("selected_item_id", R.id.grocery_list);
-        intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        finish();
-    }
-
     private void openMealPlannerPage() {
-        // You need to implement this method
         Intent intent = new Intent(friends.this, weekplan.class);
-        intent.putExtra("selected_item_id", R.id.meal_planner);
         intent.putExtra("user_id", userId);
-        overridePendingTransition(0, 0);
+        intent.putExtra("selected_item_id", R.id.meal_planner);
         startActivity(intent);
         finish();
     }
+
+    private void openFriendsPage() {
+//        Intent intent = new Intent(friends.this, friends.class);
+//        intent.putExtra("selected_item_id", R.id.friends);
+//        intent.putExtra("user_id", userId);
+//        overridePendingTransition(0, 0);
+//        startActivity(intent);
+//        finish();
+    }
+
+
 }

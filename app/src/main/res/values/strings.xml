@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">FoodHub</string>
+    <!-- Other strings -->
+
     <string-array name="days_of_week">
         <item>Monday</item>
         <item>Tuesday</item>
@@ -9,8 +10,10 @@
         <item>Saturday</item>
         <item>Sunday</item>
     </string-array>
-    <string name="dietary_preference_and_health_goals">Dietary Preference and Health Goals</string>
-    <string name="allergy_conscious">Allergy Conscious</string>
-    <string name="vegetarian">Vegetarian</string>
-    <!-- Add any other missing strings here -->
+
+    <string-array name="meal_types">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Supper</item>
+    </string-array>
 </resources>

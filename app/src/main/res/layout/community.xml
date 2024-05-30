@@ -1,120 +1,110 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@color/cyan">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/magenta">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/feature_layout"
+    <!--    android:src="@drawable/boy"-->
 
+    <!-- Search Button -->
+
+
+    <ImageButton
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/search_comm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#2B2F30"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_button">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue"
-            android:padding="16dp"
-            tools:ignore="MissingConstraints">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/profilepic"
-                android:layout_width="70dp"
-                android:layout_height="75dp"
-                android:contentDescription="Profile picture"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/postpic"
-                app:srcCompat="@drawable/profile" />
-
-            <TextView
-                android:id="@+id/profilename"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:text="Name"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/profilepic"
-                app:layout_constraintStart_toEndOf="@id/profilepic"
-                app:layout_constraintTop_toTopOf="@id/profilepic" />
-
-            <Button
-                android:id="@+id/makefriend"
-                android:layout_width="wrap_content"
+            <!-- User Profile Section -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/black"
-                android:onClick="MakeFriendonClick"
-                android:text="Make Friend"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toTopOf="@id/postpic"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:background="@color/black"
+                android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/postpic"
-                android:layout_width="369dp"
-                android:layout_height="188dp"
-                android:contentDescription="Post Recipe Image"
-                app:layout_constraintBottom_toTopOf="@id/thumbsup"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profilename"
-                android:background="@color/cyan"/>
+                <ImageView
+                    android:id="@+id/profile_image_id"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/person"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/thumbsup"
-                android:layout_width="49dp"
-                android:layout_height="49dp"
-                android:layout_marginTop="16dp"
-                android:clickable="true"
-                android:onClick="onThumbsUpClicked"
-                android:src="@drawable/thumbsup"
-                app:layout_constraintTop_toBottomOf="@id/postpic"
-                app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/NameTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Name"
+                    android:textColor="@color/smoke"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_image_id"
+                    app:layout_constraintStart_toEndOf="@id/profile_image_id"
+                    app:layout_constraintTop_toTopOf="@id/profile_image_id" />
 
-            <ImageView
-                android:id="@+id/thumbsdown"
-                android:layout_width="49dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
-                android:clickable="true"
-                android:onClick="onThumbDownClicked"
-                android:src="@drawable/thumbsdown"
-                app:layout_constraintTop_toBottomOf="@id/postpic"
-                app:layout_constraintStart_toEndOf="@id/thumbsup" />
-
-            <ImageView
-                android:id="@+id/comment"
-                android:layout_width="49dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
-                android:clickable="true"
-                android:onClick="onCommentClicked"
-                android:src="@drawable/comment"
-                app:layout_constraintTop_toBottomOf="@id/postpic"
-                app:layout_constraintStart_toEndOf="@id/thumbsdown" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navcomm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@layout/bottom_nav_comm" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            </LinearLayout>
+            <!-- Container for recipes -->
+            <LinearLayout
+                android:id="@+id/recipes_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                android:padding="16dp" />
+
+            <!-- Bottom Buttons -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Google Android bottom navigation bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemIconTint="@color/blue"
+        app:itemTextColor="@color/blue"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@layout/bottom_nav_comm" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -202,19 +202,18 @@ public class CreateRecipe extends AppCompatActivity {
             String imagePath = (String) params[3];
 
             try {
-                // Prepare the multipart request body
                 MultipartBody.Builder builder = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                         .addFormDataPart("user_id", String.valueOf(userId))
                         .addFormDataPart("recipeName", recipeName)
                         .addFormDataPart("instructions", instructions);
 
-                // Add ingredients
+
                 for (String ingredient : selectedIngredients) {
                     builder.addFormDataPart("ingredients[]", ingredient);
                 }
 
-                // Add image
+
                 InputStream inputStream = getContentResolver().openInputStream(Uri.parse(imagePath));
                 byte[] imageBytes = new byte[inputStream.available()];
                 inputStream.read(imageBytes);
@@ -225,13 +224,12 @@ public class CreateRecipe extends AppCompatActivity {
 
                 RequestBody requestBody = builder.build();
 
-                // Create request
+
                 Request request = new Request.Builder()
                         .url(SERVER_URL)
                         .post(requestBody)
                         .build();
 
-                // Execute request
                 OkHttpClient client = new OkHttpClient();
                 Response response = client.newCall(request).execute();
                 return response.body().string();
